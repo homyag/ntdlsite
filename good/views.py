@@ -35,6 +35,7 @@ def show_product(request, category_slug, product_slug):
         'content': good.description,
         'category_selected': category_slug,
         'img': good.img.url if good.img else None,  # Добавляем проверку наличия URL
+        'property': good.product_card_property,
     }
     return render(request, 'good/good.html', context=data)
 

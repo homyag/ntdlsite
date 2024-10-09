@@ -2,7 +2,7 @@ ymaps.ready(init);
 
 function init() {
     // Стоимость за километр.
-    var DELIVERY_TARIFF = 200,
+    var DELIVERY_TARIFF = 300,
         // Минимальная стоимость.
         MINIMUM_COST = 4000,
         myMap = new ymaps.Map('map', {
@@ -37,7 +37,7 @@ function init() {
     // Если вы хотите задать неизменяемую точку "откуда", раскомментируйте код ниже.
     routePanelControl.routePanel.state.set({
         fromEnabled: false,
-        from: 'Мариуполь'
+        from: 'Мариуполь, улица Сортировочная 1'
     });
 
     myMap.controls.add(routePanelControl).add(zoomControl);

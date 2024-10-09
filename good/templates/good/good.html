@@ -14,9 +14,9 @@
                     <h1>{{ title }}</h1>
                 </div>
                 <div class="good__property">
-                    <h2>
-                        {{ good|linebreaks }}
-                    </h2>
+                    <span>
+                        {{ property|linebreaks }}
+                    </span>
                 </div>
                 <div class="good__header_button">
                     <button class="hero__button--popup" type="button">
@@ -36,7 +36,8 @@
         </div>
         <div class="good-description">
         <span>
-    {{ content|linebreaks }}
+{#    {{ content|linebreaks }}#}
+            {{ content|safe }}
     </span>
         </div>
     </div>

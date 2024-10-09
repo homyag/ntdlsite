@@ -6,6 +6,7 @@
 {% endblock %}
 {% block content %}
     <div class="goods__sections--content">
+    {% include "good/includes/mobile_menu.html" %}
         <h1>{{ title }}</h1>
         <div class="products__list">
             {% for p in products %}

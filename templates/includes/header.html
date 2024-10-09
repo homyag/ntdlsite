@@ -1,10 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% load static %}
+<header class="header">
+    <div class="header__logo__burger">
+        <div class="header__logo">
+            <a class="header__logo--img" href="{% url 'home' %}"></a>
+        </div>
 
-</body>
-</html>
+        <!-- Burger menu -->
+        <label class="burger" for="burger">
+            <input type="checkbox" id="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+    </div>
+
+    <nav class="header__nav">
+        <div class="header__menu">
+            {% for m in menu %}
+                <a class="menu__link"
+                   href="{% url m.url_name %}">{{ m.title }}</a>
+            {% endfor %}
+        </div>
+    </nav>
+    <div class="header__callback">
+        <div class="header__phone">
+            <div class="header__callback--icon">
+                <img class="header__callback--phone--icon"
+                     src="{% static 'images/icons/telephone-inbound.svg' %}"
+                     alt="phone_icon">
+            </div>
+            <div class="header__callback--phone--number">
+                <a href="tel:+79495632670">
+            <span class="value">
+                +7 (949)563-26-70
+            </span>
+                </a>
+            </div>
+        </div>
+        <div class="header_callback--popup">
+            <button type="button" class="call--popup">
+                Заказать звонок
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Попап с формой -->
+<noindex>
+    <div id="callback-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <span class="popup--header">
+        Заказать обратный звонок
+        </span>
+            <form action="/submit_callback" method="POST">
+                <label for="name">Имя:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="phone">Телефон:</label>
+                <input type="tel" id="phone" name="phone" required>
+
+                <div class="popup-buttons">
+                    <button type="submit" class="btn-primary">Заказать звонок
+                    </button>
+                    <button type="reset" class="btn-secondary">Сбросить
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</noindex>    

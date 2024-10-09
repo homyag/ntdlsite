@@ -1,10 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block sidebar %}
+    <div class="goods__sections">
+    {% include "good/includes/sidebar.html" %}
+{% endblock %}
+{% block content %}
+    <div class="goods__sections--content">
+        <div class="goods__header-with-image">
+            <div class="header--title--with--button">
+                <div class="header-title">
+                    <h1>{{ title }}</h1>
+                </div>
+                <div class="good__property">
+                    <h2>
+                        {{ good|linebreaks }}
+                    </h2>
+                </div>
+                <div class="good__header_button">
+                    <button class="hero__button--popup" type="button">
+                        Заказать {{ title|truncatewords:2 }}
+                    </button>
+                </div>
+            </div>
+            <div class="header-image">
+                {% if img %}
+                    <img src="{{ img }}" alt="{{ title }}"
+                         class="content-image">
+                {% else %}
+                    <img src="{% static 'images/mainpage/zavod.webp' %}"
+                         alt="{{ title }}" class="content-image">
+                {% endif %}
+            </div>
+        </div>
+        <div class="good-description">
+        <span>
+    {{ content|linebreaks }}
+    </span>
+        </div>
+    </div>
+    </div>
+{% endblock %}

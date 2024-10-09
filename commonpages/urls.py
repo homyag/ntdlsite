@@ -1,0 +1,13 @@
+from django.urls import path
+
+from . import views
+
+menu = ["О компании", "Контакты", "Продукция", "Блог", "Услуги"]
+
+urlpatterns = [
+    path("", views.index, name="home"),
+    path("about/", views.about, name="about"),
+    path("contacts/", views.contacts, name="contacts"),
+    path("services/", views.services, name="services"),
+    path("services/delivery", views.delivery, name="delivery"),
+]

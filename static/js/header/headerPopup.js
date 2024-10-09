@@ -1,10 +1,12 @@
- // Ваш JavaScript код
     const popup = document.getElementById('callback-popup');
-    const popupTrigger = document.querySelector('.header_callback--popup');
+    const popupTrigger = document.querySelectorAll('.header_callback--popup,' +
+        ' .hero__button--popup');
     const closeBtn = document.querySelector('.popup .close-btn');
 
-    popupTrigger.addEventListener('click', function() {
-    popup.style.display = 'block';
+    popupTrigger.forEach(trigger => {
+    trigger.addEventListener('click', function() {
+        popup.style.display = 'block';
+    })
 });
 
     closeBtn.addEventListener('click', function() {

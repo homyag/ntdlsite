@@ -1,10 +1,41 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ title }}</title>
+    <link type="text/css" href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+          rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'images/logo/logo.svg' %}"
+          type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block api %}
+    {% endblock %}
 </head>
 <body>
-
+<!--Header-->
+<div class="wrapper">
+    {% block header %}
+        {% include 'includes/header.html' %}
+    {% endblock header %}
+    <!-- Sidebar -->
+    {% block sidebar %}
+    {% endblock %}
+    <!-- Хлебные крошки -->
+    {% block breadcrumbs %}
+    {% endblock %}
+    <!-- Блок контента -->
+    {% block content %}
+    {% endblock %}
+    <!-- Footer -->
+    {% block footer %}
+        {% include 'includes/footer.html' %}
+    {% endblock %}
+</div>
+<script src="{% static 'js/header/headerPopup.js' %}"></script>
+<script src="{% static 'js/header/headerNavDisplay.js' %}"></script>
 </body>
 </html>

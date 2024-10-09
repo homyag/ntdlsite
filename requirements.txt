@@ -1,0 +1,6 @@
+Django==5.1
+pillow==10.4.0
+requests==2.32.3
+djangorestframework==3.15.2
+openpyxl==3.1.5
+django-filter==24.3

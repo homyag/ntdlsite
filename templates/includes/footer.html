@@ -1,10 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% load static %}
 
-</body>
-</html>
+<footer class="footer">
+    <div class="footer__left">
+        <div class="footer__logo">
+    <a class="footer__logo--img" href="{% url 'home' %}"></a>
+        </div>
+        <p class="footer__tagline">
+            Качество, профессионализм и надежность, 
+            которым можно доверять на каждом этапе строительства.
+        </p>
+        <div class="footer__icons">
+            <img class="footer__icon--telegram"
+                 src="{% static 'images/icons/footer__telegram.svg' %}" 
+                 alt="telegram icon">
+            <img class="footer__icon--whatsapp"
+                 src="{% static 'images/icons/footer__whatsapp.svg' %}"
+                 alt="whatsapp icon">
+            <img class="footer__icon--mail"
+                 src="{% static 'images/icons/footer__mail.svg' %}"
+                 alt="mail icon">
+            <img class="footer__icon--mail"
+                 src="{% static 'images/icons/footer__telephone.svg' %}"
+                 alt="phone icon">
+        </div>
+    </div>
+
+    
+    <div class="footer__center">
+        <div class="footer__address">
+            <a href="#">
+            <img src="{% static 'images/icons/footer__pin-map-fill.svg' %}" 
+                 alt="map icon">
+            Санкт-Петербург, Красное Село, ул. Свободы, д. 57, литер Д, 
+            помещ. 3-Н, кабинет 202-1
+            </a>
+        </div>
+        <div class="footer__tax_id">
+            ИНН/КПП 7807395014/780701001
+        </div>
+    </div>
+    
+    <div class="footer__right">
+        <div class="footer__name">
+            <p>ТД <span>Ленинградский</span></p>
+        </div>
+        <div class="footer__menu_links">
+                {% for m in menu %}
+        <a class="menu__link" href="{% url m.url_name %}">{{ m.title }}</a>
+    {% endfor %}
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{#HERO SECTION#}
+    <div class="hero__section" xmlns="http://www.w3.org/1999/html">
+        <div class="hero__presentation">
+            <div class="hero__title">
+                <h1>
+                    <span class="line1">Бетон</span>
+                    <span class="line2">и нерудные материалы</span>
+                    <span class="line3">с доставкой</span>
+                </h1>
+</div>
+            <div class="hero__text">
+    <p>
+        <span class="line1">Лучшие цены и качество от</span>
+        <span class="line2">ТД Ленинградский</span>
+    </p>
+            </div>
+            <div class="hero__button--title">
+                <button class="hero__button--popup" type="button">
+                    Получить консультацию
+                </button>
+                <a href="#" class="hero__button" type="button">
+                    Перейти в каталог
+                </a>
+            </div>
+        </div>
+        <div class="hero-img">
+            <img src="{% static 'images/mainpage/HeroImg.webp' %}" alt="Миксер ТД
+            Ленинградский">
+        </div>
+    </div>
+{#SERVICE SECTION#}
+<div class="main-service">
+    <div class="service-head">
+        <h2>Услуги ТД Ленинградский</h2>
+        <p>
+            Надежного поставщика бетона и нерудных материалов с доставкой до
+            Вашего объекта
+        </p>
+    </div>
+    <div class="service-main">
+        <div class="service-add" id="service1">
+            <div class="service-top">
+            <div class="service-number">
+                1
+            </div>
+            <div class="service-title">
+                <h3>
+                От 1 м³ до <br>крупных партий
+                </h3>
+            </div>
+            </div>
+            <div class="service-desc">
+                <p>
+                Продукция в любых объемах – от небольших заказов до крупных партий для масштабного строительства
+                </p>
+            </div>
+        </div>
+        <div class="service-add" id="service2">
+            <div class="service-top">
+        <div class="service-number">
+                2
+            </div>
+            <div class="service-title">
+                <h3>
+                Оперативная <br>доставка
+                </h3>
+            </div>
+            </div>
+            <div class="service-desc">
+                <p>
+                Быстрая и надежная доставка прямо на ваш объект, в удобное для вас время
+                </p>
+            </div>
+        </div>
+        <div class="service-add" id="service3">
+            <div class="service-top">
+            <div class="service-number">
+                3
+            </div>
+            <div class="service-title">
+                <h3>
+                Гарантия качества <br>продукции
+                </h3>
+            </div>
+            </div>
+            <div class="service-desc">
+                <p>
+                Вся продукция соответствует стандартам, обеспечивая надежность и долговечность ваших строительных проектов
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{#ABOUT SECTION#}
+<div class="main-about">
+    <div class="about-head">
+<h2>
+    О компании
+</h2>
+    </div>
+    <div class="about-desc">
+        <div class="main-about-img">
+            <img src="{% static 'images/mainpage/zavod.webp' %}"
+                 alt="Завод ТД Ленинградский">
+        </div>
+        <div class="about-text-and-button">
+<p>
+    Компания ООО “ТД Ленинградский”, занимается производством бетона и
+    строительных смесей более 10 лет. Наши клиенты доверяют нам за
+    стабильность поставок, высокое качество продукции и профессиональный
+    сервис. Мы работаем с ведущими строительными компаниями, а также
+    обслуживаем частные заказы. Ориентируемся на долгосрочные отношения и
+    всегда готовы предложить лучшие условия для наших деловых партнеров.
+</p>
+        <button class="about-button" type="button">
+        Узнать о нас больше
+        </button>
+        </div>
+    </div>
+</div>
+{#PRODUCT SECTION#}
+<div class="main-product">
+    <div class="main-product-head">
+        <h2>
+        Продукция
+        </h2>
+    </div>
+<div class="main-product-desc">
+    <div class="main-product-good">
+        <img src="{% static 'images/mainpage/Concrete.png' %}" alt="Бетон ТД
+         Ленинградский">
+        <span>Качественный бетон всех марок для любых строительных целей</span>
+        <button class="product-button" type="button">
+        Купить бетон
+        </button>
+    </div>
+    <div class="main-product-good">
+        <img src="{% static 'images/mainpage/macadam.png' %}" alt="Нерудные
+        материалы ТД Ленинградский">
+        <span>Все виды нерудных материалов по конкурентным ценам</span>
+        <button class="product-button" type="button">
+        Купить нерудные материалы
+        </button>
+    </div>
+        <div class="main-product-good">
+        <img src="{% static 'images/mainpage/asphalt.png' %}"
+             alt="Асфальтобетон ТД Ленинградский">
+        <span>Асфальт для дорожного строительства и благоустройства</span>
+        <button class="product-button" type="button">
+        Купить асфальт
+        </button>
+    </div>
+</div>
+</div>
+{#ADVANTAGES SECTION#}
+<div class="main-advantages">
+<div class="main-advantages-head">
+    <h2>
+        Преимущества ТД Ленинградский
+    </h2>
+</div>
+    <div class="main-advantages-desc">
+<div class="main-advantages-add" id="advantage1">
+    <div class="advantage-subtitle">
+        <h3>
+            Качество продукции
+        </h3>
+    </div>
+    <div class="advantage-icon">
+        <img src="{% static 'images/icons/patch-check.svg' %}" alt="Icon">
+    </div>
+    <div class="advantage-desc">
+        <p>
+            Материалы, соответствующие ГОСТ
+        </p>
+    </div>
+</div>
+
+<div class="main-advantages-add" id="advantage2">
+    <div class="advantage-subtitle">
+        <h3>
+            Гибкие условия
+        </h3>
+    </div>
+    <div class="advantage-icon">
+        <img src="{% static 'images/icons/bezier.svg' %}" alt="Icon">
+    </div>
+    <div class="advantage-desc">
+        <p>
+            Индивидуальный подход к каждому клиенту
+        </p>
+    </div>
+</div>
+<div class="main-advantages-add" id="advantage3">
+    <div class="advantage-subtitle">
+        <h3>
+            Оперативная доставка
+        </h3>
+    </div>
+    <div class="advantage-icon">
+        <img src="{% static 'images/icons/truck.svg' %}" alt="Icon">
+    </div>
+    <div class="advantage-desc">
+        <p>
+            Быстрая и точная доставка в любую точку
+        </p>
+    </div>
+</div>
+
+<div class="main-advantages-add" id="advantage4">
+    <div class="advantage-subtitle">
+        <h3>
+            Конкурентные цены
+        </h3>
+    </div>
+    <div class="advantage-icon">
+        <img src="{% static 'images/icons/piggy-bank.svg' %}" alt="Icon">
+    </div>
+    <div class="advantage-desc">
+        <p>
+            Лучшие условия на рынке без переплат
+        </p>
+    </div>
+</div>
+
+</div>
+</div>
+{% endblock %}

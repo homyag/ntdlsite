@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+{% block api %}
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=6ba57de0-e39c-4584-a7a8-c7f703d5a333" type="text/javascript"></script>
+    <script src="{% static 'js/deliveryCalculator.js' %}" type="text/javascript"></script>
+{% endblock %}
+{% block content %}
+<h1>{{ title }}</h1>
+    <div class="map">
+    <div id="map"></div>
+    </div>
+
+{% endblock %}

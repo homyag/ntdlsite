@@ -2,7 +2,7 @@
 {#Мобильный сайдбар#}
 <div class="category-slider">
     <div class="category-slider-track">
-        <ul>
+        <ul id="slider">
             {% if category_selected == 0 or category_selected is None %}
                 <li><a href="{% url 'catalog' %}" class="active">Все
                     категории</a></li>

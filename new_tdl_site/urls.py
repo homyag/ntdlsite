@@ -5,6 +5,11 @@ from django.conf.urls.static import static
 
 from new_tdl_site.views import page_not_found
 
+
+admin.site.site_header = "Торговый Дом Ленинградский - административная панель"
+
+admin.site.site_title = "Торговый Дом Ленинградский"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('catalog/', include('good.urls')),

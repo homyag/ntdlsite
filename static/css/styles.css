@@ -268,13 +268,32 @@
         justify-content: center;
     }
 
-    /*.header__logo--img {*/
-    /*    margin-left: 50px;*/
-    /*}*/
     .header__logo__burger {
         display: flex;
         width: 100%;
         justify-content: space-between;
+    }
+
+    .header__callback {
+        display: none;
+    }
+
+    .header__nav {
+        display: none;
+    }
+
+    .burger input:checked ~ .header__callback {
+        display: flex;
+        flex-direction: column;
+        max-height: 300px;
+        opacity: 1;
+    }
+
+    .burger input:checked ~ .header__nav {
+        display: flex;
+        flex-direction: column;
+        max-height: 300px;
+        opacity: 1;
     }
 
 
@@ -342,10 +361,6 @@
         display: none;
     }
 
-    /*.burger input:checked ~ .header__nav {*/
-    /*    display: flex !important;*/
-    /*    flex-direction: column;*/
-    /*}*/
     .header__menu, .header__nav {
         flex-direction: column;
     }
@@ -1110,7 +1125,20 @@
     list-style-type: none;
 }
 
+.category-slider-track ul {
+    list-style-type: none;
+}
+
 .goods___sections--sidebar li {
+    text-decoration: none;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 500;
+    position: relative;
+}
+
+.category-slider-track li {
     text-decoration: none;
     text-transform: uppercase;
     margin-bottom: 10px;
@@ -1123,13 +1151,32 @@
     position: relative;
 }
 
+.category-slider-track li a {
+    position: relative;
+}
+
 .goods___sections--sidebar li:hover {
+    font-weight: 700; /* Выделение активного элемента */
+    color: #1e73be; /* Можно задать цвет для выделения */
+}
+
+.category-slider-track li:hover {
     font-weight: 700; /* Выделение активного элемента */
     color: #1e73be; /* Можно задать цвет для выделения */
 }
 
 #leftchapters {
     padding-left: 0;
+}
+
+#slider {
+    padding-left: 0;
+}
+
+#slider li a {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 5px; /* Добавляем отступ снизу для псевдоэлемента */
 }
 
 #leftchapters li a::before {
@@ -1144,10 +1191,25 @@
     transform: translateX(-50%); /* Центрируем полосу */
 }
 
+#slider li a::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0; /* Начальная позиция по центру */
+    width: 0; /* Начальная ширина */
+    height: 4px;
+    background-color: #1e73be;
+    transition: width 0.4s ease; /* Плавный переход */
+}
+
 #leftchapters li a:hover::before {
     width: 100%; /* Увеличиваем ширину до 100% от ширины текста */
     left: 0; /* Разворачиваем полосу влево */
     transform: none; /* Отключаем трансформацию */
+}
+
+#slider li a:hover::before {
+    width: 100%; /* Увеличиваем ширину до 100% от ширины текста */
 }
 
 #leftchapters li a.selected::before {
@@ -1156,11 +1218,19 @@
     transform: none; /* Отключаем трансформацию */
 }
 
+#slider li a.selected::before {
+    width: 100%; /* Увеличиваем ширину до 100% от ширины текста */
+}
+
 #leftchapters li.selected {
     color: #1e73be;
     width: 100%;
     font-weight: 700;
+}
 
+#slider li.selected {
+    color: #1e73be;
+    font-weight: 700;
 }
 
 .goods___sections--sidebar a {
@@ -1171,7 +1241,20 @@
     font-weight: 500;
 }
 
+.category-slider-track a {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: inherit;
+    font-size: 20px;
+    font-weight: 500;
+}
+
 .goods___sections--sidebar a.active {
+    font-weight: 700; /* Выделение активного элемента */
+    color: #1e73be; /* Можно задать цвет для выделения */
+}
+
+.category-slider-track a.active {
     font-weight: 700; /* Выделение активного элемента */
     color: #1e73be; /* Можно задать цвет для выделения */
 }

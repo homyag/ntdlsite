@@ -6,8 +6,22 @@
 {% endblock %}
 {% block content %}
     <div class="goods__sections--content">
-    {% include "good/includes/mobile_menu.html" %}
+        {% include "good/includes/mobile_menu.html" %}
         <h1>{{ title }}</h1>
+        {% if short_description %}
+            <div class="catalog__text">
+                {{ short_description }}
+            </div>
+        {% else %}
+            <div class="catalog__text">
+                Наша компания предлагает широкий ассортимент строительных
+                материалов, которые идеально подходят для любого проекта — от
+                небольших частных строек до крупных промышленных объектов. Мы
+                гарантируем высокое качество продукции и своевременную доставку
+                на
+                объект.
+            </div>
+        {% endif %}
         <div class="products__list">
             {% for p in products %}
                 <div class="goods__products_cards">

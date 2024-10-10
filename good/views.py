@@ -50,12 +50,13 @@ def show_category(request, category_slug):
     )
 
     data = {
-        'title': f'Категория: {category.name}',
+        'title': f'Купить {category.name} от изготовителя продукции ТД Ленинградский',
         'menu': menu,
         'products': products,
         # 'category_selected': category_slug,
         'category_selected': category.pk,
         'description': category.description,
+        'short_description': category.small_text_for_catalog,
     }
     return render(request, 'good/products.html', context=data)
 

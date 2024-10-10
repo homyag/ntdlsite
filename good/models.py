@@ -83,6 +83,9 @@ class Category(models.Model):
         verbose_name="Родительская категория",
     )
     description = models.TextField(blank=True, verbose_name="Описание категории")
+    small_text_for_catalog = models.TextField(
+        blank=True, verbose_name="Короткое описание под title каталога"
+    )
 
     class Meta:
         verbose_name = "Категория"

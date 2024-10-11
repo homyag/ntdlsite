@@ -1,5 +1,8 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+
+from .forms import CallbackRequestForm
 
 menu = [
     {"title": "О компании", "url_name": "about"},
@@ -48,3 +51,16 @@ def delivery(request):
         "menu": menu,
     }
     return render(request, "commonpages/delivery.html", context=data)
+
+
+# представление для обработки отправки формы Callback заявки через ajax
+@csrf_exempt
+def submit_callback(request):
+    if request.method == 'POST':
+        form = CallbackRequestForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse({'status': 'error', 'errors': form.errors})
+    return JsonResponse({'status': 'invalid request'}, status=400)

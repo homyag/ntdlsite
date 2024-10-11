@@ -46,20 +46,49 @@
 </header>
 
 <!-- Попап с формой -->
+{#<noindex>#}
+{#    <div id="callback-popup" class="popup">#}
+{#        <div class="popup-content">#}
+{#            <span class="close-btn">&times;</span>#}
+{#            <span class="popup--header">#}
+{#        Заказать обратный звонок#}
+{#        </span>#}
+{#            <form action="/submit_callback" method="POST">#}
+{#                <label for="name">Имя:</label>#}
+{#                <input type="text" id="name" name="name" required>#}
+{##}
+{#                <label for="phone">Телефон:</label>#}
+{#                <input type="tel" id="phone" name="phone" required>#}
+{##}
+{#                <div class="popup-buttons">#}
+{#                    <button type="submit" class="btn-primary">Заказать звонок#}
+{#                    </button>#}
+{#                    <button type="reset" class="btn-secondary">Сбросить#}
+{#                    </button>#}
+{#                </div>#}
+{#            </form>#}
+{#        </div>#}
+{#    </div>#}
+{#</noindex>    #}
+
 <noindex>
     <div id="callback-popup" class="popup">
         <div class="popup-content">
             <span class="close-btn">&times;</span>
-            <span class="popup--header">
-        Заказать обратный звонок
-        </span>
-            <form action="/submit_callback" method="POST">
+            <span class="popup--header">Заказать обратный звонок</span>
+            <form id="callback-form" data-url="{% url 'submit_callback' %}">
                 <label for="name">Имя:</label>
                 <input type="text" id="name" name="name" required>
 
                 <label for="phone">Телефон:</label>
                 <input type="tel" id="phone" name="phone" required>
-
+                <div class="agree-with-terms">
+                    <label for="agree_to_terms">
+                        <input type="checkbox" id="agree_to_terms"
+                               name="agree_to_terms" required>
+                        Я соглашаюсь на обработку персональных данных
+                    </label>
+                </div>
                 <div class="popup-buttons">
                     <button type="submit" class="btn-primary">Заказать звонок
                     </button>
@@ -69,4 +98,16 @@
             </form>
         </div>
     </div>
-</noindex>    
+</noindex>
+
+<noindex>
+    <!-- Модальное окно для подтверждения заявки -->
+    <div id="success-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p>Заявка на звонок принята. Наш менеджер свяжется с Вами в
+                ближайшее время.</p>
+        </div>
+    </div>
+</noindex>
+

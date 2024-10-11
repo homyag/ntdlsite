@@ -10,4 +10,5 @@ urlpatterns = [
     path("contacts/", views.contacts, name="contacts"),
     path("services/", views.services, name="services"),
     path("services/delivery", views.delivery, name="delivery"),
+    path('submit_callback/', views.submit_callback, name='submit_callback'),
 ]

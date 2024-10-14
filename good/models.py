@@ -50,6 +50,10 @@ class Product(models.Model):
         null=True,
     )
 
+    meta_title = models.CharField(max_length=255, blank=True, null=True)
+    meta_description = models.TextField(blank=True, null=True)
+    meta_keywords = models.TextField(blank=True, null=True)
+
     objects = models.Manager()  # The default manager.
     published = PublishedManager()
 
@@ -86,6 +90,10 @@ class Category(models.Model):
     small_text_for_catalog = models.TextField(
         blank=True, verbose_name="Короткое описание под title каталога"
     )
+
+    meta_title = models.CharField(max_length=255, blank=True, null=True)
+    meta_description = models.TextField(blank=True, null=True)
+    meta_keywords = models.TextField(blank=True, null=True)
 
     class Meta:
         verbose_name = "Категория"

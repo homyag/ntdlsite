@@ -4,7 +4,6 @@ requests==2.32.3
 djangorestframework==3.15.2
 openpyxl==3.1.5
 django-filter==24.3
-django-meta==2.4.2
 python-dotenv==1.0.1
 celery==5.4.0
 python-decouple==3.8

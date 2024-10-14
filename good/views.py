@@ -5,21 +5,25 @@ from django.template.loader import render_to_string
 
 from .models import Product, Category
 
-menu = [
-    {"title": "О компании", "url_name": "about"},
-    {"title": "Контакты", "url_name": "contacts"},
-    {"title": "Продукция", "url_name": "catalog"},
-    {"title": "Услуги", "url_name": "services"},
-    {"title": "Блог", "url_name": "blog"},
-]
+# menu = [
+#     {"title": "О компании", "url_name": "about"},
+#     {"title": "Контакты", "url_name": "contacts"},
+#     {"title": "Продукция", "url_name": "catalog"},
+#     {"title": "Услуги", "url_name": "services"},
+#     {"title": "Блог", "url_name": "blog"},
+# ]
 
 
 def product(request):
     products = get_list_or_404(Product)
     data = {
         'title': 'Товарный каталог продукции ТД Ленинградский',
-        'menu': menu,
+        # 'menu': menu,
         'products': products,
+        'seo_title': "Товарный каталог продукции ТД Ленинградский",
+        'seo_description': "Продажа бетона и нерудных материалов от "
+                           "производителя ТД Ленинградский",
+        'seo_keywords': "купить бетон, продажа нерудных материалов, бетонный завод ТД Ленинградский",
     }
     return render(request, 'good/products.html', context=data)
 
@@ -31,11 +35,14 @@ def show_product(request, category_slug, product_slug):
 
     data = {
         'title': good.name,
-        'menu': menu,
+        # 'menu': menu,
         'content': good.description,
         'category_selected': category_slug,
         'img': good.img.url if good.img else None,  # Добавляем проверку наличия URL
         'property': good.product_card_property,
+        'seo_title': good.meta_title,
+        'seo_description': good.meta_description,
+        'seo_keywords': good.meta_keywords
     }
     return render(request, 'good/good.html', context=data)
 
@@ -51,12 +58,15 @@ def show_category(request, category_slug):
 
     data = {
         'title': f'Купить {category.name} от изготовителя продукции ТД Ленинградский',
-        'menu': menu,
+        # 'menu': menu,
         'products': products,
         # 'category_selected': category_slug,
         'category_selected': category.pk,
         'description': category.description,
         'short_description': category.small_text_for_catalog,
+        'seo_title': category.meta_title,
+        'seo_description': category.meta_description,
+        'seo_keywords': category.meta_keywords
     }
     return render(request, 'good/products.html', context=data)
 

@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'django_extensions',
     'rest_framework',
     'django_filters',
-    'meta',
 ]
 
 MIDDLEWARE = [
@@ -72,6 +71,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'commonpages.context_processors.default_context',
 
             ],
         },

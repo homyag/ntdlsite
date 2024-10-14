@@ -33,6 +33,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
+
     'good.apps.GoodConfig',
     'commonpages.apps.CommonpagesConfig',
     'blog.apps.BlogConfig',

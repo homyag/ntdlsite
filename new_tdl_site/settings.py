@@ -17,6 +17,8 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET')
 
 API_TOKEN = os.environ.get('API_TOKEN')
 
+RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 

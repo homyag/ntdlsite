@@ -1,0 +1,86 @@
+[
+{
+  "model": "leads.result",
+  "pk": 1,
+  "fields": {
+    "name": "отправлено КП"
+  }
+},
+{
+  "model": "leads.result",
+  "pk": 2,
+  "fields": {
+    "name": "пустой звонок"
+  }
+},
+{
+  "model": "leads.result",
+  "pk": 3,
+  "fields": {
+    "name": "произведена отправка"
+  }
+},
+{
+  "model": "leads.result",
+  "pk": 4,
+  "fields": {
+    "name": "отправлен договор"
+  }
+},
+{
+  "model": "leads.result",
+  "pk": 5,
+  "fields": {
+    "name": "неактуально"
+  }
+},
+{
+  "model": "leads.result",
+  "pk": 6,
+  "fields": {
+    "name": "в работе"
+  }
+},
+{
+  "model": "leads.result",
+  "pk": 7,
+  "fields": {
+    "name": "нет возможности"
+  }
+},
+{
+  "model": "leads.result",
+  "pk": 8,
+  "fields": {
+    "name": "отказ"
+  }
+},
+{
+  "model": "leads.result",
+  "pk": 9,
+  "fields": {
+    "name": "предложение"
+  }
+},
+{
+  "model": "leads.result",
+  "pk": 10,
+  "fields": {
+    "name": "отправлено сообщение"
+  }
+},
+{
+  "model": "leads.result",
+  "pk": 11,
+  "fields": {
+    "name": "ожидание ответа от клиента"
+  }
+},
+{
+  "model": "leads.result",
+  "pk": 12,
+  "fields": {
+    "name": "выставлен счёт"
+  }
+}
+]

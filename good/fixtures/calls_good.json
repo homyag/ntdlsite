@@ -1,0 +1,92 @@
+[
+{
+  "model": "leads.good",
+  "pk": 1,
+  "fields": {
+    "category": "бетон",
+    "name": "Товарный бетон М100",
+    "article": "В7,5П3F50W3",
+    "price": "6500.00"
+  }
+},
+{
+  "model": "leads.good",
+  "pk": 2,
+  "fields": {
+    "category": "бетон",
+    "name": "Товарный бетон М300",
+    "article": "в22,5п4",
+    "price": "8500.00"
+  }
+},
+{
+  "model": "leads.good",
+  "pk": 3,
+  "fields": {
+    "category": "песок",
+    "name": "песок",
+    "article": "отсутствует",
+    "price": "0.00"
+  }
+},
+{
+  "model": "leads.good",
+  "pk": 4,
+  "fields": {
+    "category": "асфальт",
+    "name": "асфальт",
+    "article": "М3",
+    "price": "0.01"
+  }
+},
+{
+  "model": "leads.good",
+  "pk": 5,
+  "fields": {
+    "category": "асфальт",
+    "name": "асфальт",
+    "article": "К3",
+    "price": "0.01"
+  }
+},
+{
+  "model": "leads.good",
+  "pk": 6,
+  "fields": {
+    "category": "смеси",
+    "name": "кладочная смесь",
+    "article": "РК50",
+    "price": "8550.00"
+  }
+},
+{
+  "model": "leads.good",
+  "pk": 7,
+  "fields": {
+    "category": "смеси",
+    "name": "раствор кладочный",
+    "article": "РК250",
+    "price": "9600.00"
+  }
+},
+{
+  "model": "leads.good",
+  "pk": 8,
+  "fields": {
+    "category": "бетон",
+    "name": "товарный бетон",
+    "article": "М200",
+    "price": "10000.00"
+  }
+},
+{
+  "model": "leads.good",
+  "pk": 9,
+  "fields": {
+    "category": "бетон",
+    "name": "Товарный бетон",
+    "article": "М300",
+    "price": "10300.00"
+  }
+}
+]

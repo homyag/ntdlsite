@@ -1,8 +1,11 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.conf import settings
 
 from .forms import CallbackRequestForm
+
+import requests
 
 # menu = [
 #     {"title": "О компании", "url_name": "about"},
@@ -78,13 +81,46 @@ def delivery(request):
 
 
 # представление для обработки отправки формы Callback заявки через ajax
-@csrf_exempt
+# @csrf_exempt
+# def submit_callback(request):
+#     if request.method == 'POST':
+#         form = CallbackRequestForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return JsonResponse({'status': 'success'})
+#         else:
+#             return JsonResponse({'status': 'error', 'errors': form.errors})
+#     return JsonResponse({'status': 'invalid request'}, status=400)
+
+@require_POST
 def submit_callback(request):
-    if request.method == 'POST':
-        form = CallbackRequestForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'status': 'success'})
-        else:
-            return JsonResponse({'status': 'error', 'errors': form.errors})
-    return JsonResponse({'status': 'invalid request'}, status=400)
+    recaptcha_response = request.POST.get('g-recaptcha-response')
+    if not recaptcha_response:
+        return JsonResponse({'status': 'error', 'errors': {'recaptcha': 'Проверка reCAPTCHA не пройдена. Пожалуйста, попробуйте еще раз.'}})
+
+    # Проверяем токен reCAPTCHA с помощью запроса к API Google
+    data = {
+        'secret': settings.RECAPTCHA_SECRET_KEY,
+        'response': recaptcha_response,
+        'remoteip': request.META.get('REMOTE_ADDR')
+    }
+
+    try:
+        r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+        result = r.json()
+    except requests.exceptions.RequestException as e:
+        return JsonResponse({'status': 'error', 'errors': {'recaptcha': 'Ошибка проверки reCAPTCHA. Пожалуйста, попробуйте позже.'}})
+
+    if not result.get('success'):
+        # Если проверка не пройдена, возвращаем ошибку
+        return JsonResponse({'status': 'error', 'errors': {'recaptcha': 'Неверная reCAPTCHA. Пожалуйста, попробуйте еще раз.'}})
+
+    # Если reCAPTCHA пройдена, продолжаем обработку формы
+    form = CallbackRequestForm(request.POST)
+    if form.is_valid():
+        form.save()
+        return JsonResponse({'status': 'success'})
+    else:
+        # Преобразуем ошибки формы в список строк
+        errors = {field: [str(error) for error in error_list] for field, error_list in form.errors.items()}
+        return JsonResponse({'status': 'error', 'errors': errors})

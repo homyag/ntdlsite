@@ -76,7 +76,9 @@
         <div class="popup-content">
             <span class="close-btn">&times;</span>
             <span class="popup--header">Заказать обратный звонок</span>
-            <form id="callback-form" data-url="{% url 'submit_callback' %}">
+            <form id="callback-form" method="post" data-url=
+                    "{% url 'submit_callback' %}">
+                {% csrf_token %}
                 <label for="name">Имя:</label>
                 <input type="text" id="name" name="name" required>
 

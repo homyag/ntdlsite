@@ -23,35 +23,43 @@
             </div>
         {% endif %}
         <div class="products__list">
-            {% for p in products %}
-                <div class="goods__products_cards">
-                    <div class="goods__product_card--card">
-                        {% if p.img %}
-                            <img src="{{ p.img.url }}" alt="{{ p.name }}">
-                        {% else %}
-                            <img src="{% static 'images/mainpage/zavod.webp' %}"
-                                 alt="{{ p.name }}">
-                        {% endif %}
-                        <a href="{{ p.get_absolute_url }}">
-                            <h2>{{ p.name|truncatewords:5 }}</h2>
-                        </a>
-                        {% autoescape off %}
-                            <p>{{ p.product_card_property|linebreaks }}</p>
-                        {% endautoescape %}
-                        <div class="goods__product_card--card--buttons">
-                            <button class="hero__button--popup" type="button">
-                                Заказать {{ p.name|truncatewords:2 }}
-                            </button>
-                            <a href="{{ p.get_absolute_url }}"
-                               class="hero__button"
-                               type="button">
-                                Подробнее
+            {% if products %}
+                {% for p in products %}
+                    <div class="goods__products_cards">
+                        <div class="goods__product_card--card">
+                            {% if p.img %}
+                                <img src="{{ p.img.url }}" alt="{{ p.name }}">
+                            {% else %}
+                                <img src="{% static 'images/mainpage/zavod.webp' %}"
+                                     alt="{{ p.name }}">
+                            {% endif %}
+                            <a href="{{ p.get_absolute_url }}">
+                                <h2>{{ p.name|truncatewords:5 }}</h2>
                             </a>
+                            {% autoescape off %}
+                                <p>{{ p.product_card_property|linebreaks }}</p>
+                            {% endautoescape %}
+                            <div class="goods__product_card--card--buttons">
+                                <button class="hero__button--popup"
+                                        type="button">
+                                    Заказать {{ p.name|truncatewords:2 }}
+                                </button>
+                                <a href="{{ p.get_absolute_url }}"
+                                   class="hero__button"
+                                   type="button">
+                                    Подробнее
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+                <p>К сожалению товаров указанной категории в выбранном
+                    регионе нет. Пожалуйста, выберите другой регион или
+                    другую категорию.</p>
+            {% endif %}
         </div>
+
 
         {% if description %}
             <div class="category-description">
@@ -61,4 +69,17 @@
 
     </div>
     </div>
+{% endblock %}
+
+{% block extra_scripts %}
+    {% if show_city_modal %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var cityModal = document.getElementById('city-modal');
+                if (cityModal) {
+                    cityModal.style.display = 'block';
+                }
+            });
+        </script>
+    {% endif %}
 {% endblock %}

@@ -9,10 +9,20 @@ from .models import Product, Category, City
 
 def product(request):
     city_slug = request.session.get('city_slug')
-    if not city_slug:
-        return redirect('home')
-    city = get_object_or_404(City, slug=city_slug)
-    products = Product.objects.filter(city=city)
+    city = None
+    show_city_modal = False
+
+    if city_slug:
+        city = get_object_or_404(City, slug=city_slug)
+        products = Product.objects.filter(city=city)
+    else:
+        # If city is not selected, show the modal
+        products = Product.objects.all()
+        show_city_modal = True
+    # if not city_slug:
+    #     return redirect('home')
+    # city = get_object_or_404(City, slug=city_slug)
+    # products = Product.objects.filter(city=city)
     data = {
         'title': 'Товарный каталог продукции ТД Ленинградский',
         'products': products,
@@ -21,6 +31,8 @@ def product(request):
                            "производителя ТД Ленинградский",
         'seo_keywords': "купить бетон, продажа нерудных материалов, бетонный завод ТД Ленинградский",
         'city_slug': city_slug,
+        'show_city_modal': show_city_modal,
+        'city_name': city.name if city else None,
     }
     return render(request, 'good/products.html', context=data)
 
@@ -58,18 +70,23 @@ def show_product(request, category_slug, product_slug):
 
 def show_category(request, category_slug):
     city_slug = request.session.get('city_slug')
-    if not city_slug:
-        # Если город не выбран, перенаправляем на домашнюю страницу или
-        # страницу выбора города
-        return redirect('home')  # или 'set_city'
-    city = get_object_or_404(City, slug=city_slug)
+
+    show_city_modal = False
+    city = None
+
     category = get_object_or_404(Category, slug=category_slug)
     subcategories = Category.objects.filter(parent=category)
 
-    # Фильтруем продукты по категории и городу
-    products = Product.objects.filter(
-        (Q(category=category) | Q(category__in=subcategories)) & Q(city=city)
-    )
+    if city_slug:
+        city = get_object_or_404(City, slug=city_slug)
+        products = Product.objects.filter(
+            (Q(category=category) | Q(category__in=subcategories)) & Q(
+                city=city)
+        )
+    else:
+        # City not selected, show modal and possibly show no products
+        products = Product.objects.none()
+        show_city_modal = True
 
     data = {
         'title': f'Купить {category.name} от изготовителя продукции ТД Ленинградский',
@@ -81,6 +98,7 @@ def show_category(request, category_slug):
         'seo_description': category.meta_description,
         'seo_keywords': category.meta_keywords,
         'city_slug': city_slug,
-        'city_name': city.name,
+        'city_name': city.name if city else None,
+        'show_city_modal': show_city_modal,
     }
     return render(request, 'good/products.html', context=data)

@@ -121,7 +121,7 @@ def set_city(request):
         city = City.objects.filter(slug=city_slug).first()
         if city:
             request.session['city_slug'] = city_slug
-            return redirect(request.META.get('HTTP_REFERER', '/'))
+            return redirect(request.META.get('HTTP_REFERER', 'catalog'))
         else:
             return JsonResponse({'error': 'Неверный выбор города'}, status=400)
     else:
@@ -133,4 +133,4 @@ def change_city(request):
     if 'city_slug' in request.session:
         del request.session['city_slug']
     # Перенаправляем пользователя на главную страницу или другую страницу
-    return redirect('home')
+    return redirect('catalog')

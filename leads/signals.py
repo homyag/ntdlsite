@@ -1,6 +1,7 @@
 import os
 import json
 import requests
+from django.conf import settings
 
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
@@ -82,7 +83,10 @@ def notify_manager_on_call_creation(sender, instance, created, **kwargs):
         )
         keyboard = action_choice_keyboard(instance.id)
         send_telegram_message(manager.tg_id, message, reply_markup=keyboard)
-        send_telegram_message(operator_id, message, reply_markup=keyboard)
+        if settings.DEBUG:
+            send_telegram_message(admin_id, message, reply_markup=keyboard)
+        else:
+            send_telegram_message(operator_id, message, reply_markup=keyboard)
 
 
 # оповещение при изменении записи в админке
@@ -117,7 +121,10 @@ def notify_users_on_call_change(sender, instance, created, **kwargs):
                     f'Комментарий: <b>{instance.comment}</b>\n\n'
                     f'Срок исполнения до: <b>{instance.date_of_notification}</b>'
                 )
-                send_telegram_message(operator_id, message_to_operator)
+                if settings.DEBUG:
+                    send_telegram_message(admin_id, message_to_operator)
+                else:
+                    send_telegram_message(operator_id, message_to_operator)
 
             # отправка уведомления о любом изменении заявки
         else:
@@ -131,4 +138,7 @@ def notify_users_on_call_change(sender, instance, created, **kwargs):
                 f'Комментарий: <b>{instance.comment}</b>\n\n'
                 f'Срок исполнения до: <b>{instance.date_of_notification}</b>'
             )
-            send_telegram_message(operator_id, message)
+            if settings.DEBUG:
+                send_telegram_message(admin_id, message)
+            else:
+                send_telegram_message(operator_id, message)

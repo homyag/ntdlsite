@@ -14,8 +14,8 @@ load_dotenv()
 
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 
-# operator_id = 809618451 #Ксюша
-operator_id = 59726568 #admin
+operator_id = int(os.getenv('OPERATOR_TG_ID'))
+admin_id = int(os.getenv('ADMIN_TG_ID'))
 
 
 def send_telegram_message(user_id, message, reply_markup=None):
@@ -32,24 +32,30 @@ def send_telegram_message(user_id, message, reply_markup=None):
     response = requests.post(url, data=data)
     return response.json()
 
+
 #функция генерации клавиатуры для уведомлений из django-signals
 def action_choice_keyboard(task_id):
     keyboard = {
         "inline_keyboard": [
             [
-                {"text": "Добавить комментарий", "callback_data": f"edit_comment:{task_id}"}
+                {"text": "Добавить комментарий",
+                 "callback_data": f"edit_comment:{task_id}"}
             ],
             [
-                {"text": "Изменить статус", "callback_data": f"edit_status:{task_id}"}
+                {"text": "Изменить статус",
+                 "callback_data": f"edit_status:{task_id}"}
             ],
             [
-                {"text": "Передать другому менеджеру", "callback_data": f"edit_manager:{task_id}"}
+                {"text": "Передать другому менеджеру",
+                 "callback_data": f"edit_manager:{task_id}"}
             ],
         ]
     }
     return keyboard
 
+
 original_manager = None
+
 
 @receiver(pre_save, sender=Call)
 def set_original_manager(sender, instance, **kwargs):
@@ -58,6 +64,7 @@ def set_original_manager(sender, instance, **kwargs):
         original_manager = Call.objects.get(pk=instance.pk).manager
     else:
         original_manager = None
+
 
 @receiver(post_save, sender=Call)
 def notify_manager_on_call_creation(sender, instance, created, **kwargs):
@@ -76,6 +83,7 @@ def notify_manager_on_call_creation(sender, instance, created, **kwargs):
         keyboard = action_choice_keyboard(instance.id)
         send_telegram_message(manager.tg_id, message, reply_markup=keyboard)
         send_telegram_message(operator_id, message, reply_markup=keyboard)
+
 
 # оповещение при изменении записи в админке
 @receiver(post_save, sender=Call)

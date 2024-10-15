@@ -14,6 +14,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'check-notifications-every-day': {
         'task': 'leads.tasks.check_notifications',
-        'schedule': crontab(hour='16', minute='18'),
+        'schedule': crontab(hour='10', minute='30'),
     },
 }

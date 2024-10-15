@@ -1,46 +1,42 @@
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
 from django.conf import settings
 
+from good.models import City
 from .forms import CallbackRequestForm
 
 import requests
 
-# menu = [
-#     {"title": "О компании", "url_name": "about"},
-#     {"title": "Контакты", "url_name": "contacts"},
-#     {"title": "Продукция", "url_name": "catalog"},
-#     {"title": "Услуги", "url_name": "services"},
-#     {"title": "Блог", "url_name": "blog"},
-# ]
-
 
 def index(request):
+    city_slug = request.session.get('city_slug')
     data = {
         "title": "Производитель бетона и бетонных смесей ТД Ленинградский",
-        # "menu": menu,
         "seo_title": "Производитель бетона и бетонных смесей ТД Ленинградский",
         'seo_description': 'ТД Ленинградский — ведущий производитель бетона и бетонных смесей в регионе.',
         'seo_keywords': 'ТД Ленинградский, бетон, бетонные смеси, о компании',
+        'city_slug': city_slug,
     }
     return render(request, "commonpages/main.html", context=data)
 
 
 def about(request):
+    city_slug = request.session.get('city_slug')
     data = {
         "title": "О компании ТД Ленинградский - производителе бетона и "
                  "бетонных смесей",
-        # "menu": menu,
         "seo_title": "О компании ТД Ленинградский - производителе бетона и "
                  "бетонных смесей",
         'seo_description': 'Ведущий производитель бетона и бетонных смесей в регионе деятельности - ТД Ленинградский',
         'seo_keywords': 'ТД Ленинградский, бетон, бетонные смеси, о компании',
+        'city_slug': city_slug,
     }
     return render(request, "commonpages/about.html", context=data)
 
 
 def contacts(request):
+    city_slug = request.session.get('city_slug')
     data = {
         "title": "Контакты бетонного завода ТД Ленинградский. Производство и отдел продаж",
         # "menu": menu,
@@ -48,11 +44,13 @@ def contacts(request):
         'seo_description': 'Контакты бетонного завода ТД Ленинградский. '
                            'Продажа бетона и бетонных смесей от 1м3',
         'seo_keywords': 'ТД Ленинградский, бетон, бетонные смеси, о компании',
+        'city_slug': city_slug,
     }
     return render(request, "commonpages/contacts.html", context=data)
 
 
 def services(request):
+    city_slug = request.session.get('city_slug')
     data = {
         "title": "Услуги производителя бетона и бетонных смесей ТД "
                  "Ленинградский",
@@ -63,11 +61,13 @@ def services(request):
                            'собственным автопарком или самовывозом с '
                            'производства',
         'seo_keywords': 'ТД Ленинградский, бетон, бетонные смеси, о компании',
+        'city_slug': city_slug,
     }
     return render(request, "commonpages/services.html", context=data)
 
 
 def delivery(request):
+    city_slug = request.session.get('city_slug')
     data = {
         "title": "Калькулятор доставки бетона от завода ТД Ленинградский",
         # "menu": menu,
@@ -76,21 +76,10 @@ def delivery(request):
                            'стоимости доставки бетона по региону от ТД '
                            'Ленинградский',
         'seo_keywords': 'ТД Ленинградский, бетон, бетонные смеси, о компании',
+        'city_slug': city_slug,
     }
     return render(request, "commonpages/delivery.html", context=data)
 
-
-# представление для обработки отправки формы Callback заявки через ajax
-# @csrf_exempt
-# def submit_callback(request):
-#     if request.method == 'POST':
-#         form = CallbackRequestForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return JsonResponse({'status': 'success'})
-#         else:
-#             return JsonResponse({'status': 'error', 'errors': form.errors})
-#     return JsonResponse({'status': 'invalid request'}, status=400)
 
 @require_POST
 def submit_callback(request):
@@ -124,3 +113,24 @@ def submit_callback(request):
         # Преобразуем ошибки формы в список строк
         errors = {field: [str(error) for error in error_list] for field, error_list in form.errors.items()}
         return JsonResponse({'status': 'error', 'errors': errors})
+
+
+def set_city(request):
+    if request.method == 'POST':
+        city_slug = request.POST.get('city_slug')
+        city = City.objects.filter(slug=city_slug).first()
+        if city:
+            request.session['city_slug'] = city_slug
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+        else:
+            return JsonResponse({'error': 'Неверный выбор города'}, status=400)
+    else:
+        return JsonResponse({'error': 'Неверный метод запроса'}, status=400)
+
+
+def change_city(request):
+    # Удаляем city_slug из сессии
+    if 'city_slug' in request.session:
+        del request.session['city_slug']
+    # Перенаправляем пользователя на главную страницу или другую страницу
+    return redirect('home')

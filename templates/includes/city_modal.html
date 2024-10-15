@@ -1,0 +1,14 @@
+<div id="city-modal" class="modal">
+    <div class="modal-content">
+        <p>Выберите ваш город</p>
+        <form id="city-form" method="post" action="{% url 'set_city' %}">
+            {% csrf_token %}
+            <select name="city_slug" required>
+                {% for city in cities %}
+                    <option value="{{ city.slug }}">{{ city.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Выбрать</button>
+        </form>
+    </div>
+</div>

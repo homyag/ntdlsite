@@ -5,27 +5,18 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('DJANGO_SECRET')
 
 API_TOKEN = os.environ.get('API_TOKEN')
 
 RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -58,6 +49,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     # 'leads.mdlw.ApiTokenMiddleware',
+    'commonpages.middleware.CityMiddleware',
 ]
 
 ROOT_URLCONF = 'new_tdl_site.urls'
@@ -75,6 +67,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 'commonpages.context_processors.default_context',
+                'commonpages.context_processors.city_context',
 
             ],
         },

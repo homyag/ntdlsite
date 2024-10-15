@@ -17,6 +17,7 @@
 {% else %}{{ seo_keywords }}{% endif %}">
     <link type="text/css" href="{% static 'css/styles.css' %}"
           rel="stylesheet">
+    <link type="text/css" href="{% static 'css/modal.css' %}" rel="stylesheet">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,6 +49,8 @@
         {% include 'includes/footer.html' %}
     {% endblock %}
 </div>
+{% include 'includes/city_modal.html' %}
+<script src="{% static 'js/cityModal.js' %}"></script>
 <script src="{% static 'js/header/headerPopup.js' %}"></script>
 <script src="{% static 'js/header/headerNavDisplay.js' %}"></script>
 <script src="{% static 'js/header/headerCallbackPopup.js' %}"></script>

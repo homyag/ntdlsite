@@ -4,6 +4,17 @@
         <div class="header__logo">
             <a class="header__logo--img" href="{% url 'home' %}"></a>
         </div>
+        <!-- Выбор города -->
+        {% if city_slug %}
+            <div class="city-info">
+                <span id="current-city">{{ city_name }}</span>
+                <a href="{% url 'change_city' %}" id="change-city">Сменить город</a>
+            </div>
+        {% else %}
+            <div class="city-info">
+                <a href="#" id="select-city">Выбрать город</a>
+            </div>
+        {% endif %}
 
         <!-- Burger menu -->
         <label class="burger" for="burger">

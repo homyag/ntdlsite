@@ -47,7 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
+    # включить на проде
     # 'leads.mdlw.ApiTokenMiddleware',
     'commonpages.middleware.CityMiddleware',
 ]
@@ -95,7 +95,7 @@ DATABASES = {
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASS'),
         'HOST': os.environ.get('DB_HOST'),
-        'PORT': 5432,
+        'PORT': int(os.environ.get('DB_PORT')),
     }
 }
 
@@ -136,9 +136,13 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# выключить на проде
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+# включить на проде
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -154,9 +158,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
+        # 'rest_framework.renderers.BrowsableAPIRenderer',
     ]
 }
+# включить на проде
+# CSRF_TRUSTED_ORIGINS = ['https://*.tdleningrad.ru']
 
 SITE_ID = 1
 

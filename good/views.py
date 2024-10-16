@@ -19,10 +19,6 @@ def product(request):
         # If city is not selected, show the modal
         products = Product.objects.all()
         show_city_modal = True
-    # if not city_slug:
-    #     return redirect('home')
-    # city = get_object_or_404(City, slug=city_slug)
-    # products = Product.objects.filter(city=city)
     data = {
         'title': 'Товарный каталог продукции ТД Ленинградский',
         'products': products,

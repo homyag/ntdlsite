@@ -21,12 +21,10 @@ admin.site.site_header = "Торговый Дом Ленинградский - �
 admin.site.site_title = "Торговый Дом Ленинградский"
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('tdladmin/', admin.site.urls),
     path('catalog/', include('good.urls')),
     path('', include('commonpages.urls')),
     path('', include('blog.urls')),
-    # path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
-    #      name='django.contrib.sitemaps.views.sitemap'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps, 'template_name': 'sitemap_with_images.xml'}, name='django.contrib.sitemaps.views.sitemap'),
     path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
 ]

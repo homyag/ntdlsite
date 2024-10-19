@@ -10,6 +10,7 @@ from good.models import Product, Category
 class StaticViewSitemap(Sitemap):
     priority = 0.8
     changefreq = 'daily'
+    protocol = 'https'
 
     def items(self):
         return ['home', 'about', 'contacts', 'services', 'delivery']
@@ -31,6 +32,7 @@ class StaticViewSitemap(Sitemap):
 class ProductSitemap(Sitemap):
     changefreq = 'daily'
     priority = 0.7
+    protocol = 'https'
 
     def items(self):
         return Product.published.all()  # Выводим только товары в наличии
@@ -46,11 +48,13 @@ class ProductSitemap(Sitemap):
             return [obj.img.url]  # Возвращаем URL изображения товара
         return []
 
+
 # Products category sitemap
 
 class CategorySitemap(Sitemap):
     changefreq = 'weekly'
     priority = 0.6
+    protocol = 'https'
 
     def items(self):
         return Category.objects.all().order_by('name')

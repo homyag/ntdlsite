@@ -8,62 +8,64 @@
 {% endblock %}
 {% block content %}
     {% if good %}
-    <div class="goods__sections--content">
-        <div class="goods__header-with-image">
-            <div class="header--title--with--button">
-                <div class="header-title">
-                    <h1>{{ title }}</h1>
-                </div>
-                <div class="good__property">
+        <div class="goods__sections--content">
+            <div class="goods__header-with-image">
+                <div class="header--title--with--button">
+                    <div class="header-title">
+                        <h1>{{ title }}</h1>
+                    </div>
+                    <div class="good__property">
                     <span>
                         {{ property|linebreaks }}
                     </span>
+                    </div>
+                    <div class="good__header_button">
+                        <button class="hero__button--popup" type="button">
+                            Заказать {{ title|truncatewords:2 }}
+                        </button>
+                    </div>
                 </div>
-                <div class="good__header_button">
-                    <button class="hero__button--popup" type="button">
-                        Заказать {{ title|truncatewords:2 }}
-                    </button>
+                <div class="header-image">
+                    {% if img %}
+                        <img src="{{ img }}" alt="{{ title }}"
+                             class="content-image">
+                    {% else %}
+                        <img src="{% static 'images/mainpage/zavod.webp' %}"
+                             alt="{{ title }}" class="content-image">
+                    {% endif %}
                 </div>
             </div>
-            <div class="header-image">
-                {% if img %}
-                    <img src="{{ img }}" alt="{{ title }}"
-                         class="content-image">
-                {% else %}
-                    <img src="{% static 'images/mainpage/zavod.webp' %}"
-                         alt="{{ title }}" class="content-image">
-                {% endif %}
-            </div>
-        </div>
-        <div class="good-description">
+            <div class="good-description">
         <span>
 {#    {{ content|linebreaks }}#}
             {{ content|safe }}
     </span>
+            </div>
         </div>
-    </div>
     {% else %}
         <!-- Content when 'good' does not exist -->
         <div class="goods__sections--content">
             <h1>{{ title }}</h1>
-            <p>К сожалению, данный товар отсутствует в выбранном городе или город не выбран.</p>
+            <p>К сожалению, данный товар отсутствует в выбранном городе или
+                город не выбран.</p>
         </div>
     {% endif %}
     </div>
 
-    {% if product_not_available %}
-    <!-- Modal Structure -->
-    <div id="product-not-available-modal" class="modal">
-        <div class="modal-content">
-            <h4>Товар недоступен</h4>
-            <p>К сожалению, данный товар отсутствует в выбранном городе.</p>
-            <button onclick="window.location.href='{% url 'catalog' %}'"
-                    class="btn">
-                Вернуться в каталог
-            </button>
-        </div>
-    </div>
-{% endif %}
+{#    {% if product_not_available %}#}
+{#        <!-- Modal Structure -->#}
+{#        <div id="product-not-available-modal" class="modal">#}
+{#            <div class="modal-content">#}
+{#                <h4>Товар недоступен</h4>#}
+{#                <p>К сожалению, данный товар отсутствует в выбранном#}
+{#                    городе.</p>#}
+{#                <button onclick="window.location.href='{% url 'catalog' %}'"#}
+{#                        class="btn">#}
+{#                    Вернуться в каталог#}
+{#                </button>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endif %}#}
 
 {% endblock %}
 
@@ -71,19 +73,7 @@
 {% block extra_scripts %}
     {% if show_city_modal %}
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var cityModal = document.getElementById('city-modal');
-                if (cityModal) {
-                    cityModal.style.display = 'block';
-                }
-            });
-        </script>
-    {% endif %}
-
-    {% if show_city_modal %}
-        <!-- Existing script to show city selection modal -->
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function () {
                 var cityModal = document.getElementById('city-modal');
                 if (cityModal) {
                     cityModal.style.display = 'block';

@@ -2,6 +2,9 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+<!-- Google Tag Manager -->
+<script src="{% static 'js/gtm_head_script.js' %}"></script>
+<!-- End Google Tag Manager -->
     <title>
         {% block title %}
             {% if seo_title %}
@@ -32,6 +35,10 @@
     {% endblock %}
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P8VKM4F"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 <!--Header-->
 <div class="wrapper">
     {% block header %}
@@ -56,7 +63,7 @@
 <script src="{% static 'js/header/headerPopup.js' %}"></script>
 <script src="{% static 'js/header/headerNavDisplay.js' %}"></script>
 <script src="{% static 'js/header/headerCallbackPopup.js' %}"></script>
-<script src="https://www.google.com/recaptcha/api.js?render=6LchN2EqAAAAAFEYLgQZmZLrF_czptpdExkUsusM"></script>
+{#<script src="https://www.google.com/recaptcha/api.js?render=6LchN2EqAAAAAFEYLgQZmZLrF_czptpdExkUsusM"></script>#}
 {% block extra_scripts %}
 {% endblock %}
 </body>

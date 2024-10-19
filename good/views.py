@@ -70,7 +70,7 @@ def show_product(request, category_slug, product_slug):
             'city_slug': city_slug,
             'city_name': city.name if city else None,
             'show_city_modal': show_city_modal,
-            'product_not_available': product_not_available,
+            # 'product_not_available': product_not_available,
             'good': good,
         }
 
@@ -83,7 +83,7 @@ def show_product(request, category_slug, product_slug):
             'city_slug': city_slug,
             'city_name': city.name if city else None,
             'show_city_modal': show_city_modal,
-            'product_not_available': product_not_available,
+            # 'product_not_available': product_not_available,
         }
 
     # data = {

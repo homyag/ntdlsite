@@ -35,32 +35,72 @@ def product(request):
 
 def show_product(request, category_slug, product_slug):
     city_slug = request.session.get('city_slug')
-    if not city_slug:
-        # Если город не выбран, перенаправляем на домашнюю страницу или
-        # страницу выбора города
-        return redirect('home')  # или 'set_city'
+    show_city_modal = False
+    product_not_available = False
+    city = None
 
-    city = get_object_or_404(City, slug=city_slug)
-    category = get_object_or_404(Category,
-                                 slug=category_slug)  # проверяем наличие категории
-    good = get_object_or_404(Product, slug=product_slug, category=category,
-                             city=city
-                             )  #
-    # находим продукт в этой категории
+    category = get_object_or_404(Category, slug=category_slug)
 
-    data = {
-        'title': good.name,
-        'content': good.description,
-        'category_selected': category_slug,
-        'img': good.img.url if good.img else None,
-        # Добавляем проверку наличия URL
-        'property': good.product_card_property,
-        'seo_title': good.meta_title,
-        'seo_description': good.meta_description,
-        'seo_keywords': good.meta_keywords,
-        'city_slug': city_slug,
-        'city_name': city.name,
-    }
+    if city_slug:
+        city = get_object_or_404(City, slug=city_slug)
+        try:
+            good = Product.objects.get(slug=product_slug, category=category,
+                                       city=city)
+        except Product.DoesNotExist:
+            good = None
+            product_not_available = True
+
+        # good = get_object_or_404(Product, slug=product_slug, category=category, city=city)
+    else:
+        good = None
+        show_city_modal = True
+        # Fetch the product without filtering by city
+        # good = get_object_or_404(Product, slug=product_slug, category=category)
+
+    if good:
+        data = {
+            'title': good.name,
+            'content': good.description,
+            'category_selected': category_slug,
+            'img': good.img.url if good.img else None,
+            'property': good.product_card_property,
+            'seo_title': good.meta_title,
+            'seo_description': good.meta_description,
+            'seo_keywords': good.meta_keywords,
+            'city_slug': city_slug,
+            'city_name': city.name if city else None,
+            'show_city_modal': show_city_modal,
+            'product_not_available': product_not_available,
+            'good': good,
+        }
+
+    else:
+        # If city is not selected, show the modal
+        data = {
+            'title': 'Товар не найден',
+            'content': None,
+            'category_selected': category_slug,
+            'city_slug': city_slug,
+            'city_name': city.name if city else None,
+            'show_city_modal': show_city_modal,
+            'product_not_available': product_not_available,
+        }
+
+    # data = {
+    #     'title': good.name if good else 'Товар не найден',
+    #     'content': good.description if good else None,
+    #     'category_selected': category_slug,
+    #     'img': good.img.url if good.img else None,
+    #     'property': good.product_card_property,
+    #     'seo_title': good.meta_title,
+    #     'seo_description': good.meta_description,
+    #     'seo_keywords': good.meta_keywords,
+    #     'city_slug': city_slug,
+    #     'city_name': city.name if city else None,
+    #     'show_city_modal': show_city_modal,
+    #     'product_not_available': product_not_available,
+    #     'good': good,
+    # }
     return render(request, 'good/good.html', context=data)
 
 

@@ -1,8 +1,5 @@
 from django.db.models import Q
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404, get_list_or_404, \
-    redirect
-from django.template.loader import render_to_string
+from django.shortcuts import render, get_object_or_404
 
 from .models import Product, Category, City
 
@@ -50,12 +47,9 @@ def show_product(request, category_slug, product_slug):
             good = None
             product_not_available = True
 
-        # good = get_object_or_404(Product, slug=product_slug, category=category, city=city)
     else:
         good = None
         show_city_modal = True
-        # Fetch the product without filtering by city
-        # good = get_object_or_404(Product, slug=product_slug, category=category)
 
     if good:
         data = {
@@ -86,21 +80,6 @@ def show_product(request, category_slug, product_slug):
             # 'product_not_available': product_not_available,
         }
 
-    # data = {
-    #     'title': good.name if good else 'Товар не найден',
-    #     'content': good.description if good else None,
-    #     'category_selected': category_slug,
-    #     'img': good.img.url if good.img else None,
-    #     'property': good.product_card_property,
-    #     'seo_title': good.meta_title,
-    #     'seo_description': good.meta_description,
-    #     'seo_keywords': good.meta_keywords,
-    #     'city_slug': city_slug,
-    #     'city_name': city.name if city else None,
-    #     'show_city_modal': show_city_modal,
-    #     'product_not_available': product_not_available,
-    #     'good': good,
-    # }
     return render(request, 'good/good.html', context=data)
 
 

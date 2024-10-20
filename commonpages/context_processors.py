@@ -23,6 +23,5 @@ def city_context(request):
     return {
         'city_slug': city_slug,
         'city_name': city_name,
-        # 'cities': City.objects.all() if not city_slug else None,
         'cities': City.objects.all(),
     }

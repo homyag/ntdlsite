@@ -3,7 +3,7 @@ import datetime
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
-from good.models import Product, Category
+from good.models import Product, Category, City
 
 
 # Static Sitemap
@@ -51,18 +51,51 @@ class ProductSitemap(Sitemap):
 
 # Products category sitemap
 
+# class CategorySitemap(Sitemap):
+#     changefreq = 'weekly'
+#     priority = 0.6
+#     protocol = 'https'
+#
+#     def items(self):
+#         return Category.objects.all().order_by('name')
+#
+#     def location(self, obj):
+#         return obj.get_absolute_url()
+#
+#     def lastmod(self, obj):
+#         if obj.products.exists():
+#             return obj.products.latest('time_update').time_update
+#         return None
+
 class CategorySitemap(Sitemap):
     changefreq = 'weekly'
     priority = 0.6
     protocol = 'https'
 
     def items(self):
-        return Category.objects.all().order_by('name')
+        # Генерируем комбинации городов и категорий, где есть товары
+        items = []
+        cities = City.objects.all()
+        categories = Category.objects.all()
+        for city in cities:
+            for category in categories:
+                # Проверяем, есть ли продукты в данной категории и городе
+                if Product.objects.filter(city=city,
+                                          category=category).exists():
+                    items.append((city, category))
+        return items
 
     def location(self, obj):
-        return obj.get_absolute_url()
+        city, category = obj
+        return reverse("category", kwargs={
+            "city_slug": city.slug,
+            "category_slug": category.slug
+        })
 
     def lastmod(self, obj):
-        if obj.products.exists():
-            return obj.products.latest('time_update').time_update
+        city, category = obj
+        # Возвращаем дату последнего обновления продуктов в данной категории и городе
+        products = Product.objects.filter(city=city, category=category)
+        if products.exists():
+            return products.latest('time_update').time_update
         return None

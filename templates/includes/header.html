@@ -8,11 +8,13 @@
         {% if city_slug %}
             <div class="city-info">
                 <span id="current-city">{{ city_name }}</span>
-                <a href="{% url 'change_city' %}" id="change-city">Сменить город</a>
+                <a href="#" id="change-city"
+                   onclick="openCityModal(); return false;">Сменить город</a>
             </div>
         {% else %}
             <div class="city-info">
-                <a href="#" id="select-city">Выбрать город</a>
+                <a href="#" id="select-city"
+                   onclick="openCityModal(); return false;">Выбрать город</a>
             </div>
         {% endif %}
 
@@ -28,8 +30,18 @@
     <nav class="header__nav">
         <div class="header__menu">
             {% for m in menu %}
-                <a class="menu__link"
-                   href="{% url m.url_name %}">{{ m.title }}</a>
+                {% if m.url_name == 'catalog' %}
+                    {% if city_slug %}
+                        <a class="menu__link"
+                           href="{% url m.url_name city_slug=city_slug %}">{{ m.title }}</a>
+                    {% else %}
+                        <a class="menu__link" href="#"
+                           onclick="openCityModal();">{{ m.title }}</a>
+                    {% endif %}
+                {% else %}
+                    <a class="menu__link"
+                       href="{% url m.url_name %}">{{ m.title }}</a>
+                {% endif %}
             {% endfor %}
         </div>
     </nav>
@@ -98,4 +110,11 @@
         </div>
     </div>
 </noindex>
-
+{#<script>#}
+{#    function openCityModal() {#}
+{#        var cityModal = document.getElementById('city-modal');#}
+{#        if (cityModal) {#}
+{#            cityModal.style.display = 'block';#}
+{#        }#}
+{#    }#}
+{#</script>#}

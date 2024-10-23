@@ -33,7 +33,7 @@
                                 <img src="{% static 'images/mainpage/zavod.webp' %}"
                                      alt="{{ p.name }}">
                             {% endif %}
-                            <a href="{{ p.get_absolute_url }}">
+                            <a href="{% url 'product' city_slug=city_slug category_slug=p.category.slug product_slug=p.slug %}">
                                 <h2>{{ p.name|truncatewords:5 }}</h2>
                             </a>
                             {% autoescape off %}
@@ -44,7 +44,7 @@
                                         type="button">
                                     Заказать {{ p.name|truncatewords:2 }}
                                 </button>
-                                <a href="{{ p.get_absolute_url }}"
+                                <a href="{% url 'product' city_slug=city_slug category_slug=p.category.slug product_slug=p.slug %}"
                                    class="hero__button"
                                    type="button">
                                     Подробнее

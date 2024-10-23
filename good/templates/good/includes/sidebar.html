@@ -1,15 +1,27 @@
 {% load good_tags %}
 <!-- Sidebar слева -->
+{#<div class="goods___sections--sidebar">#}
+{#    <ul id="leftchapters">#}
+{#        {% if category_selected == 0 or category_selected is None %}#}
+{#            <li>#}
+{#                <a href="{% url 'catalog' %}" class="active">Все категории</a>#}
+{#            </li>#}
+{#        {% else %}#}
+{#            <li><a href="{% url 'catalog' %}">Все категории</a></li>#}
+{#        {% endif %}#}
+{#        {% show_categories category_selected=category_selected %}#}
+{#    </ul>#}
+{#</div>#}
 <div class="goods___sections--sidebar">
     <ul id="leftchapters">
         {% if category_selected == 0 or category_selected is None %}
             <li>
-                <a href="{% url 'catalog' %}" class="active">Все категории</a>
+                <a href="{% url 'catalog' city_slug=city_slug %}" class="active">Все категории</a>
             </li>
         {% else %}
-            <li><a href="{% url 'catalog' %}">Все категории</a></li>
+            <li><a href="{% url 'catalog' city_slug=city_slug %}">Все категории</a></li>
         {% endif %}
-        {% show_categories category_selected=category_selected %}
+        {% show_categories city_slug=city_slug category_selected=category_selected %}
     </ul>
 </div>
 <!-- Конец Sidebar'а -->

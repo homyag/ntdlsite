@@ -14,14 +14,13 @@ def default_context(request):
 
 
 def city_context(request):
-    city_slug = request.session.get('city_slug')
-    city_name = None
-    if city_slug:
-        city = City.objects.filter(slug=city_slug).first()
-        if city:
-            city_name = city.name
+    DEFAULT_CITY_SLUG = 'mariupol'
+    city_slug = request.session.get('city_slug', DEFAULT_CITY_SLUG)
+    city = City.objects.filter(slug=city_slug).first()
+    if not city:
+        city = City.objects.filter(slug=DEFAULT_CITY_SLUG).first()
     return {
-        'city_slug': city_slug,
-        'city_name': city_name,
+        'city_slug': city.slug,
+        'city_name': city.name,
         'cities': City.objects.all(),
     }

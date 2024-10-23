@@ -22,10 +22,17 @@
                         id="button__call">
                     Получить консультацию
                 </button>
-                <a href="{% url 'catalog' %}" class="hero__button"
-                   type="button">
-                    Перейти в каталог
-                </a>
+                {% if city_slug %}
+                    <a href="{% url 'catalog' city_slug=city_slug %}"
+                       class="hero__button" type="button">
+                        Перейти в каталог
+                    </a>
+                {% else %}
+                    <a href="#" class="hero__button" type="button"
+                       onclick="openCityModal();">
+                        Перейти в каталог
+                    </a>
+                {% endif %}
             </div>
         </div>
         <div class="hero-img">
@@ -156,11 +163,17 @@
                     <span>Качественный бетон всех марок для любых строительных целей</span>
                 </div>
                 <div class="products__section--good--lnk">
-                    <a href="{% url 'category' 'beton' %}"
-                       class="products__section__button"
-                       type="button">
-                        Купить бетон
-                    </a>
+                    {% if city_slug %}
+                        <a href="{% url 'category' city_slug=city_slug category_slug='beton' %}"
+                           class="products__section__button" type="button">
+                            Купить бетон
+                        </a>
+                    {% else %}
+                        <a href="#" class="products__section__button"
+                           type="button" onclick="openCityModal();">
+                            Купить бетон
+                        </a>
+                    {% endif %}
                 </div>
             </div>
             <div class="products__section--good" id="product2">
@@ -172,11 +185,17 @@
                     <span>Все виды нерудных материалов по конкурентным ценам</span>
                 </div>
                 <div class="products__section--good--lnk">
-                    <a href="{% url 'category' 'nerudnye' %}"
-                       class="products__section__button"
-                       type="button">
-                        Купить нерудные материалы
-                    </a>
+                    {% if city_slug %}
+                        <a href="{% url 'category' city_slug=city_slug category_slug='nerudnye' %}"
+                           class="products__section__button" type="button">
+                            Купить нерудные материалы
+                        </a>
+                    {% else %}
+                        <a href="#" class="products__section__button"
+                           type="button" onclick="openCityModal();">
+                            Купить нерудные материалы
+                        </a>
+                    {% endif %}
                 </div>
             </div>
             <div class="products__section--good" id="product3">
@@ -188,11 +207,17 @@
                     <span>Асфальт для дорожного строительства и благоустройства</span>
                 </div>
                 <div class="products__section--good--lnk">
-                    <a href="{% url 'category' 'asfalt' %}"
-                       class="products__section__button"
-                       type="button">
-                        Купить асфальт
-                    </a>
+                    {% if city_slug %}
+                        <a href="{% url 'category' city_slug=city_slug category_slug='asfalt' %}"
+                           class="products__section__button" type="button">
+                            Купить асфальт
+                        </a>
+                    {% else %}
+                        <a href="#" class="products__section__button"
+                           type="button" onclick="openCityModal();">
+                            Купить асфальт
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>

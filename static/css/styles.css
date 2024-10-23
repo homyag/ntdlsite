@@ -260,6 +260,7 @@ form#callback-form .agree-with-terms {
 
 form#callback-form .agree-with-terms input[type="checkbox"] {
     margin-right: 10px;
+    width: 30%;
 }
 
 form#callback-form .agree-with-terms label {

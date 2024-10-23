@@ -35,7 +35,7 @@ class ProductSitemap(Sitemap):
     protocol = 'https'
 
     def items(self):
-        return Product.published.all()  # Выводим только товары в наличии
+        return Product.objects.all()  # Выводим только товары в наличии
 
     def lastmod(self, obj):
         return obj.time_update

@@ -2,28 +2,44 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     var cityModal = document.getElementById('city-modal');
-    var citySlug = "{{ city_slug|default:'' }}";
 
-    if (!citySlug && cityModal) {
-        // The modal will be shown by the template script when needed
-        // No need to do anything here
+    // Функция для открытия модального окна
+    function openCityModal() {
+        if (cityModal) {
+            cityModal.style.display = 'block';
+        }
     }
 
-    // Handler for the "Select City" button if it exists
+    // Добавляем обработчик клика для кнопки "Выбрать город"
     var selectCityButton = document.getElementById('select-city');
     if (selectCityButton) {
         selectCityButton.addEventListener('click', function(event) {
             event.preventDefault();
-            if (cityModal) {
-                cityModal.style.display = 'block';
-            }
+            openCityModal();
         });
     }
 
-    // Close the modal when clicking outside of it
+    // Добавляем обработчик клика для кнопки "Сменить город"
+    var changeCityButton = document.getElementById('change-city');
+    if (changeCityButton) {
+        changeCityButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            openCityModal();
+        });
+    }
+
+    // Закрываем модальное окно при клике вне его области
     window.onclick = function(event) {
         if (event.target == cityModal) {
             cityModal.style.display = "none";
         }
+    }
+
+    // Обработка закрытия модального окна при клике на кнопку закрытия
+    var closeBtn = document.querySelector('#city-modal .close-btn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            cityModal.style.display = 'none';
+        });
     }
 });

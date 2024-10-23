@@ -60,10 +60,17 @@
             <p>ТД <span>Ленинградский</span></p>
         </div>
         <div class="footer__menu_links">
-            {% for m in menu %}
-                <a class="menu__link"
-                   href="{% url m.url_name %}">{{ m.title }}</a>
-            {% endfor %}
+{% for m in menu %}
+            {% if m.url_name == 'catalog' %}
+                {% if city_slug %}
+                    <a class="menu__link" href="{% url m.url_name city_slug=city_slug %}">{{ m.title }}</a>
+                {% else %}
+                    <a class="menu__link" href="#" onclick="openCityModal();">{{ m.title }}</a>
+                {% endif %}
+            {% else %}
+                <a class="menu__link" href="{% url m.url_name %}">{{ m.title }}</a>
+            {% endif %}
+        {% endfor %}
         </div>
     </div>
 </footer>

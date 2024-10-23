@@ -10,19 +10,17 @@ import requests
 
 
 def index(request):
-    city_slug = request.session.get('city_slug')
     data = {
         "title": "Производитель бетона и бетонных смесей ТД Ленинградский",
         "seo_title": "Производитель бетона и бетонных смесей ТД Ленинградский",
         'seo_description': 'ТД Ленинградский — ведущий производитель бетона и бетонных смесей в регионе.',
         'seo_keywords': 'ТД Ленинградский, бетон, бетонные смеси, о компании',
-        'city_slug': city_slug,
     }
     return render(request, "commonpages/main.html", context=data)
 
 
 def about(request):
-    city_slug = request.session.get('city_slug')
+    # city_slug = request.session.get('city_slug')
     data = {
         "title": "О компании ТД Ленинградский - производителе бетона и "
                  "бетонных смесей",
@@ -30,13 +28,13 @@ def about(request):
                  "бетонных смесей",
         'seo_description': 'Ведущий производитель бетона и бетонных смесей в регионе деятельности - ТД Ленинградский',
         'seo_keywords': 'ТД Ленинградский, бетон, бетонные смеси, о компании',
-        'city_slug': city_slug,
+        # 'city_slug': city_slug,
     }
     return render(request, "commonpages/about.html", context=data)
 
 
 def contacts(request):
-    city_slug = request.session.get('city_slug')
+    # city_slug = request.session.get('city_slug')
     data = {
         "title": "Контакты бетонного завода ТД Ленинградский. Производство и отдел продаж",
         # "menu": menu,
@@ -44,13 +42,13 @@ def contacts(request):
         'seo_description': 'Контакты бетонного завода ТД Ленинградский. '
                            'Продажа бетона и бетонных смесей от 1м3',
         'seo_keywords': 'ТД Ленинградский, бетон, бетонные смеси, о компании',
-        'city_slug': city_slug,
+        # 'city_slug': city_slug,
     }
     return render(request, "commonpages/contacts.html", context=data)
 
 
 def services(request):
-    city_slug = request.session.get('city_slug')
+    # city_slug = request.session.get('city_slug')
     data = {
         "title": "Услуги производителя бетона и бетонных смесей ТД "
                  "Ленинградский",
@@ -61,13 +59,13 @@ def services(request):
                            'собственным автопарком или самовывозом с '
                            'производства',
         'seo_keywords': 'ТД Ленинградский, бетон, бетонные смеси, о компании',
-        'city_slug': city_slug,
+        # 'city_slug': city_slug,
     }
     return render(request, "commonpages/services.html", context=data)
 
 
 def delivery(request):
-    city_slug = request.session.get('city_slug')
+    # city_slug = request.session.get('city_slug')
     data = {
         "title": "Калькулятор доставки бетона от завода ТД Ленинградский",
         # "menu": menu,
@@ -76,7 +74,7 @@ def delivery(request):
                            'стоимости доставки бетона по региону от ТД '
                            'Ленинградский',
         'seo_keywords': 'ТД Ленинградский, бетон, бетонные смеси, о компании',
-        'city_slug': city_slug,
+        # 'city_slug': city_slug,
     }
     return render(request, "commonpages/delivery.html", context=data)
 
@@ -121,16 +119,9 @@ def set_city(request):
         city = City.objects.filter(slug=city_slug).first()
         if city:
             request.session['city_slug'] = city_slug
-            return redirect(request.META.get('HTTP_REFERER', 'catalog'))
+            return redirect(request.META.get('HTTP_REFERER', '/'))
         else:
             return JsonResponse({'error': 'Неверный выбор города'}, status=400)
     else:
         return JsonResponse({'error': 'Неверный метод запроса'}, status=400)
 
-
-def change_city(request):
-    # Удаляем city_slug из сессии
-    if 'city_slug' in request.session:
-        del request.session['city_slug']
-    # Перенаправляем пользователя на главную страницу или другую страницу
-    return redirect('catalog')

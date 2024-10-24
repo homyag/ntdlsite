@@ -23,4 +23,5 @@ def city_context(request):
         'city_slug': city.slug,
         'city_name': city.name,
         'cities': City.objects.all(),
+        'city_slugs': list(City.objects.values_list('slug', flat=True)),
     }

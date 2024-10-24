@@ -1,5 +1,6 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views.decorators.http import require_POST
 from django.conf import settings
 
@@ -113,15 +114,29 @@ def submit_callback(request):
         return JsonResponse({'status': 'error', 'errors': errors})
 
 
+# def set_city(request):
+#     if request.method == 'POST':
+#         city_slug = request.POST.get('city_slug')
+#         city = City.objects.filter(slug=city_slug).first()
+#         if city:
+#             request.session['city_slug'] = city_slug
+#             return redirect(request.META.get('HTTP_REFERER', '/'))
+#         else:
+#             return JsonResponse({'error': 'Неверный выбор города'}, status=400)
+#     else:
+#         return JsonResponse({'error': 'Неверный метод запроса'}, status=400)
+# def set_city(request):
+#     if request.method == 'POST':
+#         selected_city_slug = request.POST.get('city_slug')
+#         if selected_city_slug and City.objects.filter(slug=selected_city_slug).exists():
+#             request.session['city_slug'] = selected_city_slug
+#     return redirect(request.META.get('HTTP_REFERER', '/'))
+@require_POST
 def set_city(request):
-    if request.method == 'POST':
-        city_slug = request.POST.get('city_slug')
-        city = City.objects.filter(slug=city_slug).first()
-        if city:
-            request.session['city_slug'] = city_slug
-            return redirect(request.META.get('HTTP_REFERER', '/'))
-        else:
-            return JsonResponse({'error': 'Неверный выбор города'}, status=400)
-    else:
-        return JsonResponse({'error': 'Неверный метод запроса'}, status=400)
+    selected_city_slug = request.POST.get('city_slug')
+    if selected_city_slug and City.objects.filter(slug=selected_city_slug).exists():
+        request.session['city_slug'] = selected_city_slug
+    # Определяем URL для перенаправления обратно
+    referer = request.META.get('HTTP_REFERER', '/')
+    return redirect(referer)
 

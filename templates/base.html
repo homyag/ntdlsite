@@ -48,6 +48,10 @@
           content="ugl6-qohgj-pqxMAJJoCTdnxo6iDmEk0srdaxHF9qbE"/>
     {% block api %}
     {% endblock %}
+    <!-- Глобальная переменная для URL 'set_city' -->
+    <script>
+        window.setCityUrl = "{% url 'set_city' %}";
+    </script>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -76,6 +80,8 @@
         {% include 'includes/footer.html' %}
     {% endblock %}
 </div>
+<!-- Передача данных о городах -->
+{{ city_slugs|json_script:'cities-data'|safe }}
 {% include 'includes/city_modal.html' %}
 <script src="{% static 'js/cityModal.js' %}"></script>
 <script src="{% static 'js/header/headerPopup.js' %}"></script>

@@ -6,7 +6,10 @@
             {% csrf_token %}
             <select name="city_slug" required>
                 {% for city in cities %}
-                    <option value="{{ city.slug }}" {% if city.slug == city_slug %}selected{% endif %}>
+                    <option value="{{ city.slug }}"
+                            {% if city.slug == city_slug %}
+                            selected
+                            {% endif %}>
                         {{ city.name }}
                     </option>
                 {% endfor %}

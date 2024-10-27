@@ -1059,7 +1059,7 @@ form#callback-form .agree-with-terms label {
 .delivery__about {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /*align-items: center;*/
 }
 
 .delivery__about h1 {

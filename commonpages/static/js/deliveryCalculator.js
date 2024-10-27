@@ -1,79 +1,109 @@
 ymaps.ready(init);
 
 function init() {
-    // Стоимость за километр.
-    var DELIVERY_TARIFF = 300,
-        // Минимальная стоимость.
-        MINIMUM_COST = 4000,
-        myMap = new ymaps.Map('map', {
-            center: [60.906882, 30.067233],
-            zoom: 9,
-            controls: []
-        }),
+    // Стоимость за км за м³ бетона (руб)
+    const RATE_PER_KM_PER_M3 = 600; // Замените на вашу актуальную стоимость
 
-        // Создадим панель маршрутизации.
-        routePanelControl = new ymaps.control.RoutePanel({
-            options: {
-                // Добавим заголовок панели.
-                showHeader: true,
-                title: 'Расчёт доставки'
-            }
-        }),
-        zoomControl = new ymaps.control.ZoomControl({
-            options: {
-                size: 'small',
-                float: 'none',
-                position: {
-                    bottom: 145,
-                    right: 10
-                }
-            }
-        });
-    // Пользователь сможет построить только автомобильный маршрут.
-    routePanelControl.routePanel.options.set({
-        types: {auto: true}
+    // Базовая точка доставки (замените на ваши координаты)
+    const BASE_POINT = [60.906882, 30.067233];
+
+    // Инициализация карты
+    const myMap = new ymaps.Map('map', {
+        center: BASE_POINT,
+        zoom: 9,
+        controls: []
     });
 
-    // Если вы хотите задать неизменяемую точку "откуда", раскомментируйте код ниже.
+    // Создаем панель маршрутизации
+    const routePanelControl = new ymaps.control.RoutePanel({
+        options: {
+            showHeader: true,
+            title: 'Расчёт доставки'
+        }
+    });
+
+    // Добавляем элементы управления на карту
+    myMap.controls.add(routePanelControl).add(new ymaps.control.ZoomControl({
+        options: {
+            size: 'small',
+            float: 'none',
+            position: {
+                bottom: 145,
+                right: 10
+            }
+        }
+    }));
+
+    // Ограничиваем типы маршрутов только автомобилем
+    routePanelControl.routePanel.options.set({
+        types: { auto: true }
+    });
+
+    // Задаем неизменяемую точку "откуда"
     routePanelControl.routePanel.state.set({
         fromEnabled: false,
-        from: 'Мариуполь, улица Сортировочная 1'
+        from: 'Мариуполь, улица Сортировочная 1' // Замените на ваш адрес отправки
     });
 
-    myMap.controls.add(routePanelControl).add(zoomControl);
-
-    // Получим ссылку на маршрут.
+    // Получаем ссылку на маршрут
     routePanelControl.routePanel.getRouteAsync().then(function (route) {
+        // Задаем максимально допустимое число маршрутов
+        route.model.setParams({ results: 1 }, true);
 
-        // Зададим максимально допустимое число маршрутов, возвращаемых мультимаршрутизатором.
-        route.model.setParams({results: 1}, true);
-
-        // Повесим обработчик на событие построения маршрута.
+        // Обработка события успешного построения маршрута
         route.model.events.add('requestsuccess', function () {
-
-            var activeRoute = route.getActiveRoute();
+            const activeRoute = route.getActiveRoute();
             if (activeRoute) {
-                // Получим протяженность маршрута.
-                var length = route.getActiveRoute().properties.get("distance"),
-                    // Вычислим стоимость доставки.
-                    price = calculate(Math.round(length.value / 1000)),
-                    // Создадим макет содержимого балуна маршрута.
-                    balloonContentLayout = ymaps.templateLayoutFactory.createClass(
-                        '<span>Расстояние: ' + length.text + '.</span><br/>' +
-                        '<span style="font-weight: bold; font-style: italic">Стоимость доставки: ' + price + ' р.</span>');
-                // Зададим этот макет для содержимого балуна.
-                route.options.set('routeBalloonContentLayout', balloonContentLayout);
-                // Откроем балун.
+                const length = activeRoute.properties.get("distance");
+                const distanceKm = length.value / 1000; // Расстояние в километрах (с дробной частью)
+
+                // Получение объема бетона из формы
+                const volumeInput = document.getElementById('volume');
+                const volume = parseFloat(volumeInput.value);
+
+                if (isNaN(volume) || volume <= 0) {
+                    alert("Пожалуйста, введите корректный объем бетона.");
+                    return;
+                }
+
+                // Вычисление общей стоимости доставки
+                const totalCost = distanceKm * volume * RATE_PER_KM_PER_M3;
+
+                // Создание макета содержимого балуна маршрута
+                const balloonContentLayout = ymaps.templateLayoutFactory.createClass(
+                    `<span>Расстояние: ${length.text}.</span><br/>` +
+                    `<span>Объем заказа: ${volume} м³.</span><br/>` +
+                    `<span>Стоимость за 1 км за 1 м³: ${RATE_PER_KM_PER_M3} руб.</span><br/>` +
+                    `<span style="font-weight: bold; font-style: italic">Общая стоимость доставки: ${totalCost.toFixed(2)} руб.</span>`
+                );
+
+                // Установка макета для содержимого балуна
+                activeRoute.options.set('routeBalloonContentLayout', balloonContentLayout);
+
+                // Открытие балуна маршрута
                 activeRoute.balloon.open();
 
-                document.getElementById('delivery-cost').innerHTML = 'Предварительная стоимость доставки составляет: ' + price + ' р.';
+                // Отображение стоимости доставки на странице
+                document.getElementById('delivery-cost').innerHTML =
+                    `Предварительная стоимость доставки составляет: <strong>${totalCost.toFixed(2)} руб.</strong>`;
             }
         });
-
     });
 
-    // Функция, вычисляющая стоимость доставки.
-    function calculate(routeLength) {
-        return Math.max(routeLength * DELIVERY_TARIFF, MINIMUM_COST);
-    }
+    // Обработка отправки формы для пересчета стоимости при изменении объема
+    const form = document.getElementById('delivery-form');
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        // Перестроение маршрута для обновления стоимости
+        const routeControl = myMap.controls.get('routePanelControl');
+        if (routeControl) {
+            // Получаем текущее место назначения из маршрутизации
+            const toState = routeControl.routePanel.state.get('to');
+            if (toState) {
+                routeControl.routePanel.state.set('to', toState);
+            } else {
+                alert("Пожалуйста, введите адрес доставки на карте.");
+            }
+        }
+    });
 }

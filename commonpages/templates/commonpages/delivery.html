@@ -7,62 +7,13 @@
             type="text/javascript"></script>
 {% endblock %}
 {% block content %}
-    <style>
-        .delivery__calculator {
-            margin: 20px 0;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-
-        .delivery__calculator h3 {
-            margin-bottom: 10px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .form-group button {
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .form-group button:hover {
-            background-color: #218838;
-        }
-
-        #delivery-cost {
-            font-size: 1.2em;
-            font-weight: bold;
-        }
-    </style>
-    <h1>Доставка бетона с миксером по выгодной цене</h1>
+    <h1>Доставка бетона миксером по выгодной цене</h1>
     <div class="delivery__about">
         <p>
             Компания ТД Ленинградский предлагает качественный бетон с доставкой по выгодной цене!<br>
             Наши услуги включают доставку бетона миксером прямо к вашему объекту, обеспечивая своевременную доставку и качество материалов.
         </p>
-        <h3>Как заказать бетон с доставкой?</h3>
+        <h2>Как заказать бетон с доставкой?</h2>
         <ol>
             <li>Рассчитайте стоимость доставки: Используйте встроенную функцию на карте, чтобы определить стоимость доставки бетона миксером до вашего объекта.</li>
             <li>Выберите тип бетона: Ознакомьтесь с нашими видами бетона и выберите подходящий для вашего проекта.</li>
@@ -84,7 +35,7 @@
                 <input type="number" id="volume" name="volume" min="1" required placeholder="Введите объем в м³">
             </div>
         </form>
-    </div>
+
     <!-- Конец новой формы -->
 
     <div class="delivery__price--bill" id="delivery-price">
@@ -101,5 +52,6 @@
                     href="tel:+79495632670">+7 (949)563-26-70</a>
             </p>
         </div>
+    </div>
     </div>
 {% endblock %}

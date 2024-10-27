@@ -1076,6 +1076,55 @@ form#callback-form .agree-with-terms label {
     width: 100%;
 }
 
+.delivery__calculator {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.delivery__calculator h3 {
+    margin-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-group button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form-group button:hover {
+    background-color: #218838;
+}
+
+#delivery-cost {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+
 .delivery__price--bill .map,
 .delivery__price--bill .delivery--price--text--for--costumers {
     width: 50%;
@@ -1090,7 +1139,7 @@ form#callback-form .agree-with-terms label {
     width: 100%;
     height: 100%; /* Высота относительно контейнера */
     /*min-height: 400px; !* Минимальная высота карты *!*/
-    background-color: #ff0000; /* Фон, если карта не загрузилась */
+    background-color: #f5f5f5; /* Фон, если карта не загрузилась */
 }
 
 #delivery-cost {
@@ -1104,14 +1153,17 @@ form#callback-form .agree-with-terms label {
         flex-direction: column;
         width: 100%;
         align-items: center;
-        gap: 20px;
+        /*gap: 20px;*/
     }
 
-    .map {
+    .delivery__price--bill .delivery--price--text--for--costumers {
+        width: 100%;
+    }
+
+    .delivery__price--bill .map {
         width: 100%;
     }
 }
-
 
 /*PRODUCTS*/
 .goods__sections {

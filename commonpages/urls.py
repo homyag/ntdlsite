@@ -10,6 +10,7 @@ urlpatterns = [
     path("contacts/", views.contacts, name="contacts"),
     path("services/", views.services, name="services"),
     path("services/delivery/", views.delivery, name="delivery"),
+    path("service/calc/", views.concrete_calculator, name="concrete_calculator"),
     path('submit_callback/', views.submit_callback, name='submit_callback'),
     path('set_city/', views.set_city, name='set_city'),
 ]

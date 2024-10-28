@@ -85,6 +85,21 @@ def delivery(request):
     return render(request, "commonpages/delivery.html", context=data)
 
 
+def concrete_calculator(request):
+    data = {
+        "title": "Онлайн-калькулятор бетона. Расчет бетонной смеси в м3",
+        "seo_title": "Расчет объема бетона онлайн | Онлайн-калькулятор бетона",
+        'seo_description': 'Калькулятор для автоматического определения '
+                           'необходимого объема бетона на основе ваших '
+                           'данных. Не забудьте добавить запасный объем для '
+                           'возможных потерь.',
+        'seo_keywords': 'калькулятор бетона, бетонный калькулятор,'
+                        'калькулятор бетона онлайн, бетонный калькулятор онлайн'
+                        'калькулятор бетона м3',
+    }
+    return render(request, "commonpages/concrete_calculator.html", context=data)
+
+
 @require_POST
 def submit_callback(request):
     recaptcha_response = request.POST.get('g-recaptcha-response')

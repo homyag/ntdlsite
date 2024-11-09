@@ -62,6 +62,33 @@ def show_category(request, city_slug, category_slug):
     products = Product.objects.filter(
         (Q(category=category) | Q(category__in=subcategories)) & Q(city=city)
     )
+
+    # Получаем список названий товаров
+    product_names = list(products.values_list('name', flat=True))
+
+    if product_names:
+        max_products = 10  # Максимальное количество товаров в описании
+        if len(product_names) > max_products:
+            displayed_products = product_names[:max_products]
+            displayed_products.append('и другие')  # Добавляем фразу "и другие"
+        else:
+            displayed_products = product_names
+
+        # Формируем строку с названиями товаров
+        products_str = ', '.join(displayed_products)
+    else:
+        products_str = 'Нет доступных товаров'
+
+    # Формируем seo_description, учитывая ограничения по длине
+    seo_description_base = (f'Купить {category.name} в городе {city.name}. '
+                            f'Каталог продукции ТД Ленинградский: {products_str}.')
+
+    # Ограничиваем длину seo_description до 160 символов
+    if len(seo_description_base) > 160:
+        seo_description = seo_description_base[:157] + '...'
+    else:
+        seo_description = seo_description_base
+
     data = {
         'title': f'Купить {category.name} от производителя продукции ТД '
                  f'Ленинградский в городе {city.name}',
@@ -70,7 +97,7 @@ def show_category(request, city_slug, category_slug):
         'description': category.description,
         'short_description': category.small_text_for_catalog,
         'seo_title': category.meta_title,
-        'seo_description': category.meta_description,
+        'seo_description': seo_description,
         'seo_keywords': category.meta_keywords,
         'city_slug': city.slug,
         'city_name': city.name,

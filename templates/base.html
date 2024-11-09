@@ -40,14 +40,30 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
           rel="stylesheet">
+
     <link rel="shortcut icon" href="{% static 'images/logo/logo.svg' %}"
           type="image/x-icon"/>
+
+    <link rel="icon" type="image/png"
+          href="{% static 'images/logo/favicon/favicon-96x96.png' %}"
+          sizes="96x96"/>
+    <link rel="icon" type="image/svg+xml"
+          href="{% static 'images/logo/favicon/favicon.svg' %}"/>
+    <link rel="shortcut icon"
+          href="{% static 'images/logo/favicon/favicon.ico' %}"/>
+    <link rel="apple-touch-icon" sizes="180x180"
+          href="{% static 'images/logo/favicon/apple-touch-icon.png' %}"/>
+    <meta name="apple-mobile-web-app-title" content="ТД Ленинградский"/>
+    <link rel="manifest"
+          href="{% static 'images/logo/favicon/site.webmanifest' %}"/>
+
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="yandex-verification" content="a07f878ab1197b5e"/>
     <meta name="google-site-verification"
           content="ugl6-qohgj-pqxMAJJoCTdnxo6iDmEk0srdaxHF9qbE"/>
     <!-- Канонический тег -->
-    <link rel="canonical" href="{{ request.build_absolute_uri }}" />
+    <link rel="canonical" href="{{ request.build_absolute_uri }}"/>
     {% block api %}
     {% endblock %}
     <!-- Глобальная переменная для URL 'set_city' -->

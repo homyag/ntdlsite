@@ -13,7 +13,13 @@ class StaticViewSitemap(Sitemap):
     protocol = 'https'
 
     def items(self):
-        return ['home', 'about', 'contacts', 'services', 'delivery']
+        return ['home',
+                'about',
+                'contacts',
+                'services',
+                'delivery',
+                'concrete_calculator',
+                ]
 
     def location(self, item):
         return reverse(item)
@@ -50,23 +56,6 @@ class ProductSitemap(Sitemap):
 
 
 # Products category sitemap
-
-# class CategorySitemap(Sitemap):
-#     changefreq = 'weekly'
-#     priority = 0.6
-#     protocol = 'https'
-#
-#     def items(self):
-#         return Category.objects.all().order_by('name')
-#
-#     def location(self, obj):
-#         return obj.get_absolute_url()
-#
-#     def lastmod(self, obj):
-#         if obj.products.exists():
-#             return obj.products.latest('time_update').time_update
-#         return None
-
 class CategorySitemap(Sitemap):
     changefreq = 'weekly'
     priority = 0.6
@@ -99,3 +88,23 @@ class CategorySitemap(Sitemap):
         if products.exists():
             return products.latest('time_update').time_update
         return None
+
+
+# Catalog Sitemap (для URL /<city_slug>/)
+class CatalogSitemap(Sitemap):
+    changefreq = 'weekly'
+    priority = 0.6
+    protocol = 'https'
+
+    def items(self):
+        return City.objects.all().order_by('id')
+
+    def location(self, obj):
+        return reverse("catalog", kwargs={"city_slug": obj.slug})
+
+    def lastmod(self, obj):
+        # Возвращаем дату последнего обновления продуктов в данном городе
+        latest_product = Product.published.filter(city=obj).order_by('-time_update').first()
+        if latest_product:
+            return latest_product.time_update
+        return datetime.datetime.now()

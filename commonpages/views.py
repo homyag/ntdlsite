@@ -68,7 +68,7 @@ def services(request):
 def delivery(request):
     data = {
         "title": "Калькулятор доставки бетона от завода ТД Ленинградский",
-        "seo_title": "Доставка бетона с миксером по выгодной цене | Заказать бетон с доставкой",
+        "seo_title": "Калькулятор доставка бетона | Заказать бетон с доставкой",
         'seo_description': 'Закажите бетон с доставкой по доступной цене. '
                            'Рассчитайте стоимость доставки бетона миксером '
                            'онлайн с помощью Яндекс.Карт. Быстрая доставка, '
@@ -134,23 +134,6 @@ def submit_callback(request):
         return JsonResponse({'status': 'error', 'errors': errors})
 
 
-# def set_city(request):
-#     if request.method == 'POST':
-#         city_slug = request.POST.get('city_slug')
-#         city = City.objects.filter(slug=city_slug).first()
-#         if city:
-#             request.session['city_slug'] = city_slug
-#             return redirect(request.META.get('HTTP_REFERER', '/'))
-#         else:
-#             return JsonResponse({'error': 'Неверный выбор города'}, status=400)
-#     else:
-#         return JsonResponse({'error': 'Неверный метод запроса'}, status=400)
-# def set_city(request):
-#     if request.method == 'POST':
-#         selected_city_slug = request.POST.get('city_slug')
-#         if selected_city_slug and City.objects.filter(slug=selected_city_slug).exists():
-#             request.session['city_slug'] = selected_city_slug
-#     return redirect(request.META.get('HTTP_REFERER', '/'))
 @require_POST
 def set_city(request):
     selected_city_slug = request.POST.get('city_slug')

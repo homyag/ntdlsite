@@ -1165,15 +1165,152 @@ form#callback-form .agree-with-terms label {
     }
 }
 
+/*!*CONCRETE CALCULATOR*!*/
+/*.concrete-calculator {*/
+/*    margin: 20px 0;*/
+/*    padding: 20px;*/
+/*    border: 1px solid #ccc;*/
+/*    border-radius: 5px;*/
+/*    background-color: #f9f9f9;*/
+/*}*/
+
+/*.concrete-calculator h1 {*/
+/*    font-size: 28px;*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+/*.concrete-calculator form {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
+
+/*.concrete-calculator .form-group {*/
+/*    margin-bottom: 15px;*/
+/*}*/
+
+/*.concrete-calculator .form-group label {*/
+/*    display: block;*/
+/*    margin-bottom: 5px;*/
+/*    font-weight: bold;*/
+/*}*/
+
+/*.concrete-calculator .form-group input,*/
+/*.concrete-calculator .form-group select {*/
+/*    width: 100%;*/
+/*    padding: 8px;*/
+/*    box-sizing: border-box;*/
+/*    border: 1px solid #ccc;*/
+/*    border-radius: 4px;*/
+/*}*/
+
+/*.concrete-calculator button {*/
+/*    padding: 10px 20px;*/
+/*    background-color: #3798D4;*/
+/*    color: #fff;*/
+/*    border: none;*/
+/*    border-radius: 4px;*/
+/*    cursor: pointer;*/
+/*    font-size: 1em;*/
+/*}*/
+
+/*.concrete-calculator button:hover {*/
+/*    background-color: #113E71;*/
+/*}*/
+
+/*#calculation-result {*/
+/*    margin-top: 20px;*/
+/*    padding: 15px;*/
+/*    border: 1px solid #28a745;*/
+/*    border-radius: 5px;*/
+/*    background-color: #d4edda;*/
+/*    color: #155724;*/
+/*    font-weight: bold;*/
+/*    display: none; !* Скрыто по умолчанию *!*/
+/*}*/
+
+/*!* Адаптивные стили *!*/
+
+/*!* Для устройств с шириной экрана до 768px (планшеты и небольшие десктопы) *!*/
+/*@media screen and (max-width: 768px) {*/
+/*    .concrete-calculator {*/
+/*        padding: 15px;*/
+/*    }*/
+
+/*    .concrete-calculator h1 {*/
+/*        font-size: 24px;*/
+/*    }*/
+
+/*    .concrete-calculator button {*/
+/*        font-size: 0.9em;*/
+/*    }*/
+
+/*    #calculation-result {*/
+/*        font-size: 1em;*/
+/*    }*/
+/*}*/
+
+/*!* Для устройств с шириной экрана до 480px (смартфоны) *!*/
+/*@media screen and (max-width: 480px) {*/
+/*    .concrete-calculator {*/
+/*        padding: 10px;*/
+/*    }*/
+
+/*    .concrete-calculator h1 {*/
+/*        font-size: 20px;*/
+/*    }*/
+
+/*    .concrete-calculator button {*/
+/*        padding: 8px 16px;*/
+/*        font-size: 0.8em;*/
+/*    }*/
+
+/*    #calculation-result {*/
+/*        font-size: 0.9em;*/
+/*    }*/
+/*}*/
+
 /*CONCRETE CALCULATOR*/
+.concrete-calculator-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Калькулятор */
 .concrete-calculator {
-    margin: 20px 0;
+    flex: 1 1 300px; /* Гибкая ширина с минимальной шириной 300px */
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
 }
 
+/* Описание конструкции */
+.structure-description {
+    flex: 1 1 300px; /* Гибкая ширина с минимальной шириной 300px */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #e9ecef;
+    transition: all 0.3s ease-in-out;
+}
+
+.structure-description h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.structure-description p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Скрытие описания по умолчанию */
+#description-content p:first-child {
+    color: #6c757d;
+}
+
+/* Общие стили */
 .concrete-calculator h1 {
     font-size: 28px;
     margin-bottom: 20px;
@@ -1232,6 +1369,10 @@ form#callback-form .agree-with-terms label {
 
 /* Для устройств с шириной экрана до 768px (планшеты и небольшие десктопы) */
 @media screen and (max-width: 768px) {
+    .concrete-calculator-container {
+        flex-direction: column;
+    }
+
     .concrete-calculator {
         padding: 15px;
     }
@@ -1247,10 +1388,22 @@ form#callback-form .agree-with-terms label {
     #calculation-result {
         font-size: 1em;
     }
+
+    .structure-description h2 {
+        font-size: 20px;
+    }
+
+    .structure-description p {
+        font-size: 14px;
+    }
 }
 
 /* Для устройств с шириной экрана до 480px (смартфоны) */
 @media screen and (max-width: 480px) {
+    .concrete-calculator-container {
+        flex-direction: column;
+    }
+
     .concrete-calculator {
         padding: 10px;
     }
@@ -1266,6 +1419,14 @@ form#callback-form .agree-with-terms label {
 
     #calculation-result {
         font-size: 0.9em;
+    }
+
+    .structure-description h2 {
+        font-size: 18px;
+    }
+
+    .structure-description p {
+        font-size: 13px;
     }
 }
 

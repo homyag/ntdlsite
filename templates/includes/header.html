@@ -31,13 +31,25 @@
         <div class="header__menu">
             {% for m in menu %}
                 {% if m.url_name == 'catalog' %}
+                    <div class="menu__item dropdown">
                     {% if city_slug %}
-                        <a class="menu__link"
-                           href="{% url m.url_name city_slug=city_slug %}">{{ m.title }}</a>
+                        <a class="menu__link dropdown__toggle"
+                           href="{% url m.url_name city_slug=city_slug %}">{{ m.title }}
+                        <span class="dropdown__arrow">&#9662;</span>
+                        </a>
                     {% else %}
-                        <a class="menu__link" href="#"
-                           onclick="openCityModal();">{{ m.title }}</a>
+                        <a class="menu__link dropdown__toggle" href="#"
+                           onclick="openCityModal();">{{ m.title }}
+                        <span class="dropdown__arrow">&#9662;</span>
+                        </a>
                     {% endif %}
+                    <!-- Выпадающее меню с городами -->
+                    <div class="dropdown__content">
+                    {% for city in cities %}
+                    <a class="dropdown__link" href="{% url 'catalog' city_slug=city.slug %}">{{ city.name }}</a>
+                    {% endfor %}
+                    </div>
+                    </div>
                 {% else %}
                     <a class="menu__link"
                        href="{% url m.url_name %}">{{ m.title }}</a>
@@ -110,11 +122,3 @@
         </div>
     </div>
 </noindex>
-{#<script>#}
-{#    function openCityModal() {#}
-{#        var cityModal = document.getElementById('city-modal');#}
-{#        if (cityModal) {#}
-{#            cityModal.style.display = 'block';#}
-{#        }#}
-{#    }#}
-{#</script>#}

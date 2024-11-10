@@ -56,6 +56,61 @@
     padding: 10px; /* Добавляем отступы для кликабельности */
 }
 
+.menu__item.dropdown {
+    position: relative; /* Для позиционирования выпадающего меню */
+    display: flex;
+    align-items: center;
+}
+
+/* Стрелка для выпадающего меню */
+.dropdown__arrow {
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+/* Скрываем выпадающее меню по умолчанию */
+.dropdown__content {
+    display: none;
+    position: absolute;
+    top: 100%; /* Располагаем ниже родительского пункта меню */
+    left: 0;
+    background-color: #ffffff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 1000;
+    border-radius: 5px;
+    padding: 10px 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Отображение выпадающего меню при наведении */
+.dropdown:hover .dropdown__content {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Стили для ссылок внутри выпадающего меню */
+.dropdown__link {
+    display: block;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #333333;
+    white-space: nowrap;
+}
+
+.dropdown__link:hover {
+    background-color: #f1f1f1;
+    color: #000000;
+}
+
+/* Стиль для активного/открытого выпадающего меню */
+.dropdown__toggle.active + .dropdown__content {
+    display: block;
+}
+
 .header a {
     text-decoration: none;
     text-transform: uppercase;
@@ -281,6 +336,52 @@ form#callback-form .agree-with-terms label {
         flex-direction: column;
         align-items: center;
         justify-content: center;
+    }
+
+    .header__menu {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .menu__item {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .menu__link {
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    .menu__item.dropdown {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .dropdown__content {
+        position: static;
+        box-shadow: none;
+        border: none;
+        width: 100%;
+        padding: 0;
+        align-items: center;
+    }
+
+    .dropdown__link {
+        padding: 10px 20px;
+        text-align: center;
+    }
+
+    .dropdown:hover .dropdown__content {
+        display: none; /* Отключаем отображение при наведении на мобильных */
+    }
+
+    .dropdown__toggle.active + .dropdown__content {
+        display: block;
     }
 
     .header__logo__burger {
@@ -1040,13 +1141,6 @@ form#callback-form .agree-with-terms label {
         align-items: center;
         text-align: center;
     }
-
-    /*.footer__address {*/
-    /*    text-align: center;*/
-    /*}*/
-    /*.footer__tax_id {*/
-    /*    text-align: center;*/
-    /*}*/
 }
 
 /*MISC*/
@@ -1164,110 +1258,6 @@ form#callback-form .agree-with-terms label {
         width: 100%;
     }
 }
-
-/*!*CONCRETE CALCULATOR*!*/
-/*.concrete-calculator {*/
-/*    margin: 20px 0;*/
-/*    padding: 20px;*/
-/*    border: 1px solid #ccc;*/
-/*    border-radius: 5px;*/
-/*    background-color: #f9f9f9;*/
-/*}*/
-
-/*.concrete-calculator h1 {*/
-/*    font-size: 28px;*/
-/*    margin-bottom: 20px;*/
-/*}*/
-
-/*.concrete-calculator form {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*}*/
-
-/*.concrete-calculator .form-group {*/
-/*    margin-bottom: 15px;*/
-/*}*/
-
-/*.concrete-calculator .form-group label {*/
-/*    display: block;*/
-/*    margin-bottom: 5px;*/
-/*    font-weight: bold;*/
-/*}*/
-
-/*.concrete-calculator .form-group input,*/
-/*.concrete-calculator .form-group select {*/
-/*    width: 100%;*/
-/*    padding: 8px;*/
-/*    box-sizing: border-box;*/
-/*    border: 1px solid #ccc;*/
-/*    border-radius: 4px;*/
-/*}*/
-
-/*.concrete-calculator button {*/
-/*    padding: 10px 20px;*/
-/*    background-color: #3798D4;*/
-/*    color: #fff;*/
-/*    border: none;*/
-/*    border-radius: 4px;*/
-/*    cursor: pointer;*/
-/*    font-size: 1em;*/
-/*}*/
-
-/*.concrete-calculator button:hover {*/
-/*    background-color: #113E71;*/
-/*}*/
-
-/*#calculation-result {*/
-/*    margin-top: 20px;*/
-/*    padding: 15px;*/
-/*    border: 1px solid #28a745;*/
-/*    border-radius: 5px;*/
-/*    background-color: #d4edda;*/
-/*    color: #155724;*/
-/*    font-weight: bold;*/
-/*    display: none; !* Скрыто по умолчанию *!*/
-/*}*/
-
-/*!* Адаптивные стили *!*/
-
-/*!* Для устройств с шириной экрана до 768px (планшеты и небольшие десктопы) *!*/
-/*@media screen and (max-width: 768px) {*/
-/*    .concrete-calculator {*/
-/*        padding: 15px;*/
-/*    }*/
-
-/*    .concrete-calculator h1 {*/
-/*        font-size: 24px;*/
-/*    }*/
-
-/*    .concrete-calculator button {*/
-/*        font-size: 0.9em;*/
-/*    }*/
-
-/*    #calculation-result {*/
-/*        font-size: 1em;*/
-/*    }*/
-/*}*/
-
-/*!* Для устройств с шириной экрана до 480px (смартфоны) *!*/
-/*@media screen and (max-width: 480px) {*/
-/*    .concrete-calculator {*/
-/*        padding: 10px;*/
-/*    }*/
-
-/*    .concrete-calculator h1 {*/
-/*        font-size: 20px;*/
-/*    }*/
-
-/*    .concrete-calculator button {*/
-/*        padding: 8px 16px;*/
-/*        font-size: 0.8em;*/
-/*    }*/
-
-/*    #calculation-result {*/
-/*        font-size: 0.9em;*/
-/*    }*/
-/*}*/
 
 /*CONCRETE CALCULATOR*/
 .concrete-calculator-container {

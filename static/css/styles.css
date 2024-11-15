@@ -1741,3 +1741,25 @@ form#callback-form .agree-with-terms label {
     border-radius: 30px;
     gap: 20px;
 }
+@media (max-width: 768px) {
+    .goods__header-with-image {
+        flex-direction: column-reverse;
+    }
+    .header-image {
+        max-width: 100%;
+    }
+    .header-image img {
+        max-width: 100%;
+    }
+}
+@media (max-width: 425px) {
+    .goods__header-with-image {
+        flex-direction: column-reverse;
+    }
+    .header-image {
+        max-width: 100%;
+    }
+    .header-image img {
+        max-width: 100%;
+    }
+}

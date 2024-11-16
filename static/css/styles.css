@@ -1751,6 +1751,10 @@ form#callback-form .agree-with-terms label {
     .header-image img {
         max-width: 100%;
     }
+    .good__header_button {
+        width: 100%;
+        text-align: center;
+    }
 }
 @media (max-width: 425px) {
     .goods__header-with-image {

@@ -96,7 +96,7 @@ def show_category(request, city_slug, category_slug):
         'category_selected': category.pk,
         'description': category.description,
         'short_description': category.small_text_for_catalog,
-        'seo_title': category.meta_title,
+        'seo_title': f'{category.meta_title} в городе {city.name}',
         'seo_description': seo_description,
         'seo_keywords': category.meta_keywords,
         'city_slug': city.slug,

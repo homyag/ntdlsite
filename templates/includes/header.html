@@ -30,6 +30,21 @@
     <nav class="header__nav">
         <div class="header__menu">
             {% for m in menu %}
+                {% if m.children %}
+                <div class="menu__item dropdown">
+                <a class="menu__link dropdown__toggle" href="{% url m.url_name %}">
+                {{ m.title }}
+                <span class="dropdown__arrow">&#9662;</span>
+                </a>
+                <!-- Выпадающее меню -->
+                <div class="dropdown__content">
+                {% for child in m.children %}
+                    <a class="dropdown__link" href="{% url child.url_name %}">{{ child.title }}</a>
+                    {% endfor %}
+                </div>
+                </div>
+                {% else %}
+
                 {% if m.url_name == 'catalog' %}
                     <div class="menu__item dropdown">
                     {% if city_slug %}
@@ -51,8 +66,11 @@
                     </div>
                     </div>
                 {% else %}
+
                     <a class="menu__link"
                        href="{% url m.url_name %}">{{ m.title }}</a>
+
+                {% endif %}
                 {% endif %}
             {% endfor %}
         </div>

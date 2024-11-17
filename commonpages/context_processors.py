@@ -7,7 +7,15 @@ def default_context(request):
             {'title': 'О компании', 'url_name': 'about'},
             {'title': 'Контакты', 'url_name': 'contacts'},
             {'title': 'Продукция', 'url_name': 'catalog'},
-            {'title': 'Услуги', 'url_name': 'services'},
+            {
+                'title': 'Услуги',
+                'url_name': 'services',
+                'children': [
+                    {'title': 'Калькулятор доставки', 'url_name': 'delivery'},
+                    {'title': 'Калькулятор бетона',
+                     'url_name': 'concrete_calculator'},
+                ]
+            },
             {'title': 'Блог', 'url_name': 'blog'},
         ],
     }

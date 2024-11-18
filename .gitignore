@@ -177,3 +177,5 @@ cython_debug/
 /celerybeat-schedule.db
 /dump.rdb
 !/db.sqlite3
+!/tdl.conf
+!/good/fixtures/leads-call.json

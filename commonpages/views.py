@@ -100,6 +100,10 @@ def concrete_calculator(request):
     return render(request, "commonpages/concrete_calculator.html", context=data)
 
 
+def privacy(request):
+    return render(request, "commonpages/privacy.html")
+
+
 @require_POST
 def submit_callback(request):
     recaptcha_response = request.POST.get('g-recaptcha-response')

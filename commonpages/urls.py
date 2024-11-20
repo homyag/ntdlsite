@@ -13,4 +13,5 @@ urlpatterns = [
     path("service/calc/", views.concrete_calculator, name="concrete_calculator"),
     path('submit_callback/', views.submit_callback, name='submit_callback'),
     path('set_city/', views.set_city, name='set_city'),
+    path('privacy/', views.privacy, name='privacy'),
 ]

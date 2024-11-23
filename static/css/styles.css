@@ -1772,6 +1772,7 @@ form#callback-form .agree-with-terms label {
 /* Breadcrumbs */
 .breadcrumb {
     display: flex;
+    flex-wrap: wrap;
     list-style: none;
     padding: 8px 16px;
     background-color: #f5f5f5;
@@ -1787,7 +1788,7 @@ form#callback-form .agree-with-terms label {
 
 .breadcrumb-item a {
     text-decoration: none;
-    color: #007bff;
+    /*color: #007bff;*/
 }
 
 .breadcrumb-item a:hover {
@@ -1795,5 +1796,5 @@ form#callback-form .agree-with-terms label {
 }
 
 .breadcrumb-item.active {
-    color: #6c757d;
+    color: #1e73be;
 }

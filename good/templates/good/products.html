@@ -6,6 +6,9 @@
 {% endblock %}
 {% block content %}
     <div class="goods__sections--content">
+            <!-- Хлебные крошки -->
+    {% include 'good/includes/breadcrumbs.html' %}
+    <!-- Конец хлебных крошек -->
         {% include "good/includes/mobile_menu.html" %}
         <h1>{{ title }}</h1>
         {% if short_description %}

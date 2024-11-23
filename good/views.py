@@ -1,5 +1,6 @@
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 
 from .models import Product, Category, City
 
@@ -20,6 +21,11 @@ def product(request, city_slug):
                         "бетонный завод ТД Ленинградский",
         'city_slug': city.slug,
         'city_name': city.name,
+        'breadcrumbs': [
+            {'title': 'Главная', 'url': reverse('home')},
+            {'title': 'Каталог' + ' ' + city.name, 'url': reverse('catalog',
+                                                  args=[city_slug])},
+        ],
     }
     return render(request, 'good/products.html', context=data)
 
@@ -46,12 +52,25 @@ def show_product(request, city_slug, category_slug, product_slug):
             'city_slug': city.slug,
             'city_name': city.name,
             'good': good,
+            'breadcrumbs': [
+                {'title': 'Главная', 'url': reverse('home')},
+                {'title': 'Каталог' + ' ' + city.name,
+                 'url': reverse('catalog', args=[city_slug])},
+                {'title': category.name,
+                 'url': reverse('category', args=[city_slug, category_slug])},
+                {'title': good.name, 'url': ''},  # Текущая страница
+            ],
         }
     else:
         data = {
             'title': 'Товар не найден',
             'city_slug': city.slug,
             'city_name': city.name,
+            'breadcrumbs': [
+                {'title': 'Главная', 'url': reverse('home')},
+                {'title': 'Каталог' + ' ' + city.name,
+                 'url': reverse('catalog', args=[city_slug])},
+            ],
         }
     return render(request, 'good/good.html', context=data)
 
@@ -102,5 +121,11 @@ def show_category(request, city_slug, category_slug):
         'seo_keywords': category.meta_keywords,
         'city_slug': city.slug,
         'city_name': city.name,
+        'breadcrumbs': [
+            {'title': 'Главная', 'url': reverse('home')},
+            {'title': 'Каталог' + ' ' + city.name, 'url': reverse('catalog', args=[city_slug])},
+            {'title': category.name,
+             'url': reverse('category', args=[city_slug, category_slug])},
+        ],
     }
     return render(request, 'good/products.html', context=data)

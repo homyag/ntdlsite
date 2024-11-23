@@ -13,12 +13,12 @@
                     <!-- Хлебные крошки -->
     {% include 'good/includes/breadcrumbs.html' %}
     <!-- Конец хлебных крошек -->
-            <div class="goods__header-with-image">
+            <div class="goods__header-with-image" itemscope itemtype="https://schema.org/Service">
                 <div class="header--title--with--button">
                     <div class="header-title">
-                        <h1>{{ title }}</h1>
+                        <h1 itemprop="name">{{ title }}</h1>
                     </div>
-                    <div class="good__property">
+                    <div class="good__property" itemprop="description">
                     <span>
                         {{ property|linebreaks }}
                     </span>
@@ -32,19 +32,21 @@
                 <div class="header-image">
                     {% if img %}
                         <img src="{{ img }}" alt="{{ title }}"
-                             class="content-image">
+                             class="content-image" itemprop="image">
                     {% else %}
                         <img src="{% static 'images/mainpage/zavod.webp' %}"
-                             alt="{{ title }}" class="content-image">
+                             alt="{{ title }}" class="content-image" itemprop="image">
                     {% endif %}
                 </div>
             </div>
-            <div class="good-description">
+            <div class="good-description" itemprop="provider" itemscope itemtype="https://schema.org/Organization">
+                <meta itemprop="name" content="ТД Ленинградский">
         <span>
-{#    {{ content|linebreaks }}#}
             {{ content|safe }}
     </span>
             </div>
+        <meta itemprop="areaServed" content="{{ city_name }}">
+            <meta itemprop="serviceType" content="Поставка {{ good.name }}">
         </div>
     {% else %}
         <!-- Content when 'good' does not exist -->

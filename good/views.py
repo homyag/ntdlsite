@@ -8,12 +8,13 @@ def product(request, city_slug):
     city = get_object_or_404(City, slug=city_slug)
     products = Product.objects.filter(city=city)
     data = {
-        'title': 'Товарный каталог продукции ТД Ленинградский в городе ' +
+        'title': 'Товарный каталог продукции ТД Ленинградский в ДНР: город ' +
                  city.name,
         'products': products,
         'seo_title': "Товарный каталог продукции ТД Ленинградский в городе " +
                      city.name,
-        'seo_description': "Бетон и нерудные материалы в городе " + city.name + " от "
+        'seo_description': "Бетон и нерудные материалы в ДНР, город " +
+                           city.name + " от "
                            "производителя | ТД Ленинградский",
         'seo_keywords': "купить бетон, продажа нерудных материалов, "
                         "бетонный завод ТД Ленинградский",

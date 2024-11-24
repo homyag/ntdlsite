@@ -66,16 +66,6 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
-    # def get_absolute_url(self):
-    #     return reverse(
-    #         "product",
-    #         kwargs={
-    #             "city_slug": self.city.slug,
-    #             "category_slug": self.category.slug,
-    #             "product_slug": self.slug,
-    #         },
-    #     )
-
     def get_absolute_url(self):
         if self.city is None or self.city.slug is None:
             raise ValueError(f"Product {self.id} {self.name} has no city or "

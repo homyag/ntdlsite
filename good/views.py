@@ -40,6 +40,9 @@ def show_product(request, city_slug, category_slug, product_slug):
         good = None
 
     if good:
+        related_goods = Product.objects.filter(category=category,
+                                               city=city).exclude(id=good.id)[
+                        :4]
         data = {
             'title': f'Купить {good.name} в городе {city.name}',
             'content': good.description,
@@ -52,6 +55,7 @@ def show_product(request, city_slug, category_slug, product_slug):
             'city_slug': city.slug,
             'city_name': city.name,
             'good': good,
+            'related_goods': related_goods,
             'breadcrumbs': [
                 {'title': 'Главная', 'url': reverse('home')},
                 {'title': 'Каталог' + ' ' + city.name,

@@ -1798,3 +1798,27 @@ form#callback-form .agree-with-terms label {
 .breadcrumb-item.active {
     color: #1e73be;
 }
+
+/*RELATED GOODS*/
+.related-products {
+    margin-top: 40px;
+}
+.related-products__list {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.related-product {
+    width: 200px;
+    text-align: center;
+}
+.related-product img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+@media screen and (max-width: 768px) {
+    .related-products__list {
+        justify-content: center;
+    }
+}

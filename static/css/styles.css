@@ -1811,11 +1811,13 @@ form#callback-form .agree-with-terms label {
 .related-product {
     width: 200px;
     text-align: center;
+    overflow: hidden; /* скрыть лишнее */
 }
 .related-product img {
     width: 100%;
-    height: auto;
+    height: 150px;
     border-radius: 8px;
+    object-fit: cover;
 }
 @media screen and (max-width: 768px) {
     .related-products__list {

@@ -42,7 +42,7 @@ def show_product(request, city_slug, category_slug, product_slug):
     if good:
         related_goods = Product.objects.filter(category=category,
                                                city=city).exclude(id=good.id)[
-                        :4]
+                        :3]
         data = {
             'title': f'Купить {good.name} в городе {city.name}',
             'content': good.description,

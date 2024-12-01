@@ -63,7 +63,8 @@
     <meta name="google-site-verification"
           content="ugl6-qohgj-pqxMAJJoCTdnxo6iDmEk0srdaxHF9qbE"/>
     <!-- Канонический тег -->
-    <link rel="canonical" href="{{ request.build_absolute_uri }}"/>
+{#    <link rel="canonical" href="{{ request.build_absolute_uri }}"/>#}
+    <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}" />
     {% block api %}
     {% endblock %}
     <!-- Глобальная переменная для URL 'set_city' -->

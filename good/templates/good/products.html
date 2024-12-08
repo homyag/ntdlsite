@@ -38,7 +38,7 @@
                                      alt="{{ p.name }}">
                             {% endif %}
                             <a href="{% url 'product' city_slug=city_slug category_slug=p.category.slug product_slug=p.slug %}">
-                                <h2>{{ p.name|truncatewords:5 }}</h2>
+                                <p class="goods__product_card--card--name">{{ p.name|truncatewords:5 }}</p>
                             </a>
                             {% autoescape off %}
                                 <p>{{ p.product_card_property|linebreaks }}</p>

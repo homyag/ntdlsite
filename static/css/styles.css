@@ -1678,6 +1678,11 @@ form#callback-form .agree-with-terms label {
     gap: 10px;
 }
 
+.goods__product_card--card--name {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
 .category-description {
     margin-top: 20px;
     margin-bottom: 20px;

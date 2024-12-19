@@ -13,13 +13,13 @@ class CallItemInline(admin.TabularInline):
 
 @admin.register(Call)
 class CallAdmin(admin.ModelAdmin):
-    list_display = ['created', 'resource', 'phone', 'name', 'result',
+    list_display = ['id', 'created', 'resource', 'phone', 'name', 'result',
                     'manager', 'date_of_notification']
     list_filter = ['created', 'resource', 'updated', 'manager', 'result',
                    'date_of_notification']
-    list_editable = ['resource', 'result']
-    list_per_page = 10
-    search_fields = ['phone', 'mail', 'name', 'date_of_notification']
+    list_editable = ['resource', 'result', 'date_of_notification']
+    list_per_page = 100
+    search_fields = ['phone', 'mail', 'name', 'date_of_notification', 'comment']
     ordering = ['-created']
     inlines = [CallItemInline]
     actions = ['mark_as_done', 'mark_as_empty', 'export_calls_to_excel']

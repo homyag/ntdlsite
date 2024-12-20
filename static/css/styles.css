@@ -1078,6 +1078,14 @@ form#callback-form .agree-with-terms label {
     gap: 20px;
 }
 
+.footer__phone {
+    margin-left: 10px;
+}
+.footer__phone a {
+    font-size: large;
+    text-decoration: none;
+}
+
 .footer__menu_links {
     display: flex;
     flex-direction: column; /* Ссылки будут выстраиваться по вертикали */
@@ -1135,6 +1143,10 @@ form#callback-form .agree-with-terms label {
     .footer__logo--img {
         margin-top: 0;
         margin-left: 40px;
+    }
+
+    .footer__phone {
+        margin-left: 0;
     }
 
     .footer__center, .footer__address, .footer__tax_id {

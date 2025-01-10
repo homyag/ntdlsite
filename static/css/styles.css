@@ -1841,3 +1841,24 @@ form#callback-form .agree-with-terms label {
         justify-content: center;
     }
 }
+
+
+/*ABOUT PAGE*/
+.about__page_block1 {
+    display: flex;
+    font-size: 30px;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    background: #f5f5f5;
+    border-radius: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.about__page_block1 img {
+    width: 50%;
+    height: auto;
+    border-radius: 30px;
+    object-fit: cover;
+}

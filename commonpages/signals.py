@@ -18,3 +18,4 @@ def notify_operator_on_callback_request(sender, instance, created, **kwargs):
             f'<b>Дата создания</b>: {instance.created_at}'
         )
         send_telegram_message(operator_id, message)
+        send_telegram_message(admin_id, message)

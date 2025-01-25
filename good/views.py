@@ -6,27 +6,35 @@ from .models import Product, Category, City
 
 
 def product(request, city_slug):
+    # Получение города
     city = get_object_or_404(City, slug=city_slug)
+
+    # Получение продуктов
     products = Product.objects.filter(city=city)
+
+    # Условное формирование заголовка
+    if city.region:
+        title = f'Товарный каталог продукции ТД Ленинградский в {city.region}: город {city.name}'
+    else:
+        title = f'Товарный каталог продукции ТД Ленинградский в городе {city.name}'
+
+    # Формирование данных для контекста
     data = {
-        'title': 'Товарный каталог продукции ТД Ленинградский в ДНР: город ' +
-                 city.name,
+        'title': title,
         'products': products,
-        'seo_title': "Товарный каталог продукции ТД Ленинградский в городе " +
-                     city.name,
-        'seo_description': "Бетон и нерудные материалы в ДНР, город " +
-                           city.name + " от "
-                           "производителя | ТД Ленинградский",
-        'seo_keywords': "купить бетон, продажа нерудных материалов, "
-                        "бетонный завод ТД Ленинградский",
+        'seo_title': f"Товарный каталог продукции ТД Ленинградский в городе {city.name}",
+        'seo_description': f"Бетон и нерудные материалы в ДНР, город {city.name} от производителя | ТД Ленинградский",
+        'seo_keywords': "купить бетон, продажа нерудных материалов, бетонный завод ТД Ленинградский",
         'city_slug': city.slug,
         'city_name': city.name,
         'breadcrumbs': [
             {'title': 'Главная', 'url': reverse('home')},
-            {'title': 'Каталог' + ' ' + city.name, 'url': reverse('catalog',
-                                                  args=[city_slug])},
+            {'title': f'Каталог {city.name}',
+             'url': reverse('catalog', args=[city_slug])},
         ],
     }
+
+    # Рендеринг шаблона
     return render(request, 'good/products.html', context=data)
 
 

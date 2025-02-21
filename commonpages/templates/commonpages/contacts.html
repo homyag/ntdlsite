@@ -1,4 +1,57 @@
 {% extends "base.html" %}
+{% load static %}
+{% block api %}
+    <script src="{% static 'js/contactsMapChanger.js' %}" type="text/javascript"></script>
+{% endblock %}
 {% block content %}
-    <h1>{{ title }}</h1>
+<section class="contact-header">
+            <h1>Contact</h1>
+            <p>Let's talk about your new project</p>
+        </section>
+
+<section class="contact-section">
+            <div class="keep-in-touch">
+                <h2>Keep in touch</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo.</p>
+            </div>
+            <div class="contact-form-container">
+                <h2>Contact Us</h2>
+                <form>
+                    <input type="text" placeholder="Name" required>
+                    <input type="text" placeholder="Mobile No." required>
+                    <input type="email" placeholder="Email Address" required>
+                    <textarea placeholder="What support you need regarding?" required></textarea>
+                    <select>
+                        <option>Support Category</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="locations">
+            <h2>Located Globally</h2>
+            <div class="location-card" data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3A1f6ab6d20d724b84b9429d0528d2aa6e8c20abec0fd4be523dbcd16d4ce88297&amp;source=constructor">
+                <h3>Dubai, United Arab Emirates</h3>
+                <p>+971552845347</p>
+                <p>info@ytviews.in</p>
+                <p>102, Level 17, Shatha Tower, Dubai Silicon Oasis, Dtec, Dubai</p>
+            </div>
+            <div class="location-card" data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3A0ce75ca517f8eb1789dbeb8dc7d781d871758c6eb7615463700fad61b6da089b&amp;source=constructor">
+                <h3>Delhi, India</h3>
+                <p>+91 8383854446</p>
+                <p>Tower B, Ground Floor, Spaze I-Tech Park, Sohna Road, Sector 49, Gurgaon, Haryana 122022</p>
+            </div>
+            <div class="location-card" data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3Aaff391a09999ced83cef3de396513cb727df8cb6d00652a2f1f3fab81a812f8f&amp;source=constructor">
+                <h3>Singapore, Southeast Asia</h3>
+                <p>+6588467000</p>
+                <p>20 Collyer Quay, #14-02 PLUS, Singapore 049319</p>
+            </div>
+        </section>
+
+        <section class="map">
+            <iframe id="map-frame" src="https://yandex.ru/map-widget/v1/?um=constructor%3A1f6ab6d20d724b84b9429d0528d2aa6e8c20abec0fd4be523dbcd16d4ce88297&amp;source=constructor" width="100%" height="400" frameborder="0" loading="lazy"></iframe>
+        </section>
 {% endblock %}

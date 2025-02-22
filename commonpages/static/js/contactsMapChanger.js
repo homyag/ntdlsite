@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
+    let currentMapUrl = defaultMapUrl;
+
     // Функция для изменения карты
     function changeMap(url) {
         console.log("Changing map to:", url); // Логирование изменения карты
@@ -18,22 +20,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const mapUrl = card.getAttribute('data-map-url');
         console.log("Card URL:", mapUrl); // Логирование URL каждой карточки
 
-        // Для настольных устройств
         card.addEventListener('mouseover', function() {
-            changeMap(mapUrl);
+            if (currentMapUrl !== mapUrl) {
+                currentMapUrl = mapUrl;
+                changeMap(mapUrl);
+            }
         });
 
-        card.addEventListener('mouseout', function() {
-            changeMap(defaultMapUrl);
-        });
-
-        // Для мобильных устройств
         card.addEventListener('touchstart', function() {
-            changeMap(mapUrl);
-        });
-
-        card.addEventListener('touchend', function() {
-            changeMap(defaultMapUrl);
+            if (currentMapUrl !== mapUrl) {
+                currentMapUrl = mapUrl;
+                changeMap(mapUrl);
+            }
         });
     });
 });

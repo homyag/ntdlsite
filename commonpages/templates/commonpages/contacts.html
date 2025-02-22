@@ -1,57 +1,81 @@
 {% extends "base.html" %}
 {% load static %}
 {% block api %}
-    <script src="{% static 'js/contactsMapChanger.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/contactsMapChanger.js' %}"
+            type="text/javascript"></script>
 {% endblock %}
 {% block content %}
-<section class="contact-header">
-            <h1>Contact</h1>
-            <p>Let's talk about your new project</p>
-        </section>
+    <section class="contact-header">
+        <h1>Контакты бетонного завода ТД Лениградский</h1>
+        <p>Оставьте заявку на консультацию</p>
+    </section>
 
-<section class="contact-section">
-            <div class="keep-in-touch">
-                <h2>Keep in touch</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo.</p>
+    <section class="contact-section">
+        <div class="keep-in-touch">
+            <h2>Оставайтесь на связи</h2>
+            <p>Мы всегда готовы помочь вам с любыми вопросами, связанными с
+                бетонными работами и строительством. Оставайтесь на связи,
+                чтобы быть в курсе последних новостей и специальных предложений
+                от нашего завода.</p>
+            <p>Вы также можете самостоятельно рассчитать доставку до
+                объекта или узнать необходимый для вашего проекта объем 
+                бетона в нашем
+                калькуляторе</p>
+            <div class="button-container">
+                <a href="{% url 'delivery' %}"
+                   class="hero__button" type="button">
+                    Рассчитать доставку
+                </a>
+                <a href="{% url 'concrete_calculator' %}"
+                   class="hero__button" type="button">
+                    Калькулятор бетона
+                </a>
             </div>
-            <div class="contact-form-container">
-                <h2>Contact Us</h2>
-                <form>
-                    <input type="text" placeholder="Name" required>
-                    <input type="text" placeholder="Mobile No." required>
-                    <input type="email" placeholder="Email Address" required>
-                    <textarea placeholder="What support you need regarding?" required></textarea>
-                    <select>
-                        <option>Support Category</option>
-                        <!-- Add more options as needed -->
-                    </select>
-                    <button type="submit">Submit</button>
-                </form>
-            </div>
-        </section>
+        </div>
+        <div class="contact-form-container">
+            <h2>Оставить заявку менеджеру</h2>
+            <form>
+                <input type="text" placeholder="Ваше имя" required>
+                <input type="text" placeholder="Ваш телефон" required>
+                <input type="email" placeholder="Ваш e-mail" required>
+                <textarea placeholder="Комментарий"
+                          required></textarea>
+{#                <button type="submit">Отправить заявку</button>#}
+                <button type="submit" class="btn-primary">Отправить 
+                    заявку</button>
+            </form>
+        </div>
+    </section>
 
-        <section class="locations">
-            <h2>Located Globally</h2>
-            <div class="location-card" data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3A1f6ab6d20d724b84b9429d0528d2aa6e8c20abec0fd4be523dbcd16d4ce88297&amp;source=constructor">
-                <h3>Dubai, United Arab Emirates</h3>
-                <p>+971552845347</p>
-                <p>info@ytviews.in</p>
-                <p>102, Level 17, Shatha Tower, Dubai Silicon Oasis, Dtec, Dubai</p>
-            </div>
-            <div class="location-card" data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3A0ce75ca517f8eb1789dbeb8dc7d781d871758c6eb7615463700fad61b6da089b&amp;source=constructor">
-                <h3>Delhi, India</h3>
-                <p>+91 8383854446</p>
-                <p>Tower B, Ground Floor, Spaze I-Tech Park, Sohna Road, Sector 49, Gurgaon, Haryana 122022</p>
-            </div>
-            <div class="location-card" data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3Aaff391a09999ced83cef3de396513cb727df8cb6d00652a2f1f3fab81a812f8f&amp;source=constructor">
-                <h3>Singapore, Southeast Asia</h3>
-                <p>+6588467000</p>
-                <p>20 Collyer Quay, #14-02 PLUS, Singapore 049319</p>
-            </div>
-        </section>
+    <section class="locations">
+        <h2>Адреса ТД Ленинградский</h2>
+        <div class="location-card"
+             data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3Ad1889657e89d58406bc643319e36a03292ab1a559f16cb84563d106d2e847a95&amp;source=constructor"">
+            <h3>Санкт-Петербург</h3>
+            <p>+7(949)6242644</p>
+            <p>info@tdleningrad.ru</p>
+            <p>улица Свободы, 57Д, Красное Село, Санкт-Петербург</p>
+        </div>
+        <div class="location-card"
+             data-map-url=https://yandex.ru/map-widget/v1/?um=constructor%3A219534a869e753ce396b9284a4d1e67d5a12600f543eacb8abcd7098f2557ef1&amp;source=constructor">
+            <h3>Мариуполь</h3>
+            <p>+7(949)6242644</p>
+            <p>info@tdleningrad.ru</p>
+            <p>улица Сортировочная дом 1, Мариуполь</p>
+        </div>
+        <div class="location-card"
+             data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3A5c99cbae86232571aa8a82f28b925a8ebf9827c6a31fdfd46913cdb52deeaf57&amp;source=constructor">
+            <h3>Регион доставки</h3>
+            <p>+7(949)6242644</p>
+            <p>info@tdleningrad.ru</p>
+            <p>ДНР, ЛНР</p>
+        </div>
+    </section>
 
-        <section class="map">
-            <iframe id="map-frame" src="https://yandex.ru/map-widget/v1/?um=constructor%3A1f6ab6d20d724b84b9429d0528d2aa6e8c20abec0fd4be523dbcd16d4ce88297&amp;source=constructor" width="100%" height="400" frameborder="0" loading="lazy"></iframe>
-        </section>
+    <section class="map">
+        <iframe id="map-frame"
+                src="https://yandex.ru/map-widget/v1/?um=constructor%3A1f6ab6d20d724b84b9429d0528d2aa6e8c20abec0fd4be523dbcd16d4ce88297&amp;source=constructor"
+                width="100%" height="400" frameborder="0"
+                loading="lazy"></iframe>
+    </section>
 {% endblock %}

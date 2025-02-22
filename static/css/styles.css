@@ -1924,19 +1924,49 @@ form#callback-form .agree-with-terms label {
 }
 
 /*CONTACT PAGE*/
+/*.contact-header {*/
+/*    background: url('/static/images/background/zavod_back.jpeg') no-repeat center center/cover;*/
+/*    color: white;*/
+/*    text-align: center;*/
+/*    padding: 100px 20px;*/
+/*    margin-top: 21px;*/
+
+/*}*/
 .contact-header {
-    background: url('city-skyline.jpg') no-repeat center center/cover;
+    position: relative; /* Необходимо для позиционирования псевдоэлемента */
+    background: url('/static/images/background/zavod_back.jpeg') no-repeat center center/cover;
     color: white;
     text-align: center;
     padding: 100px 20px;
+    margin-top: 21px;
 }
-.contact-header h1 {
+
+.contact-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Полупрозрачный чёрный фон */
+    z-index: 0; /* Под текстом */
+}
+
+.contact-header h1,
+.contact-header p {
+    position: relative; /* Убедитесь, что текст будет над псевдоэлементом */
+    z-index: 1; /* Текст над затемнением */
     margin: 0;
+}
+
+.contact-header h1 {
     font-size: 48px;
+    color: white;
 }
 
 .contact-header p {
     font-size: 24px;
+    color: white;
 }
 
 .contact-section {
@@ -1963,6 +1993,13 @@ form#callback-form .agree-with-terms label {
 
 .keep-in-touch h2 {
     margin-top: 0;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* Расстояние между кнопками */
+    margin-top: 20px; /* Отступ сверху */
 }
 
 .contact-form-container {
@@ -1992,7 +2029,7 @@ form#callback-form .agree-with-terms label {
 .contact-form-container button {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #3698D4;
     color: white;
     border: none;
     border-radius: 5px;

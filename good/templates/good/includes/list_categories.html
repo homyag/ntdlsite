@@ -1,0 +1,11 @@
+{% for category in categories %}
+    {% if category.id == category_selected %}
+        <li class="selected">
+            {{ category.name }}
+        </li>
+    {% else %}
+        <li>
+            <a href="{% url 'category' city_slug=city_slug category_slug=category.slug %}">{{ category.name }}</a>
+        </li>
+    {% endif %}
+{% endfor %}

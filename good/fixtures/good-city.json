@@ -1,0 +1,1 @@
+[{"model": "good.city", "pk": 1, "fields": {"name": "Мариуполь", "slug": "mariupol"}}, {"model": "good.city", "pk": 2, "fields": {"name": "Ростов-на-Дону", "slug": "rostov"}}]

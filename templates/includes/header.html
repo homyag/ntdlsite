@@ -1,0 +1,143 @@
+{% load static %}
+<header class="header">
+    <div class="header__logo__burger">
+        <div class="header__logo">
+            <a class="header__logo--img" href="{% url 'home' %}"></a>
+        </div>
+        <!-- Выбор города -->
+        {% if city_slug %}
+            <div class="city-info">
+                <span id="current-city">{{ city_name }}</span>
+                <a href="#" id="change-city"
+                   onclick="openCityModal(); return false;">Сменить город</a>
+            </div>
+        {% else %}
+            <div class="city-info">
+                <a href="#" id="select-city"
+                   onclick="openCityModal(); return false;">Выбрать город</a>
+            </div>
+        {% endif %}
+
+        <!-- Burger menu -->
+        <label class="burger" for="burger">
+            <input type="checkbox" id="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+    </div>
+
+    <nav class="header__nav">
+        <div class="header__menu">
+            {% for m in menu %}
+                {% if m.children %}
+                <div class="menu__item dropdown">
+                <a class="menu__link dropdown__toggle" href="{% url m.url_name %}">
+                {{ m.title }}
+                <span class="dropdown__arrow">&#9662;</span>
+                </a>
+                <!-- Выпадающее меню -->
+                <div class="dropdown__content">
+                {% for child in m.children %}
+                    <a class="dropdown__link" href="{% url child.url_name %}">{{ child.title }}</a>
+                    {% endfor %}
+                </div>
+                </div>
+                {% else %}
+
+                {% if m.url_name == 'catalog' %}
+                    <div class="menu__item dropdown">
+                    {% if city_slug %}
+                        <a class="menu__link dropdown__toggle"
+                           href="{% url m.url_name city_slug=city_slug %}">{{ m.title }}
+                        <span class="dropdown__arrow">&#9662;</span>
+                        </a>
+                    {% else %}
+                        <a class="menu__link dropdown__toggle" href="#"
+                           onclick="openCityModal();">{{ m.title }}
+                        <span class="dropdown__arrow">&#9662;</span>
+                        </a>
+                    {% endif %}
+                    <!-- Выпадающее меню с городами -->
+                    <div class="dropdown__content">
+                    {% for city in cities %}
+                    <a class="dropdown__link" href="{% url 'catalog' city_slug=city.slug %}">{{ city.name }}</a>
+                    {% endfor %}
+                    </div>
+                    </div>
+                {% else %}
+
+                    <a class="menu__link"
+                       href="{% url m.url_name %}">{{ m.title }}</a>
+
+                {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </nav>
+    <div class="header__callback">
+        <div class="header__phone">
+            <div class="header__callback--icon">
+                <img class="header__callback--phone--icon"
+                     src="{% static 'images/icons/telephone-inbound.svg' %}"
+                     alt="phone_icon">
+            </div>
+            <div class="header__callback--phone--number">
+                <a href="tel:+79496242644">
+            <span class="value">
+                +7 (949) 624-2644
+            </span>
+                </a>
+            </div>
+        </div>
+        <div class="header_callback--popup">
+            <button type="button" class="call--popup" onclick="ym(98660706,'reachGoal','call--popup'); return true;">
+                Заказать звонок
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Попап с формой -->
+<noindex>
+    <div id="callback-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <span class="popup--header">Заказать обратный звонок</span>
+            <form id="callback-form" method="post" data-url=
+                    "{% url 'submit_callback' %}">
+                {% csrf_token %}
+                <label for="name">Имя:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="phone">Телефон:</label>
+                <input type="tel" id="phone" name="phone" required>
+                <div class="agree-with-terms">
+                    <label for="agree_to_terms">
+                        <input type="checkbox" id="agree_to_terms"
+                               name="agree_to_terms" required checked>
+                        <p>Я соглашаюсь на обработку
+                            <a href="{% url 'privacy' %}">персональных данных</a></p>
+                    </label>
+                </div>
+                <div class="popup-buttons">
+                    <button type="submit" class="btn-primary" onclick="ym(98660706,'reachGoal','btn-primary'); return true;">Заказать звонок
+                    </button>
+                    <button type="reset" class="btn-secondary">Сбросить
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</noindex>
+
+<noindex>
+    <!-- Модальное окно для подтверждения заявки -->
+    <div id="success-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p>Заявка на звонок принята. Наш менеджер свяжется с Вами в
+                ближайшее время.</p>
+        </div>
+    </div>
+</noindex>

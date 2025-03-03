@@ -1,0 +1,20 @@
+<div id="city-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <p>Выберите ваш город</p>
+        <form id="city-form" method="post" action="{% url 'set_city' %}">
+            {% csrf_token %}
+            <select name="city_slug" required>
+                {% for city in cities %}
+                    <option value="{{ city.slug }}"
+                            {% if city.slug == city_slug %}
+                            selected
+                            {% endif %}>
+                        {{ city.name }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Выбрать</button>
+        </form>
+    </div>
+</div>

@@ -3,6 +3,8 @@
 {% block api %}
     <script src="{% static 'js/contactsMapChanger.js' %}"
             type="text/javascript"></script>
+    <script src="{% static 'js/feedbackForm.js' %}"
+            type="text/javascript"></script>
 {% endblock %}
 {% block content %}
     <section class="contact-header">
@@ -18,7 +20,7 @@
                 чтобы быть в курсе последних новостей и специальных предложений
                 от нашего завода.</p>
             <p>Вы также можете самостоятельно рассчитать доставку до
-                объекта или узнать необходимый для вашего проекта объем 
+                объекта или узнать необходимый для вашего проекта объем
                 бетона в нашем
                 калькуляторе</p>
             <div class="button-container">
@@ -34,35 +36,53 @@
         </div>
         <div class="contact-form-container">
             <h2>Оставить заявку менеджеру</h2>
-            <form id="callback-form" method="post" data-url="{% url 'submit_feedback' %}">
+            <form id="feedback-form" method="post"
+                  data-url="{% url 'submit_feedback' %}">
                 {% csrf_token %}
                 <input type="text" name="name" placeholder="Ваше имя" required>
-                <input type="email" name="email" placeholder="Ваш e-mail" required>
-                <input type="text" name="phone" placeholder="Ваш телефон" required>
+                <input type="email" name="email" placeholder="Ваш e-mail"
+                       required>
+                <input type="text" name="phone" placeholder="Ваш телефон"
+                       required>
                 <select name="product" required>
                     <option value="" disabled selected>Выберите товар</option>
                     {% for product in products %}
                         <option value="{{ product.id }}">{{ product.name }}</option>
                     {% endfor %}
                 </select>
-                <textarea name="message" placeholder="Ваше сообщение" required></textarea>
-                <div>
-                    <input type="checkbox" name="agree_to_terms" required>
-                    <label for="agree_to_terms">Согласие на обработку <a href="{% url 'privacy' %}">персональных данных</a></label>
+                <textarea name="message" placeholder="Ваше сообщение"
+                          required></textarea>
+                {#                <div>#}
+                {#                    <input type="checkbox" name="agree_to_terms" required>#}
+                {#                    <label for="agree_to_terms">Согласие на обработку <a#}
+                {#                            href="{% url 'privacy' %}">персональных данных</a></label>#}
+                {#                </div>#}
+                <div class="agree-container">
+                    <label class="custom-checkbox">
+                        <input type="checkbox" name="agree_to_terms" required
+                               class="checkbox-input" checked>
+                        <span class="checkmark"></span>
+                        <span class="checkbox-text">
+            Согласие на обработку 
+            <a href="{% url 'privacy' %}" class="privacy-link">персональных данных</a>
+        </span>
+                    </label>
                 </div>
-                <button type="submit" class="btn-primary">Отправить 
-                    заявку</button>
+                <button type="submit" class="btn-primary">Отправить
+                    заявку
+                </button>
             </form>
         </div>
     </section>
-    
+
     <!-- Модальное окно для подтверждения заявки -->
-<div id="success-modal" class="modal" style="display:none;">
-    <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <p>Заявка принята. Наш менеджер свяжется с Вами в ближайшее время.</p>
+    <div id="success-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p>Заявка принята. Наш менеджер свяжется с Вами в ближайшее
+                время.</p>
+        </div>
     </div>
-</div>
 
     <section class="locations">
         <h2>Адреса ТД Ленинградский</h2>
@@ -95,4 +115,16 @@
                 width="100%" height="400" frameborder="0"
                 loading="lazy"></iframe>
     </section>
+
+    <noindex>
+        <!-- Модальное окно для подтверждения заявки -->
+        <div id="success-feedback-form-modal" class="modal"
+             style="display:none;">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <p>Спасибо за заявку. Наш менеджер свяжется с Вами в
+                    ближайшее время.</p>
+            </div>
+        </div>
+    </noindex>
 {% endblock %}

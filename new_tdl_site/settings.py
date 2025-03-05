@@ -66,6 +66,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
 
+                'django.template.context_processors.static',
+
                 'commonpages.context_processors.default_context',
                 'commonpages.context_processors.city_context',
 

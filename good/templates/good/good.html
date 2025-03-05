@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load l10n %}
 
 
 {% block sidebar %}
@@ -9,17 +10,56 @@
 {% block content %}
 
     {% if good %}
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "{{ good.name|escapejs }}",
+            "description": "{{ good.description|striptags|escapejs }}",
+            {% if good.img %}
+            "image": "{{ request.scheme }}://{{ request.get_host }}{{ good.img.url }}",
+            {% else %}
+            "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/mainpage/zavod.webp' %}",
+            {% endif %}
+            "brand": {
+                "@type": "Brand",
+                "name": "ТД Ленинградский"
+            },
+            "offers": {
+                "@type": "Offer",
+                "url": "{{ request.build_absolute_uri }}",
+                "priceCurrency": "RUB",
+                "price": {{ good.price|unlocalize }},
+                "availability": "{% if good.on_stock %}InStock{% else %}OutOfStock{% endif %}",
+                "itemCondition": "NewCondition",
+                "availableDeliveryMethod": "http://purl.org/goodrelations/v1#DeliveryModeOwnFleet",
+                "areaServed": {
+                    "@type": "City",
+                    "name": "{{ city.name|escapejs }}"
+                }
+            },
+            "category": "{{ good.category.name|escapejs }}",
+            "sku": "{{ good.id }}",
+            "additionalProperty": {
+                "@type": "PropertyValue",
+                "name": "Характеристики",
+                "value": "{{ good.product_card_property|striptags|escapejs }}"
+            }
+        }
+        </script>
         <div class="goods__sections--content">
             <!-- Хлебные крошки -->
             {% include 'good/includes/breadcrumbs.html' %}
             <!-- Конец хлебных крошек -->
-            <div class="goods__header-with-image" itemscope
-                 itemtype="https://schema.org/Service">
+            <div class="goods__header-with-image">
                 <div class="header--title--with--button">
                     <div class="header-title">
-                        <h1 itemprop="name">{{ title }}</h1>
+                        <h1>{{ title }}</h1>
                     </div>
-                    <div class="good__property" itemprop="description">
+                    <div class="good__price">
+                        <p><strong>{{ good_price }} руб/ед</strong></p>
+                    </div>
+                    <div class="good__property">
                     <span>
                         {{ property|linebreaks }}
                     </span>
@@ -33,43 +73,37 @@
                 <div class="header-image">
                     {% if img %}
                         <img src="{{ img }}" alt="{{ title }}"
-                             class="content-image" itemprop="image">
+                             class="content-image">
                     {% else %}
                         <img src="{% static 'images/mainpage/zavod.webp' %}"
-                             alt="{{ title }}" class="content-image"
-                             itemprop="image">
+                             alt="{{ title }}" class="content-image">
                     {% endif %}
                 </div>
             </div>
-            <div class="good-description" itemprop="provider" itemscope
-                 itemtype="https://schema.org/Organization">
-                <meta itemprop="name" content="ТД Ленинградский">
+            <div class="good-description">
                 <span>
             {{ content|safe }}
     </span>
             </div>
-            <meta itemprop="areaServed" content="{{ city_name }}">
-            <meta itemprop="serviceType" content="Поставка {{ good.name }}">
-
-        <div class="related-products">
-        <h3>Похожие товары</h3>
-        <div class="related-products__list">
-            {% for related_good in related_goods %}
-                <div class="related-product">
-                    <a href="{% url 'product' city_slug category_selected related_good.slug %}">
-                        {% if related_good.img %}
-                            <img src="{{ related_good.img.url }}"
-                                 alt="{{ related_good.name }}">
-                        {% else %}
-                            <img src="{% static 'images/mainpage/zavod.webp' %}"
-                                 alt="ТД Ленинградский">
-                        {% endif %}
-                        <h4>{{ related_good.name }}</h4>
-                    </a>
+            <div class="related-products">
+                <h3>Похожие товары</h3>
+                <div class="related-products__list">
+                    {% for related_good in related_goods %}
+                        <div class="related-product">
+                            <a href="{% url 'product' city_slug category_selected related_good.slug %}">
+                                {% if related_good.img %}
+                                    <img src="{{ related_good.img.url }}"
+                                         alt="{{ related_good.name }}">
+                                {% else %}
+                                    <img src="{% static 'images/mainpage/zavod.webp' %}"
+                                         alt="ТД Ленинградский">
+                                {% endif %}
+                                <h4>{{ related_good.name }}</h4>
+                            </a>
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
-        </div>
-    </div>
+            </div>
 
         </div>
     {% else %}

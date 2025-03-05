@@ -25,7 +25,7 @@ def about(request):
     data = {
         "title": "Бетонный завод ТД Ленинградский",
         "seo_title": "О компании ТД Ленинградский - производителе бетона и "
-                 "бетонных смесей",
+                     "бетонных смесей",
         'seo_description': 'Производитель бетона и бетонных смесей в регионе '
                            'деятельности - ТД Ленинградский',
         'seo_keywords': 'ТД Ленинградский, бетон, бетонные смеси, о компании',
@@ -35,7 +35,8 @@ def about(request):
 
 
 def contacts(request):
-    proucts = Product.objects.all()
+    # proucts = Product.objects.all()
+    products = Product.objects.order_by('name').distinct('name')
     # city_slug = request.session.get('city_slug')
     data = {
         "title": "Контакты бетонного завода ТД Ленинградский. Производство и отдел продаж",
@@ -44,7 +45,7 @@ def contacts(request):
         'seo_description': 'Контакты бетонного завода ТД Ленинградский. '
                            'Продажа бетона и бетонных смесей от 1м3',
         'seo_keywords': 'ТД Ленинградский, бетон, бетонные смеси, о компании',
-        'products': proucts,
+        'products': products,
         # 'city_slug': city_slug,
     }
     return render(request, "commonpages/contacts.html", context=data)
@@ -57,7 +58,7 @@ def services(request):
                  "Ленинградский",
         # "menu": menu,
         "seo_title": "Услуги производителя бетона и бетонных смесей ТД "
-                 "Ленинградский",
+                     "Ленинградский",
         'seo_description': 'Доставка бетона и нерудных материалов '
                            'собственным автопарком или самовывозом с '
                            'производства',
@@ -99,7 +100,8 @@ def concrete_calculator(request):
                         'калькулятор бетона онлайн, бетонный калькулятор онлайн'
                         'калькулятор бетона м3',
     }
-    return render(request, "commonpages/concrete_calculator.html", context=data)
+    return render(request, "commonpages/concrete_calculator.html",
+                  context=data)
 
 
 def privacy(request):
@@ -110,41 +112,8 @@ def privacy(request):
 def submit_callback(request):
     recaptcha_response = request.POST.get('g-recaptcha-response')
     if not recaptcha_response:
-        return JsonResponse({'status': 'error', 'errors': {'recaptcha': 'Проверка reCAPTCHA не пройдена. Пожалуйста, попробуйте еще раз.'}})
-
-    # Проверяем токен reCAPTCHA с помощью запроса к API Google
-    data = {
-        'secret': settings.RECAPTCHA_SECRET_KEY,
-        'response': recaptcha_response,
-        'remoteip': request.META.get('REMOTE_ADDR')
-    }
-
-    try:
-        r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
-        result = r.json()
-    except requests.exceptions.RequestException as e:
-        return JsonResponse({'status': 'error', 'errors': {'recaptcha': 'Ошибка проверки reCAPTCHA. Пожалуйста, попробуйте позже.'}})
-
-    if not result.get('success'):
-        # Если проверка не пройдена, возвращаем ошибку
-        return JsonResponse({'status': 'error', 'errors': {'recaptcha': 'Неверная reCAPTCHA. Пожалуйста, попробуйте еще раз.'}})
-
-    # Если reCAPTCHA пройдена, продолжаем обработку формы
-    form = CallbackRequestForm(request.POST)
-    if form.is_valid():
-        form.save()
-        return JsonResponse({'status': 'success'})
-    else:
-        # Преобразуем ошибки формы в список строк
-        errors = {field: [str(error) for error in error_list] for field, error_list in form.errors.items()}
-        return JsonResponse({'status': 'error', 'errors': errors})
-
-
-@require_POST
-def submit_feedback(request):
-    recaptcha_response = request.POST.get('g-recaptcha-response')
-    if not recaptcha_response:
-        return JsonResponse({'status': 'error', 'errors': {'recaptcha': 'Проверка reCAPTCHA не пройдена. Пожалуйста, попробуйте еще раз.'}})
+        return JsonResponse({'status': 'error', 'errors': {
+            'recaptcha': 'Проверка reCAPTCHA не пройдена. Пожалуйста, попробуйте еще раз.'}})
 
     # Проверяем токен reCAPTCHA с помощью запроса к API Google
     data = {
@@ -158,11 +127,52 @@ def submit_feedback(request):
                           data=data)
         result = r.json()
     except requests.exceptions.RequestException as e:
-        return JsonResponse({'status': 'error', 'errors': {'recaptcha': 'Ошибка проверки reCAPTCHA. Пожалуйста, попробуйте позже.'}})
+        return JsonResponse({'status': 'error', 'errors': {
+            'recaptcha': 'Ошибка проверки reCAPTCHA. Пожалуйста, попробуйте позже.'}})
 
     if not result.get('success'):
         # Если проверка не пройдена, возвращаем ошибку
-        return JsonResponse({'status': 'error', 'errors': {'recaptcha': 'Неверная reCAPTCHA. Пожалуйста, попробуйте еще раз.'}})
+        return JsonResponse({'status': 'error', 'errors': {
+            'recaptcha': 'Неверная reCAPTCHA. Пожалуйста, попробуйте еще раз.'}})
+
+    # Если reCAPTCHA пройдена, продолжаем обработку формы
+    form = CallbackRequestForm(request.POST)
+    if form.is_valid():
+        form.save()
+        return JsonResponse({'status': 'success'})
+    else:
+        # Преобразуем ошибки формы в список строк
+        errors = {field: [str(error) for error in error_list] for
+                  field, error_list in form.errors.items()}
+        return JsonResponse({'status': 'error', 'errors': errors})
+
+
+@require_POST
+def submit_feedback(request):
+    recaptcha_response = request.POST.get('g-recaptcha-response')
+    if not recaptcha_response:
+        return JsonResponse({'status': 'error', 'errors': {
+            'recaptcha': 'Проверка reCAPTCHA не пройдена. Пожалуйста, попробуйте еще раз.'}})
+
+    # Проверяем токен reCAPTCHA с помощью запроса к API Google
+    data = {
+        'secret': settings.RECAPTCHA_SECRET_KEY,
+        'response': recaptcha_response,
+        'remoteip': request.META.get('REMOTE_ADDR')
+    }
+
+    try:
+        r = requests.post('https://www.google.com/recaptcha/api/siteverify',
+                          data=data)
+        result = r.json()
+    except requests.exceptions.RequestException as e:
+        return JsonResponse({'status': 'error', 'errors': {
+            'recaptcha': 'Ошибка проверки reCAPTCHA. Пожалуйста, попробуйте позже.'}})
+
+    if not result.get('success'):
+        # Если проверка не пройдена, возвращаем ошибку
+        return JsonResponse({'status': 'error', 'errors': {
+            'recaptcha': 'Неверная reCAPTCHA. Пожалуйста, попробуйте еще раз.'}})
 
     # Если reCAPTCHA пройдена, продолжаем обработку формы
     form = FeedbackForm(request.POST)
@@ -171,17 +181,17 @@ def submit_feedback(request):
         return JsonResponse({'status': 'success'})
     else:
         # Преобразуем ошибки формы в список строк
-        errors = {field: [str(error) for error in error_list] for field, error_list in form.errors.items()}
+        errors = {field: [str(error) for error in error_list] for
+                  field, error_list in form.errors.items()}
         return JsonResponse({'status': 'error', 'errors': errors})
-
 
 
 @require_POST
 def set_city(request):
     selected_city_slug = request.POST.get('city_slug')
-    if selected_city_slug and City.objects.filter(slug=selected_city_slug).exists():
+    if selected_city_slug and City.objects.filter(
+            slug=selected_city_slug).exists():
         request.session['city_slug'] = selected_city_slug
     # Определяем URL для перенаправления обратно
     referer = request.META.get('HTTP_REFERER', '/')
     return redirect(referer)
-

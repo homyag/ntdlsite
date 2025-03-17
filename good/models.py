@@ -135,5 +135,3 @@ class City(models.Model):
 
     def get_absolute_url(self):
         return reverse("city", kwargs={"city_slug": self.slug})
-
-

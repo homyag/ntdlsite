@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 {% block api %}
+    <script>
+        // Передаем доступные продукты из Django в JavaScript через JSON
+        window.availableConcreteProducts = {{ concrete_products_json|safe }};
+        
+        // Отладочная информация
+        console.log("Загружено бетонных продуктов:", {{ debug_concrete_count }});
+    </script>
     <script src="{% static 'js/concreteCalculator.js' %}" type="text/javascript"></script>
 {% endblock %}
 {% block content %}
@@ -58,6 +65,15 @@
                 <button type="submit">Рассчитать объем</button>
             </form>
             <div id="calculation-result"></div>
+            
+            <!-- Новый блок для рекомендаций -->
+            <div id="recommendations-container" class="recommendations-container" style="display:none;">
+                <h3>Рекомендуемые типы бетона</h3>
+                <p>Для вашего проекта рекомендуем следующие типы бетона:</p>
+                <ul id="recommendations-list" class="recommendations-list">
+                    <!-- Рекомендации будут добавлены JavaScript -->
+                </ul>
+            </div>
         </div>
 
         <!-- Область описания конструкции -->

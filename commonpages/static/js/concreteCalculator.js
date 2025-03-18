@@ -1,6 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
     const structureTypeSelect = document.getElementById('structure-type');
     const descriptionContent = document.getElementById('description-content');
+    const recommendationsContainer = document.getElementById('recommendations-container');
+
+    // Проверяем, есть ли доступные продукты
+    const hasProducts = window.availableConcreteProducts && window.availableConcreteProducts.length > 0;
+
+    // Отладочная информация
+    console.log(`Доступно ${hasProducts ? window.availableConcreteProducts.length : 0} продуктов с бетоном`);
+    if (hasProducts && window.availableConcreteProducts.length > 0) {
+        console.log("Доступные продукты:", window.availableConcreteProducts);
+    }
 
     // Объект с описаниями для каждого типа конструкции
     const descriptions = {
@@ -14,6 +24,14 @@ document.addEventListener('DOMContentLoaded', function () {
             <p><strong>Ленточный фундамент</strong> — тип фундамента, представляющий собой непрерывную ленточную основу под несущие стены здания. Он обеспечивает равномерное распределение нагрузки и подходит для большинства типов грунтов. Используя наш калькулятор, вы сможете точно рассчитать объем бетона для вашего ленточного фундамента, учитывая периметр, ширину и глубину.</p>
         `,
         // Добавьте другие описания конструкций здесь
+    };
+
+    // Словарь с рекомендуемыми марками бетона для разных типов конструкций
+    const recommendedConcreteTypes = {
+        'slab': ['М200', 'М250', 'М300'],
+        'column': ['М300', 'М350', 'М400'],
+        'foundation': ['М200', 'М250', 'М300'],
+        // Добавьте другие рекомендации для других типов конструкций
     };
 
     // Функция для отображения соответствующих полей формы
@@ -35,6 +53,11 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             // Если ничего не выбрано, показываем стандартное описание
             descriptionContent.innerHTML = '<p>Пожалуйста, выберите тип конструкции, чтобы увидеть описание.</p>';
+        }
+
+        // Скрываем рекомендации при смене типа конструкции
+        if (recommendationsContainer) {
+            recommendationsContainer.style.display = 'none';
         }
     }
 
@@ -82,6 +105,11 @@ document.addEventListener('DOMContentLoaded', function () {
             calculationResult.style.backgroundColor = '#f8d7da';
             calculationResult.style.color = '#721c24';
             calculationResult.textContent = 'Пожалуйста, заполните все поля корректно.';
+
+            // Скрываем блок рекомендаций при ошибке
+            if (recommendationsContainer) {
+                recommendationsContainer.style.display = 'none';
+            }
             return;
         }
 
@@ -94,5 +122,125 @@ document.addEventListener('DOMContentLoaded', function () {
         calculationResult.style.backgroundColor = '#d4edda';
         calculationResult.style.color = '#155724';
         calculationResult.textContent = `Необходимый объем бетона: ${volume} куб. м.`;
+
+        // Показываем рекомендации
+        if (recommendationsContainer) {
+            recommendationsContainer.style.display = 'block';
+
+            // Получаем контейнер для списка рекомендаций
+            const recommendationsList = document.getElementById('recommendations-list');
+
+            // Очищаем предыдущие рекомендации
+            if (recommendationsList) {
+                recommendationsList.innerHTML = '';
+
+                // Если нет доступных продуктов, предлагаем выбрать город
+                if (!hasProducts) {
+                    recommendationsList.innerHTML = '<li>Для просмотра рекомендаций необходимо <a href="#" id="open-city-modal">выбрать город</a></li>';
+
+                    // Добавляем обработчик для открытия модального окна выбора города
+                    const openCityBtn = document.getElementById('open-city-modal');
+                    if (openCityBtn) {
+                        openCityBtn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            if (typeof openCityModal === 'function') {
+                                openCityModal();
+                            }
+                        });
+                    }
+                    return;
+                }
+
+                // Получаем рекомендуемые типы для выбранной конструкции
+                const recommendedTypes = recommendedConcreteTypes[selectedType] || [];
+
+                // Отображаем доступные продукты, выделяя рекомендуемые
+                let foundProducts = false;
+
+                // Сначала отображаем рекомендуемые типы бетона
+                if (recommendedTypes.length > 0) {
+                    for (const product of window.availableConcreteProducts) {
+                        // Проверяем, соответствует ли продукт одному из рекомендуемых типов
+                        const isRecommended = recommendedTypes.some(type =>
+                            product.name.includes(type)
+                        );
+
+                        if (isRecommended) {
+                            foundProducts = true;
+                            const listItem = document.createElement('li');
+                            listItem.className = 'recommended-product';
+
+                            // Рассчитываем общую стоимость (цена за единицу * объем)
+                            const totalPrice = (product.price * volume).toFixed(2);
+
+                            const link = document.createElement('a');
+                            link.href = product.url;
+                            link.textContent = product.name;
+
+                            // Добавляем информацию о цене
+                            const priceInfo = document.createElement('span');
+                            priceInfo.className = 'price-info';
+                            priceInfo.innerHTML = `<br>Цена: ${product.price} руб/м³<br>Стоимость для объема ${volume} м³: <strong>${totalPrice} руб</strong>`;
+
+                            // Добавляем отметку "Рекомендуется"
+                            const recommendedBadge = document.createElement('span');
+                            recommendedBadge.className = 'recommended-badge';
+                            recommendedBadge.textContent = 'Рекомендуется';
+
+                            listItem.appendChild(recommendedBadge);
+                            listItem.appendChild(link);
+                            listItem.appendChild(priceInfo);
+                            recommendationsList.appendChild(listItem);
+                        }
+                    }
+                }
+
+                // Затем отображаем остальные доступные типы бетона
+                for (const product of window.availableConcreteProducts) {
+                    // Проверяем, соответствует ли продукт одному из рекомендуемых типов
+                    const isRecommended = recommendedTypes.some(type =>
+                        product.name.includes(type)
+                    );
+
+                    // Отображаем только те, которые не были отображены как рекомендуемые
+                    if (!isRecommended) {
+                        foundProducts = true;
+                        const listItem = document.createElement('li');
+
+                        // Рассчитываем общую стоимость (цена за единицу * объем)
+                        const totalPrice = (product.price * volume).toFixed(2);
+
+                        const link = document.createElement('a');
+                        link.href = product.url;
+                        link.textContent = product.name;
+
+                        // Добавляем информацию о цене
+                        const priceInfo = document.createElement('span');
+                        priceInfo.className = 'price-info';
+                        priceInfo.innerHTML = `<br>Цена: ${product.price} руб/м³<br>Стоимость для объема ${volume} м³: <strong>${totalPrice} руб</strong>`;
+
+                        listItem.appendChild(link);
+                        listItem.appendChild(priceInfo);
+                        recommendationsList.appendChild(listItem);
+                    }
+                }
+
+                // Если не найдено ни одного продукта
+                if (!foundProducts) {
+                    recommendationsList.innerHTML = '<li>В выбранном городе нет подходящих типов бетона для данной конструкции. <a href="#" id="open-city-modal">Выбрать другой город</a></li>';
+
+                    // Добавляем обработчик для открытия модального окна выбора города
+                    const openCityBtn = document.getElementById('open-city-modal');
+                    if (openCityBtn) {
+                        openCityBtn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            if (typeof openCityModal === 'function') {
+                                openCityModal();
+                            }
+                        });
+                    }
+                }
+            }
+        }
     });
 });

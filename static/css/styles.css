@@ -1356,15 +1356,80 @@ form#callback-form .agree-with-terms label {
     background-color: #113E71;
 }
 
+/* Стили для результата расчета */
 #calculation-result {
     margin-top: 20px;
-    padding: 15px;
-    border: 1px solid #28a745;
-    border-radius: 5px;
-    background-color: #d4edda;
-    color: #155724;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    border-radius: 4px;
     font-weight: bold;
     display: none; /* Скрыто по умолчанию */
+    border: 1px solid;
+}
+
+/* Стили для блока рекомендаций */
+.recommendations-container {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.recommendations-container h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 18px;
+}
+
+.recommendations-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 10px;
+}
+
+.recommendations-list li {
+    margin-bottom: 8px;
+    padding: 8px;
+    background-color: #fff;
+    border-radius: 4px;
+    border-left: 3px solid #28a745;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.recommendations-list li:hover {
+    transform: translateX(5px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.recommendations-list a {
+    color: #0066cc;
+    text-decoration: none;
+    display: block;
+    font-weight: 500;
+}
+
+.recommendations-list a:hover {
+    text-decoration: underline;
+}
+
+.no-city-selected {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #fff3cd;
+    border-left: 3px solid #ffc107;
+    border-radius: 4px;
+}
+
+.no-city-selected a {
+    color: #0066cc;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.no-city-selected a:hover {
+    text-decoration: underline;
 }
 
 /* Адаптивные стили */
@@ -1398,7 +1463,41 @@ form#callback-form .agree-with-terms label {
     .structure-description p {
         font-size: 14px;
     }
+
+    .recommendations-container h3 {
+        font-size: 16px;
+    }
+
+    .recommendations-list li {
+        padding: 6px;
+    }
 }
+
+/* Стили для информации о цене */
+.price-info {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.price-info strong {
+    color: #28a745;
+    font-size: 1.1em;
+}
+
+/* Улучшение отображения рекомендаций с ценами */
+.recommendations-list li {
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.recommendations-list a {
+    font-size: 1.05em;
+    margin-bottom: 5px;
+}
+
+
 
 /* Для устройств с шириной экрана до 480px (смартфоны) */
 @media screen and (max-width: 480px) {
@@ -1429,6 +1528,29 @@ form#callback-form .agree-with-terms label {
 
     .structure-description p {
         font-size: 13px;
+    }
+
+    .recommendations-list li {
+        padding: 5px;
+        margin-bottom: 5px;
+    }
+
+    .recommendations-container {
+        padding: 10px;
+    }
+
+    .price-info {
+        font-size: 0.85em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .price-info {
+        font-size: 0.8em;
+    }
+
+    .recommendations-list li {
+        padding: 8px;
     }
 }
 

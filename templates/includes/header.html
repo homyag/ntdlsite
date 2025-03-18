@@ -30,7 +30,7 @@
     <nav class="header__nav">
         <div class="header__menu">
             {% for m in menu %}
-                {% if m.children %}
+                {% if 'children' in m and m.children %}
                 <div class="menu__item dropdown">
                 <a class="menu__link dropdown__toggle" href="{% url m.url_name %}">
                 {{ m.title }}

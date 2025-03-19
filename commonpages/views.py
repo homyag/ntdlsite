@@ -98,10 +98,6 @@ def delivery(request):
 
 
 def concrete_calculator(request):
-    # Контекстный процессор city_context добавляет city_slug в контекст
-    # Нет необходимости добавлять его явно в context=data
-
-    # Получаем город из контекстного процессора с помощью сессии
     city_slug = request.session.get('city_slug', 'mariupol')
 
     # Переменная для хранения продуктов
@@ -112,16 +108,12 @@ def concrete_calculator(request):
         # Получаем город
         try:
             city = City.objects.get(slug=city_slug)
-            logger.info(f"Found city: {city.name} (ID: {city.id})")
-
             # Находим категорию бетона
             concrete_category = None
             try:
                 concrete_category = Category.objects.get(slug='beton')
-                logger.info(
-                    f"Found category 'beton': {concrete_category.name} (ID: {concrete_category.id})")
             except Category.DoesNotExist:
-                logger.warning("Category 'beton' not found")
+                pass
 
             # Если категория найдена, ищем продукты
             products_list = []
@@ -131,8 +123,6 @@ def concrete_calculator(request):
                     city=city,
                     category=concrete_category
                 )
-                logger.info(
-                    f"Found {products.count()} products in category 'beton'")
 
                 # Добавляем все продукты в список
                 products_list.extend(list(products))
@@ -141,38 +131,22 @@ def concrete_calculator(request):
                 subcategories = Category.objects.filter(
                     parent=concrete_category)
                 if subcategories.exists():
-                    logger.info(f"Found {subcategories.count()} subcategories")
-
                     for subcat in subcategories:
-                        logger.info(f"Processing subcategory: {subcat.name}")
-
                         subcat_products = Product.objects.filter(
                             city=city,
                             category=subcat
                         )
-
-                        logger.info(
-                            f"Found {subcat_products.count()} products in subcategory {subcat.name}")
                         products_list.extend(list(subcat_products))
 
             # Если категория не найдена или нет продуктов, ищем по названию
             if not products_list:
-                logger.info(
-                    "No products found in 'beton' category, searching by name...")
-
                 # Ищем товары, в названии которых есть 'бетон' или 'цемент'
                 name_products = Product.objects.filter(
                     city=city
                 ).filter(
                     Q(name__icontains='бетон') | Q(name__icontains='цемент')
                 )
-
-                logger.info(
-                    f"Found {name_products.count()} products by name search")
                 products_list.extend(list(name_products))
-
-            # Выводим общее количество найденных продуктов
-            logger.info(f"Total products found: {len(products_list)}")
 
             # Преобразуем продукты в нужный формат
             for product in products_list:
@@ -185,47 +159,14 @@ def concrete_calculator(request):
                         'price': price_float
                     })
                 except (ValueError, TypeError, AttributeError) as e:
-                    logger.error(
-                        f"Error processing product {product.id} - {product.name}: {e}")
+                    pass
 
         except City.DoesNotExist:
-            logger.error(f"City with slug '{city_slug}' not found")
             # Если город не найден, оставляем список пустым
             pass
 
-        except Exception as e:
-            logger.error(f"Unexpected error: {e}")
-
-    # Если после всех поисков продуктов не найдено, добавляем тестовые продукты для бесперебойной работы
-    if not concrete_products:
-        logger.warning("No concrete products found, adding test products")
-        concrete_products = [
-            {
-                'name': "Бетон М100",
-                'url': f"/catalog/{city_slug}/beton/beton-m100/",
-                'price': 40000.0
-            },
-            {
-                'name': "Бетон М200",
-                'url': f"/catalog/{city_slug}/beton/beton-m200/",
-                'price': 45000.0
-            },
-            {
-                'name': "Бетон М250",
-                'url': f"/catalog/{city_slug}/beton/beton-m250/",
-                'price': 50000.0
-            },
-            {
-                'name': "Бетон М300",
-                'url': f"/catalog/{city_slug}/beton/beton-m300/",
-                'price': 55000.0
-            },
-            {
-                'name': "Бетон М350",
-                'url': f"/catalog/{city_slug}/beton/beton-m350/",
-                'price': 60000.0
-            },
-        ]
+        except Exception:
+            pass
 
     # Сериализуем список в JSON для безопасной передачи в JavaScript
     concrete_products_json = json.dumps(concrete_products)

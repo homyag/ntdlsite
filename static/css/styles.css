@@ -1531,7 +1531,7 @@ form#callback-form .agree-with-terms label {
     }
 
     .recommendations-list li {
-        padding: 5px;
+        padding: 8px;
         margin-bottom: 5px;
     }
 
@@ -1540,17 +1540,7 @@ form#callback-form .agree-with-terms label {
     }
 
     .price-info {
-        font-size: 0.85em;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .price-info {
         font-size: 0.8em;
-    }
-
-    .recommendations-list li {
-        padding: 8px;
     }
 }
 

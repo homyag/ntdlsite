@@ -13,10 +13,10 @@ API_TOKEN = os.environ.get('API_TOKEN')
 
 RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY')
 
-DEBUG = False
+DEBUG = True
 
-#ALLOWED_HOSTS = ['tdleningrad.ru', '95.163.240.254']
-ALLOWED_HOSTS = ['tdleningrad.ru']
+ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['tdleningrad.ru']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -84,12 +84,6 @@ WSGI_APPLICATION = 'new_tdl_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('DB_ENGINE'),
@@ -164,7 +158,7 @@ REST_FRAMEWORK = {
     ]
 }
 # включить на проде
-CSRF_TRUSTED_ORIGINS = ['https://*.tdleningrad.ru']
+# CSRF_TRUSTED_ORIGINS = ['https://*.tdleningrad.ru']
 
 SITE_ID = 1
 
@@ -212,8 +206,8 @@ CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 #    },
 #}
 
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-X_FRAME_OPTIONS = 'DENY'
-
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# включить на проде
+# SECURE_BROWSER_XSS_FILTER = True
+# SECURE_CONTENT_TYPE_NOSNIFF = True
+# X_FRAME_OPTIONS = 'DENY'
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

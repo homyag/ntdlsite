@@ -49,3 +49,11 @@ media
 .AppleDouble
 .LSOverride
 ._*
+
+
+#Project
+.env
+celerybeat-schedule
+db.json
+tdl.conf
+/logs

@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% load static %}
+{% block api %}
+    <script src="{% static 'js/contactsMapChanger.js' %}"
+            type="text/javascript"></script>
+    <script src="{% static 'js/feedbackForm.js' %}"
+            type="text/javascript"></script>
+{% endblock %}
+{% block content %}
+    <section class="contact-header">
+        <h1>Контакты бетонного завода ТД Лениградский</h1>
+        <p>Оставьте заявку на консультацию</p>
+    </section>
+
+    <section class="contact-section">
+        <div class="keep-in-touch">
+            <h2>Оставайтесь на связи</h2>
+            <p>Мы всегда готовы помочь вам с любыми вопросами, связанными с
+                бетонными работами и строительством. Оставайтесь на связи,
+                чтобы быть в курсе последних новостей и специальных предложений
+                от нашего завода.</p>
+            <p>Вы также можете самостоятельно рассчитать доставку до
+                объекта или узнать необходимый для вашего проекта объем
+                бетона в нашем
+                калькуляторе</p>
+            <div class="button-container">
+                <a href="{% url 'delivery' %}"
+                   class="hero__button" type="button">
+                    Рассчитать доставку
+                </a>
+                <a href="{% url 'concrete_calculator' %}"
+                   class="hero__button" type="button">
+                    Калькулятор бетона
+                </a>
+            </div>
+        </div>
+        <div class="contact-form-container">
+            <h2>Оставить заявку менеджеру</h2>
+            <form id="feedback-form" method="post"
+                  data-url="{% url 'submit_feedback' %}">
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Ваше имя" required>
+                <input type="email" name="email" placeholder="Ваш e-mail"
+                       required>
+                <input type="text" name="phone" placeholder="Ваш телефон"
+                       required>
+                <select name="product" required>
+                    <option value="" disabled selected>Выберите товар</option>
+                    {% for product in products %}
+                        <option value="{{ product.id }}">{{ product.name }}</option>
+                    {% endfor %}
+                </select>
+                <textarea name="message" placeholder="Ваше сообщение"
+                          required></textarea>
+                {#                <div>#}
+                {#                    <input type="checkbox" name="agree_to_terms" required>#}
+                {#                    <label for="agree_to_terms">Согласие на обработку <a#}
+                {#                            href="{% url 'privacy' %}">персональных данных</a></label>#}
+                {#                </div>#}
+                <div class="agree-container">
+                    <label class="custom-checkbox">
+                        <input type="checkbox" name="agree_to_terms" required
+                               class="checkbox-input" checked>
+                        <span class="checkmark"></span>
+                        <span class="checkbox-text">
+            Согласие на обработку 
+            <a href="{% url 'privacy' %}" class="privacy-link">персональных данных</a>
+        </span>
+                    </label>
+                </div>
+                <button type="submit" class="btn-primary">Отправить
+                    заявку
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Модальное окно для подтверждения заявки -->
+    <div id="success-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p>Заявка принята. Наш менеджер свяжется с Вами в ближайшее
+                время.</p>
+        </div>
+    </div>
+
+    <section class="locations">
+        <h2>Адреса ТД Ленинградский</h2>
+        <div class="location-card"
+             data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3Ad1889657e89d58406bc643319e36a03292ab1a559f16cb84563d106d2e847a95&amp;source=constructor">
+            <h3>Санкт-Петербург</h3>
+            <p>+7(949)6242644</p>
+            <p>info@tdleningrad.ru</p>
+            <p>улица Свободы, 57Д, Красное Село, Санкт-Петербург</p>
+        </div>
+        <div class="location-card"
+             data-map-url=https://yandex.ru/map-widget/v1/?um=constructor%3A219534a869e753ce396b9284a4d1e67d5a12600f543eacb8abcd7098f2557ef1&amp;source=constructor">
+            <h3>Мариуполь</h3>
+            <p>+7(949)6242644</p>
+            <p>info@tdleningrad.ru</p>
+            <p>улица Сортировочная дом 1, Мариуполь</p>
+        </div>
+        <div class="location-card"
+             data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3A5c99cbae86232571aa8a82f28b925a8ebf9827c6a31fdfd46913cdb52deeaf57&amp;source=constructor">
+            <h3>Регион доставки</h3>
+            <p>+7(949)6242644</p>
+            <p>info@tdleningrad.ru</p>
+            <p>ДНР, ЛНР</p>
+        </div>
+    </section>
+
+    <section class="map">
+        <iframe id="map-frame"
+                src="https://yandex.ru/map-widget/v1/?um=constructor%3A1f6ab6d20d724b84b9429d0528d2aa6e8c20abec0fd4be523dbcd16d4ce88297&amp;source=constructor"
+                width="100%" height="400" frameborder="0"
+                loading="lazy"></iframe>
+    </section>
+
+    <noindex>
+        <!-- Модальное окно для подтверждения заявки -->
+        <div id="success-feedback-form-modal" class="modal"
+             style="display:none;">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <p>Спасибо за заявку. Наш менеджер свяжется с Вами в
+                    ближайшее время.</p>
+            </div>
+        </div>
+    </noindex>
+{% endblock %}

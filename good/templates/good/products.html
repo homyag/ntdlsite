@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+{% block sidebar %}
+    <div class="goods__sections">
+    {% include "good/includes/sidebar.html" %}
+{% endblock %}
+{% block content %}
+    <div class="goods__sections--content">
+            <!-- Хлебные крошки -->
+    {% include 'good/includes/breadcrumbs.html' %}
+    <!-- Конец хлебных крошек -->
+        {% include "good/includes/mobile_menu.html" %}
+        <h1>{{ title }}</h1>
+        {% if short_description %}
+            <div class="catalog__text">
+                {{ short_description }}
+            </div>
+        {% else %}
+            <div class="catalog__text">
+                Наша компания предлагает широкий ассортимент строительных
+                материалов, которые идеально подходят для любого проекта — от
+                небольших частных строек до крупных промышленных объектов. Мы
+                гарантируем высокое качество продукции и своевременную доставку
+                на
+                объект.
+            </div>
+        {% endif %}
+
+        <div class="products__list">
+            {% if products %}
+                {% for p in products %}
+                    <div class="goods__products_cards">
+                        <div class="goods__product_card--card">
+                            {% if p.img %}
+                                <img src="{{ p.img.url }}" alt="{{ p.name }}">
+                            {% else %}
+                                <img src="{% static 'images/mainpage/zavod.webp' %}"
+                                     alt="{{ p.name }}">
+                            {% endif %}
+                            <a href="{% url 'product' city_slug=city_slug category_slug=p.category.slug product_slug=p.slug %}">
+                                <p class="goods__product_card--card--name">{{ p.name|truncatewords:5 }}</p>
+                            </a>
+                            {% autoescape off %}
+                                <p>{{ p.product_card_property|linebreaks }}</p>
+                            {% endautoescape %}
+                            <div class="goods__product_card--card--buttons">
+                                <button class="hero__button--popup"
+                                        type="button">
+                                    Заказать {{ p.name|truncatewords:2 }}
+                                </button>
+                                <a href="{% url 'product' city_slug=city_slug category_slug=p.category.slug product_slug=p.slug %}"
+                                   class="hero__button"
+                                   type="button">
+                                    Подробнее
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>К сожалению товаров указанной категории в выбранном
+                    регионе нет. Пожалуйста, выберите другой регион или
+                    другую категорию.</p>
+            {% endif %}
+        </div>
+
+
+        {% if description %}
+            <div class="category-description">
+                {{ description|linebreaks }}
+            </div>
+        {% endif %}
+
+    </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+    {% if show_city_modal %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var cityModal = document.getElementById('city-modal');
+                if (cityModal) {
+                    cityModal.style.display = 'block';
+                }
+            });
+        </script>
+    {% endif %}
+{% endblock %}

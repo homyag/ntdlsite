@@ -1,0 +1,10 @@
+User-Agent: *
+Disallow: /tdladmin/
+Disallow: /shop/
+Disallow: /privacy/
+Disallow: /static/
+Allow: /static/images/
+
+Clean-param: etext&yadiscount
+
+Sitemap: https://tdleningrad.ru/sitemap.xml

@@ -35,6 +35,7 @@
     <link type="text/css" href="{% static 'css/styles.css' %}"
           rel="stylesheet">
     <link type="text/css" href="{% static 'css/modal.css' %}" rel="stylesheet">
+     <link type="text/css" href="{% static 'css/telegram-popup.css' %}" rel="stylesheet">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,6 +98,7 @@
     {% block footer %}
         {% include 'includes/footer.html' %}
     {% endblock %}
+    {% include 'includes/telegram-popup.html' %}
 </div>
 <!-- Передача данных о городах -->
 {{ city_slugs|json_script:'cities-data'|safe }}
@@ -107,6 +109,7 @@
 <script src="{% static 'js/header/headerCallbackPopup.js' %}"></script>
 <script src="{% static 'js/header/cityDropdown.js' %}"></script>
 <script src="https://www.google.com/recaptcha/api.js?render=6LchN2EqAAAAAFEYLgQZmZLrF_czptpdExkUsusM"></script>
+<script src="{% static 'js/telegram-popup.js' %}"></script>
 {% block extra_scripts %}
 {% endblock %}
 </body>

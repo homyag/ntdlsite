@@ -52,18 +52,13 @@
                 </select>
                 <textarea name="message" placeholder="Ваше сообщение"
                           required></textarea>
-                {#                <div>#}
-                {#                    <input type="checkbox" name="agree_to_terms" required>#}
-                {#                    <label for="agree_to_terms">Согласие на обработку <a#}
-                {#                            href="{% url 'privacy' %}">персональных данных</a></label>#}
-                {#                </div>#}
                 <div class="agree-container">
                     <label class="custom-checkbox">
                         <input type="checkbox" name="agree_to_terms" required
                                class="checkbox-input" checked>
                         <span class="checkmark"></span>
                         <span class="checkbox-text">
-            Согласие на обработку 
+            Согласие на обработку
             <a href="{% url 'privacy' %}" class="privacy-link">персональных данных</a>
         </span>
                     </label>
@@ -87,18 +82,18 @@
     <section class="locations">
         <h2>Адреса ТД Ленинградский</h2>
         <div class="location-card"
-             data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3Ad1889657e89d58406bc643319e36a03292ab1a559f16cb84563d106d2e847a95&amp;source=constructor">
-            <h3>Санкт-Петербург</h3>
-            <p>+7(949)6242644</p>
-            <p>info@tdleningrad.ru</p>
-            <p>улица Свободы, 57Д, Красное Село, Санкт-Петербург</p>
-        </div>
-        <div class="location-card"
              data-map-url=https://yandex.ru/map-widget/v1/?um=constructor%3A219534a869e753ce396b9284a4d1e67d5a12600f543eacb8abcd7098f2557ef1&amp;source=constructor">
             <h3>Мариуполь</h3>
             <p>+7(949)6242644</p>
             <p>info@tdleningrad.ru</p>
             <p>улица Сортировочная дом 1, Мариуполь</p>
+        </div>
+        <div class="location-card"
+             data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3Ad1889657e89d58406bc643319e36a03292ab1a559f16cb84563d106d2e847a95&amp;source=constructor">
+            <h3>Санкт-Петербург</h3>
+            <p>+7(949)6242644</p>
+            <p>info@tdleningrad.ru</p>
+            <p>улица Свободы, 57Д, Красное Село, Санкт-Петербург</p>
         </div>
         <div class="location-card"
              data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3A5c99cbae86232571aa8a82f28b925a8ebf9827c6a31fdfd46913cdb52deeaf57&amp;source=constructor">

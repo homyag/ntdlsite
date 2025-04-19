@@ -828,8 +828,6 @@ form#callback-form .agree-with-terms label {
     padding: 20px;
     background: #f5f5f5;
     border-radius: 50px;
-    /*border: 2px solid red;*/
-    /*flex-grow: 1;*/
 }
 
 .about__section__img, .about-text-and-button {
@@ -1034,6 +1032,62 @@ form#callback-form .agree-with-terms label {
     .advantages__details {
         flex-direction: column;
         align-items: center;
+    }
+}
+
+/*HOME CTA SECTION*/
+.home-cta-section {
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+.home-cta-container {
+    background: #f5f5f5;
+    border-radius: 30px;
+    padding: 30px;
+    text-align: center;
+}
+
+.home-cta-container h2 {
+    font-size: 38px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-top: 10px;
+    text-align: center;
+    color: rgb(17, 62, 113);
+}
+
+.home-cta-container p {
+    margin-bottom: 30px;
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Адаптивность для мобильных устройств */
+@media screen and (max-width: 768px) {
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cta-buttons .hero__button,
+    .cta-buttons .hero__button--popup {
+        margin-bottom: 10px;
+    }
+
+    .home-cta-container h2 {
+        font-size: 28px;
     }
 }
 
@@ -1956,94 +2010,425 @@ form#callback-form .agree-with-terms label {
 
 
 /*ABOUT PAGE*/
-.about__page_block1 {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    font-size: 20px;
+/* Основные стили для страницы О компании */
+.about-page-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 20px;
+    color: #113E71;
 }
 
-.about__page_block1_text {
-    width: 50%;
+/* Стили для всех секций */
+.about-hero,
+.about-company,
+.about-features,
+.about-production,
+.about-logistics,
+.about-clients,
+.about-mission,
+.about-digital,
+.about-social,
+.about-cta {
+    margin-bottom: 60px;
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
 }
 
-.about__page_block1_img {
-    width: 50%;
-    display: flex;
-    justify-content: end;
-    align-items: end;
-}
-
-.about__page_block1_img img {
-    width: 90%;
-    height: auto;
-    border-radius: 50px;
-}
-
-.about__page_block1_text ul li {
-    margin-top: 20px;
-}
-
-.about__page__icons {
-    display: flex;
-    gap: 20px;
-    justify-content: space-between;
-    padding: 0;
-    margin: 0;
-}
-
-.about__page__icons_text_and_icon {
-    display: flex;
-    width: 30%;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 10px;
-}
-
-.about__page__icons img {
-    width: 80px;
-    height: auto;
-    object-fit: cover;
-}
-
-.about__page_block2 ul li {
-    margin-top: 20px;
-}
-
-.about__page_block3 ul li {
-    margin-top: 20px;
-}
-
-@media screen and (max-width: 768px) {
-    .about__page_block1 {
-        flex-direction: column-reverse;
+/* Анимация для секций */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
     }
-    .about__page_block1_img {
-        width: 100%;
-        justify-content: center;
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Установка задержек для анимации */
+.about-hero { animation-delay: 0.1s; }
+.about-company { animation-delay: 0.2s; }
+.about-features { animation-delay: 0.3s; }
+.about-production { animation-delay: 0.4s; }
+.about-logistics { animation-delay: 0.5s; }
+.about-clients { animation-delay: 0.6s; }
+.about-mission { animation-delay: 0.7s; }
+.about-digital { animation-delay: 0.8s; }
+.about-social { animation-delay: 0.9s; }
+.about-cta { animation-delay: 1s; }
+
+/* Стили для заголовков */
+.about-page-container h1,
+.about-company h2,
+.about-production h2,
+.about-logistics h2,
+.about-clients h2,
+.mission-content h2,
+.digital-container h2,
+.social-container h2,
+.cta-container h2 {
+    position: relative;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    color: #113E71;
+}
+
+.about-page-container h1 {
+    font-size: 36px;
+    text-align: center;
+}
+
+.about-page-container h2 {
+    font-size: 32px;
+}
+
+.about-page-container h1::after,
+.about-company h2::after,
+.about-production h2::after,
+.about-logistics h2::after,
+.about-clients h2::after,
+.mission-content h2::after,
+.digital-container h2::after,
+.social-container h2::after,
+.cta-container h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 3px;
+    background-color: #3698D4;
+}
+
+.about-page-container h1::after,
+.about-clients h2::after,
+.mission-content h2::after,
+.cta-container h2::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.about-clients h2,
+.mission-content h2,
+.cta-container h2 {
+    text-align: center;
+}
+
+/* Секция Hero */
+.about-hero-content {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.about-hero-text {
+    flex: 1;
+}
+
+.about-hero-text p {
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+.about-hero-image {
+    flex: 1;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.about-hero-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.about-hero-image img:hover {
+    transform: scale(1.02);
+}
+
+/* Секция О компании */
+.about-company-content p,
+.production-content p,
+.logistics-content p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+/* Секция Особенности */
+.features-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.feature-item {
+    flex: 1;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 30px 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.feature-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+    margin-bottom: 20px;
+}
+
+.feature-icon img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.feature-item h3 {
+    margin-bottom: 15px;
+    color: #113E71;
+    font-size: 22px;
+}
+
+.feature-item p {
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Секция Производство и Логистика */
+.production-content,
+.logistics-content {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Секция Клиенты */
+.clients-container {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.clients-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.client-type {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+}
+
+.client-type:hover {
+    transform: translateY(-5px);
+}
+
+.client-icon {
+    margin-bottom: 15px;
+}
+
+.client-type h3 {
+    font-size: 18px;
+    color: #113E71;
+    margin-bottom: 10px;
+}
+
+.client-type p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.4;
+}
+
+.clients-benefits p {
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: center;
+    color: #113E71;
+}
+
+/* Секция Миссия */
+.about-mission {
+    background-color: #113E71;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.mission-content h2 {
+    color: #fff;
+}
+
+.mission-content p {
+    color: #fff;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+/* Секции Цифровые технологии и Социальная ответственность */
+.digital-container,
+.social-container {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.digital-container p,
+.social-container p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Секция CTA */
+.cta-container {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.cta-container p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-tagline {
+    font-size: 22px !important;
+    color: #3698D4;
+    margin-bottom: 30px !important;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.cta-buttons .hero__button,
+.cta-buttons .hero__button--popup {
+    padding: 15px 30px;
+    font-size: 18px;
+}
+
+/* Адаптивные стили */
+@media (max-width: 992px) {
+    .about-hero-content {
+        flex-direction: column;
+    }
+
+    .clients-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .features-grid {
+        flex-direction: column;
+    }
+
+    .about-mission {
+        padding: 30px;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
         align-items: center;
     }
-    .about__page_block1_text {
-        width: 100%;
+
+    .about-hero h1 {
+        font-size: 28px;
+    }
+
+    .about-company h2,
+    .about-production h2,
+    .about-logistics h2,
+    .about-clients h2,
+    .mission-content h2,
+    .digital-container h2,
+    .social-container h2,
+    .cta-container h2 {
+        font-size: 26px;
+    }
+
+    .feature-item h3 {
+        font-size: 20px;
+    }
+
+    .clients-list {
+        grid-template-columns: 1fr;
     }
 }
 
-@media screen and (max-width: 425px) {
-    .about__page__icons_text_and_icon {
-        font-size: 14px;
+@media (max-width: 480px) {
+    .about-hero h1 {
+        font-size: 24px;
+    }
+
+    .about-company h2,
+    .about-production h2,
+    .about-logistics h2,
+    .about-clients h2,
+    .mission-content h2,
+    .digital-container h2,
+    .social-container h2,
+    .cta-container h2 {
+        font-size: 22px;
+    }
+
+    .about-hero-text p,
+    .about-company-content p,
+    .production-content p,
+    .logistics-content p,
+    .mission-content p,
+    .digital-container p,
+    .social-container p,
+    .cta-container p {
+        font-size: 16px;
+    }
+
+    .feature-item {
+        padding: 20px 15px;
+    }
+
+    .feature-icon img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .client-type {
+        padding: 15px;
     }
 }
+
 
 /*CONTACT PAGE*/
-/*.contact-header {*/
-/*    background: url('/static/images/background/zavod_back.jpeg') no-repeat center center/cover;*/
-/*    color: white;*/
-/*    text-align: center;*/
-/*    padding: 100px 20px;*/
-/*    margin-top: 21px;*/
 
-/*}*/
 .contact-header {
     position: relative; /* Необходимо для позиционирования псевдоэлемента */
     background: url('/static/images/background/zavod_back.jpeg') no-repeat center center/cover;
@@ -2263,8 +2648,9 @@ form#callback-form .agree-with-terms label {
 }
 
 .map {
-    margin: 20px;
-    padding: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .map iframe {

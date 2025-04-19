@@ -1,84 +1,135 @@
 {% extends "base.html" %}
 {% load static %}
-{% block sidebar %}
-    <div class="goods__sections">
-    {% include "good/includes/sidebar.html" %}
-{% endblock %}
+{% load good_filters %}
+{#{% block sidebar %}#}
+{#    <div class="goods__sections">#}
+{#    {% include "good/includes/sidebar.html" %}#}
+{#{% endblock %}#}
 {% block content %}
-    <div class="goods__sections--content">
-            <!-- Хлебные крошки -->
-    {% include 'good/includes/breadcrumbs.html' %}
-    <!-- Конец хлебных крошек -->
-        {% include "good/includes/mobile_menu.html" %}
-        <h1>{{ title }}</h1>
-        {% if short_description %}
-            <div class="catalog__text">
-                {{ short_description }}
-            </div>
-        {% else %}
-            <div class="catalog__text">
-                Наша компания предлагает широкий ассортимент строительных
-                материалов, которые идеально подходят для любого проекта — от
-                небольших частных строек до крупных промышленных объектов. Мы
-                гарантируем высокое качество продукции и своевременную доставку
-                на
-                объект.
-            </div>
-        {% endif %}
+    <!-- PRODUCTS HERO SECTION -->
+    <section class="catalog-hero">
+        <div class="catalog-hero-content">
+            <h1>{{ title }}</h1>
+            <p>Высококачественные строительные материалы для любого проекта</p>
+        </div>
+    </section>
 
-        <div class="products__list">
-            {% if products %}
-                {% for p in products %}
-                    <div class="goods__products_cards">
-                        <div class="goods__product_card--card">
-                            {% if p.img %}
-                                <img src="{{ p.img.url }}" alt="{{ p.name }}">
-                            {% else %}
-                                <img src="{% static 'images/mainpage/zavod.webp' %}"
-                                     alt="{{ p.name }}">
-                            {% endif %}
-                            <a href="{% url 'product' city_slug=city_slug category_slug=p.category.slug product_slug=p.slug %}">
-                                <p class="goods__product_card--card--name">{{ p.name|truncatewords:5 }}</p>
-                            </a>
-                            {% autoescape off %}
-                                <p>{{ p.product_card_property|linebreaks }}</p>
-                            {% endautoescape %}
-                            <div class="goods__product_card--card--buttons">
-                                <button class="hero__button--popup"
-                                        type="button">
-                                    Заказать {{ p.name|truncatewords:2 }}
-                                </button>
-                                <a href="{% url 'product' city_slug=city_slug category_slug=p.category.slug product_slug=p.slug %}"
-                                   class="hero__button"
-                                   type="button">
-                                    Подробнее
-                                </a>
+    <!--PRODUCTS MAIN CONTENT -->
+    <div class="catalog-container">
+        <!-- DESKTOP SIDEBAR -->
+        <aside class="catalog-sidebar">
+            <div class="sidebar-box">
+                <h3 class="sidebar-title">Категории</h3>
+                <ul class="category-list">
+                    {% if category_selected == 0 or category_selected is None %}
+                        <li>
+                            <a href="{% url 'catalog' city_slug=city_slug %}" class="active">Все категории</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{% url 'catalog' city_slug=city_slug %}">Все категории</a>
+                        </li>
+                    {% endif %}
+
+                    {% load good_tags %}
+                    {% show_categories city_slug=city_slug category_selected=category_selected %}
+                </ul>
+            </div>
+        </aside>
+
+        <!-- CATALOG MAIN CONTENT -->
+        <div class="catalog-content">
+            <!-- MOBILE CATEGORY SELECTOR -->
+            <div class="mobile-category-selector">
+                <!-- MOBILE MENU ADD -->
+                {% include "good/includes/mobile_menu.html" %}
+            </div>
+
+            <!-- BREADCRUMBS AND TITLE -->
+            <div class="catalog-header">
+                <!-- BREADCRUMBS -->
+                {% include 'good/includes/breadcrumbs.html' %}
+
+                <h1 class="catalog-title">{{ title }}</h1>
+
+                {% if short_description %}
+                    <div class="catalog-description">
+                        {{ short_description }}
+                    </div>
+                {% else %}
+                    <div class="catalog-description">
+                        <p>Наша компания предлагает широкий ассортимент строительных материалов, которые идеально
+                            подходят для любого проекта — от небольших частных строек до крупных промышленных объектов.
+                            Мы гарантируем высокое качество продукции и своевременную доставку на объект.</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- PRODUCTS LIST -->
+            <div class="products-grid">
+                {% if products %}
+                    {% for p in products %}
+                        <div class="product-card">
+                            <div class="product-image">
+                                {% if p.img %}
+                                    <img src="{{ p.img.url }}" alt="{{ p.name }}">
+                                {% else %}
+                                    <img src="{% static 'images/mainpage/zavod.webp' %}" alt="{{ p.name }}">
+                                {% endif %}
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-name">
+                                    <a href="{% url 'product' city_slug=city_slug category_slug=p.category.slug product_slug=p.slug %}">
+                                        {{ p.name }}
+                                    </a>
+                                </h3>
+
+                                <div class="product-price">
+                                    <strong>{{ p.price }} руб/ед</strong>
+                                </div>
+
+                                {% if p.product_card_property %}
+                                    <div class="product-properties">
+                                        {% for property_line in p.product_card_property.split|slice:":4" %}
+                                            <div class="product-property">{{ property_line|format_property|safe }}</div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <div class="product-actions">
+                                    <button class="btn-order hero__button--popup" type="button">
+                                        Заказать
+                                    </button>
+                                    <a href="{% url 'product' city_slug=city_slug category_slug=p.category.slug product_slug=p.slug %}"
+                                       class="btn-details">
+                                        Подробнее
+                                    </a>
+                                </div>
                             </div>
                         </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-products">
+                        <p>К сожалению, товаров указанной категории в выбранном регионе нет. Пожалуйста, выберите другой
+                            регион или другую категорию.</p>
                     </div>
-                {% endfor %}
-            {% else %}
-                <p>К сожалению товаров указанной категории в выбранном
-                    регионе нет. Пожалуйста, выберите другой регион или
-                    другую категорию.</p>
+                {% endif %}
+            </div>
+
+            <!-- CATEGORY DESCRIPTION -->
+            {% if description %}
+                <div class="category-description">
+                    <h2>Подробнее о категории</h2>
+                    {{ description|linebreaks }}
+                </div>
             {% endif %}
         </div>
-
-
-        {% if description %}
-            <div class="category-description">
-                {{ description|linebreaks }}
-            </div>
-        {% endif %}
-
-    </div>
     </div>
 {% endblock %}
 
 {% block extra_scripts %}
     {% if show_city_modal %}
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function () {
                 var cityModal = document.getElementById('city-modal');
                 if (cityModal) {
                     cityModal.style.display = 'block';

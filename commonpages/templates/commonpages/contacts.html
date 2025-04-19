@@ -7,119 +7,197 @@
             type="text/javascript"></script>
 {% endblock %}
 {% block content %}
-    <section class="contact-header">
-        <h1>Контакты бетонного завода ТД Лениградский</h1>
-        <p>Оставьте заявку на консультацию</p>
+ <!-- Hero section -->
+    <section class="contact-hero">
+        <div class="contact-hero-content">
+            <h1>Контакты бетонного завода ТД Ленинградский</h1>
+            <p>Свяжитесь с нами для получения качественного бетона и строительных материалов</p>
+            <button class="contact-cta hero__button--popup">Получить консультацию</button>
+        </div>
     </section>
 
-    <section class="contact-section">
-        <div class="keep-in-touch">
-            <h2>Оставайтесь на связи</h2>
-            <p>Мы всегда готовы помочь вам с любыми вопросами, связанными с
-                бетонными работами и строительством. Оставайтесь на связи,
-                чтобы быть в курсе последних новостей и специальных предложений
-                от нашего завода.</p>
-            <p>Вы также можете самостоятельно рассчитать доставку до
-                объекта или узнать необходимый для вашего проекта объем
-                бетона в нашем
-                калькуляторе</p>
-            <div class="button-container">
-                <a href="{% url 'delivery' %}"
-                   class="hero__button" type="button">
-                    Рассчитать доставку
-                </a>
-                <a href="{% url 'concrete_calculator' %}"
-                   class="hero__button" type="button">
-                    Калькулятор бетона
-                </a>
+    <!-- Form and information section -->
+    <div class="contact-sections">
+        <div class="contact-section-left">
+            <div class="contact-card">
+                <h2>Как с нами связаться</h2>
+                <p>Связаться с нами — просто. Мы всегда на связи, готовы ответить на вопросы, рассчитать объёмы материалов, подобрать оптимальное решение под ваш строительный проект.</p>
+
+                <div class="contact-ways">
+                    <h3>Вы можете:</h3>
+                    <ul>
+                        <li>Позвонить по телефону, указанному на сайте</li>
+                        <li>Написать в WhatsApp или Telegram
+                            <div class="messenger-buttons">
+                                <a href="https://wa.me/+79496242644" target="_blank" class="messenger-btn whatsapp-btn">
+                                    <img src="{% static 'images/icons/footer__whatsapp.svg' %}" alt="WhatsApp">
+                                    WhatsApp
+                                </a>
+                                <a href="https://t.me/tdleningradsky" target="_blank" class="messenger-btn telegram-btn">
+                                    <img src="{% static 'images/icons/footer__telegram.svg' %}" alt="Telegram">
+                                    Telegram
+                                </a>
+                            </div>
+                        </li>
+                        <li>Оставить заявку через форму на сайте — мы перезвоним в течение 15 минут</li>
+                        <li>Приехать к нам в офис или на производство — схема проезда доступна ниже</li>
+                    </ul>
+                    <p>Наши менеджеры подробно проконсультируют, примут заказ и организуют оперативную доставку. Мы ценим ваше время и стремимся к максимальной эффективности общения.</p>
+                </div>
+
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <img src="{% static 'images/icons/telephone-inbound.svg' %}" alt="Телефон">
+                        </div>
+                        <div class="contact-info">
+                            <h4>Телефон</h4>
+                            <a href="tel:+79496242644">+7 (949) 624-2644</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <img src="{% static 'images/icons/footer__mail.svg' %}" alt="Email">
+                        </div>
+                        <div class="contact-info">
+                            <h4>Email</h4>
+                            <a href="mailto:info@tdleningrad.ru">info@tdleningrad.ru</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <img src="{% static 'images/icons/footer__telegram.svg' %}" alt="Telegram">
+                        </div>
+                        <div class="contact-info">
+                            <h4>Telegram</h4>
+                            <a href="https://t.me/tdleningradsky" target="_blank">@tdleningradsky</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <img src="{% static 'images/icons/footer__whatsapp.svg' %}" alt="WhatsApp">
+                        </div>
+                        <div class="contact-info">
+                            <h4>WhatsApp</h4>
+                            <a href="https://wa.me/+79496242644" target="_blank">+7 (949) 624-2644</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="contact-form-container">
-            <h2>Оставить заявку менеджеру</h2>
-            <form id="feedback-form" method="post"
-                  data-url="{% url 'submit_feedback' %}">
-                {% csrf_token %}
-                <input type="text" name="name" placeholder="Ваше имя" required>
-                <input type="email" name="email" placeholder="Ваш e-mail"
-                       required>
-                <input type="text" name="phone" placeholder="Ваш телефон"
-                       required>
-                <select name="product" required>
-                    <option value="" disabled selected>Выберите товар</option>
-                    {% for product in products %}
-                        <option value="{{ product.id }}">{{ product.name }}</option>
-                    {% endfor %}
-                </select>
-                <textarea name="message" placeholder="Ваше сообщение"
-                          required></textarea>
-                <div class="agree-container">
-                    <label class="custom-checkbox">
-                        <input type="checkbox" name="agree_to_terms" required
-                               class="checkbox-input" checked>
-                        <span class="checkmark"></span>
-                        <span class="checkbox-text">
-            Согласие на обработку
-            <a href="{% url 'privacy' %}" class="privacy-link">персональных данных</a>
-        </span>
-                    </label>
-                </div>
-                <button type="submit" class="btn-primary">Отправить
-                    заявку
-                </button>
-            </form>
-        </div>
-    </section>
 
-    <!-- Модальное окно для подтверждения заявки -->
-    <div id="success-modal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <p>Заявка принята. Наш менеджер свяжется с Вами в ближайшее
-                время.</p>
+        <div class="contact-section-right">
+            <div class="contact-form">
+                <h2>Оставить заявку менеджеру</h2>
+                <form id="feedback-form" method="post" data-url="{% url 'submit_feedback' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" name="name" class="form-control" placeholder="Ваше имя" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-control" placeholder="Ваш e-mail" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="phone" class="form-control" placeholder="Ваш телефон" required>
+                    </div>
+                    <div class="form-group">
+                        <select name="product" class="form-control" required>
+                            <option value="" disabled selected>Выберите товар</option>
+                            {% for product in products %}
+                                <option value="{{ product.id }}">{{ product.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" class="form-control" placeholder="Ваше сообщение" required></textarea>
+                    </div>
+                    <div class="agree-container">
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="agree_to_terms" required class="checkbox-input" checked>
+                            <span class="checkbox-text">
+                                Согласие на обработку
+                                <a href="{% url 'privacy' %}" class="privacy-link">персональных данных</a>
+                            </span>
+                        </label>
+                    </div>
+                    <button type="submit" class="form-submit">Отправить заявку</button>
+                </form>
+            </div>
         </div>
     </div>
 
-    <section class="locations">
-        <h2>Адреса ТД Ленинградский</h2>
-        <div class="location-card"
-             data-map-url=https://yandex.ru/map-widget/v1/?um=constructor%3A219534a869e753ce396b9284a4d1e67d5a12600f543eacb8abcd7098f2557ef1&amp;source=constructor">
-            <h3>Мариуполь</h3>
-            <p>+7(949)6242644</p>
-            <p>info@tdleningrad.ru</p>
-            <p>улица Сортировочная дом 1, Мариуполь</p>
-        </div>
-        <div class="location-card"
-             data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3Ad1889657e89d58406bc643319e36a03292ab1a559f16cb84563d106d2e847a95&amp;source=constructor">
-            <h3>Санкт-Петербург</h3>
-            <p>+7(949)6242644</p>
-            <p>info@tdleningrad.ru</p>
-            <p>улица Свободы, 57Д, Красное Село, Санкт-Петербург</p>
-        </div>
-        <div class="location-card"
-             data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3A5c99cbae86232571aa8a82f28b925a8ebf9827c6a31fdfd46913cdb52deeaf57&amp;source=constructor">
-            <h3>Регион доставки</h3>
-            <p>+7(949)6242644</p>
-            <p>info@tdleningrad.ru</p>
-            <p>ДНР, ЛНР</p>
-        </div>
-    </section>
+    <!-- Address section -->
+    <section class="locations-section">
+        <h2 class="section-title">Адреса ТД Ленинградский</h2>
+        <div class="locations-grid">
+            <div class="location-card" data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3A219534a869e753ce396b9284a4d1e67d5a12600f543eacb8abcd7098f2557ef1&amp;source=constructor">
+                <h3>Мариуполь</h3>
+                <p><strong>Телефон:</strong> +7(949)6242644</p>
+                <p><strong>Email:</strong> info@tdleningrad.ru</p>
+                <p><strong>Адрес:</strong> улица Сортировочная дом 1, Мариуполь</p>
+            </div>
 
-    <section class="map">
-        <iframe id="map-frame"
-                src="https://yandex.ru/map-widget/v1/?um=constructor%3A1f6ab6d20d724b84b9429d0528d2aa6e8c20abec0fd4be523dbcd16d4ce88297&amp;source=constructor"
-                width="100%" height="400" frameborder="0"
-                loading="lazy"></iframe>
-    </section>
+            <div class="location-card" data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3A5c99cbae86232571aa8a82f28b925a8ebf9827c6a31fdfd46913cdb52deeaf57&amp;source=constructor">
+                <h3>Регион доставки</h3>
+                <p><strong>Телефон:</strong> +7(949)6242644</p>
+                <p><strong>Email:</strong> info@tdleningrad.ru</p>
+                <p><strong>Регионы:</strong> ДНР, ЛНР</p>
+            </div>
 
-    <noindex>
-        <!-- Модальное окно для подтверждения заявки -->
-        <div id="success-feedback-form-modal" class="modal"
-             style="display:none;">
-            <div class="modal-content">
-                <span class="close-btn">&times;</span>
-                <p>Спасибо за заявку. Наш менеджер свяжется с Вами в
-                    ближайшее время.</p>
+            <div class="location-card" data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3Ad1889657e89d58406bc643319e36a03292ab1a559f16cb84563d106d2e847a95&amp;source=constructor">
+                <h3>Санкт-Петербург</h3>
+                <p><strong>Телефон:</strong> +7(949)6242644</p>
+                <p><strong>Email:</strong> info@tdleningrad.ru</p>
+                <p><strong>Адрес:</strong> улица Свободы, 57Д, Красное Село, Санкт-Петербург</p>
             </div>
         </div>
-    </noindex>
+    </section>
+    <!-- Map -->
+    <div class="map-container">
+        <iframe id="map-frame" src="https://yandex.ru/map-widget/v1/?um=constructor%3A1f6ab6d20d724b84b9429d0528d2aa6e8c20abec0fd4be523dbcd16d4ce88297&amp;source=constructor" loading="lazy"></iframe>
+    </div>
+
+        <!-- Calculators section -->
+    <section class="calculators-section">
+        <h2 class="section-title">Полезные инструменты для расчетов</h2>
+        <div class="calculators-description">
+            <p>Воспользуйтесь нашими калькуляторами для самостоятельного расчета доставки или необходимого объема бетона для вашего строительного проекта</p>
+        </div>
+        <div class="calculators-grid">
+            <div class="calculator-card">
+                <div class="calculator-icon">
+                    <img src="{% static 'images/icons/truck.svg' %}" alt="Доставка">
+                </div>
+                <h3>Калькулятор доставки</h3>
+                <p>Рассчитайте стоимость доставки бетона и строительных материалов до вашего объекта</p>
+                <a href="{% url 'delivery' %}" class="calculator-btn">
+                    Рассчитать доставку
+                </a>
+            </div>
+
+            <div class="calculator-card">
+                <div class="calculator-icon">
+                    <img src="{% static 'images/icons/bezier.svg' %}" alt="Бетон">
+                </div>
+                <h3>Калькулятор бетона</h3>
+                <p>Определите необходимый объем бетона для вашего проекта, указав параметры конструкции</p>
+                <a href="{% url 'concrete_calculator' %}" class="calculator-btn">
+                    Рассчитать объем бетона
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- modal window -->
+    <div id="success-feedback-form-modal" class="success-modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="success-icon">✓</div>
+            <h3 class="success-message">Спасибо за заявку!</h3>
+            <p>Наш менеджер свяжется с Вами в ближайшее время.</p>
+        </div>
+    </div>
 {% endblock %}

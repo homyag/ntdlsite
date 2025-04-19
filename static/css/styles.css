@@ -76,7 +76,7 @@
     left: 0;
     background-color: #ffffff;
     min-width: 160px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     border-radius: 5px;
     padding: 10px 0;
@@ -1135,6 +1135,7 @@ form#callback-form .agree-with-terms label {
 .footer__phone {
     margin-left: 10px;
 }
+
 .footer__phone a {
     font-size: large;
     text-decoration: none;
@@ -1326,275 +1327,352 @@ form#callback-form .agree-with-terms label {
 }
 
 /*CONCRETE CALCULATOR*/
-.concrete-calculator-container {
+.calc-hero {
+    position: relative;
+    background: url('/static/images/background/zavod_back.jpeg') no-repeat center center/cover;
+    color: white;
+    text-align: center;
+    padding: 80px 20px;
+    margin-top: 21px;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.calc-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 0;
+}
+
+.calc-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.calc-hero h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.calc-hero p {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    color: #f0f0f0;
+    line-height: 1.6;
+}
+
+.calculator-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 40px;
+    margin: 50px 0;
+    align-items: flex-start;
 }
 
-/* Калькулятор */
-.concrete-calculator {
-    flex: 1 1 300px; /* Гибкая ширина с минимальной шириной 300px */
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
+.calculator-panel {
+    flex: 1;
+    min-width: 300px;
+    background-color: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* Описание конструкции */
-.structure-description {
-    flex: 1 1 300px; /* Гибкая ширина с минимальной шириной 300px */
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #e9ecef;
-    transition: all 0.3s ease-in-out;
+.calculator-panel h2 {
+    color: #113E71;
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    text-align: center;
+    position: relative;
+    padding-bottom: 10px;
 }
 
-.structure-description h2 {
-    font-size: 24px;
-    margin-bottom: 15px;
-}
-
-.structure-description p {
-    font-size: 16px;
-    line-height: 1.5;
-}
-
-/* Скрытие описания по умолчанию */
-#description-content p:first-child {
-    color: #6c757d;
-}
-
-/* Общие стили */
-.concrete-calculator h1 {
-    font-size: 28px;
-    margin-bottom: 20px;
-}
-
-.concrete-calculator form {
-    display: flex;
-    flex-direction: column;
-}
-
-.concrete-calculator .form-group {
-    margin-bottom: 15px;
-}
-
-.concrete-calculator .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.concrete-calculator .form-group input,
-.concrete-calculator .form-group select {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.concrete-calculator button {
-    padding: 10px 20px;
+.calculator-panel h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 60px;
+    height: 3px;
     background-color: #3798D4;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1em;
+    transform: translateX(-50%);
 }
 
-.concrete-calculator button:hover {
-    background-color: #113E71;
+.structure-info {
+    flex: 1;
+    min-width: 300px;
+    background-color: #f8f9fa;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
-/* Стили для результата расчета */
-#calculation-result {
-    margin-top: 20px;
+.structure-info h2 {
+    color: #113E71;
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.structure-info h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 60px;
+    height: 3px;
+    background-color: #3798D4;
+}
+
+.form-group {
     margin-bottom: 20px;
-    padding: 10px 15px;
-    border-radius: 4px;
-    font-weight: bold;
-    display: none; /* Скрыто по умолчанию */
-    border: 1px solid;
 }
 
-/* Стили для блока рекомендаций */
-.recommendations-container {
-    margin-top: 20px;
-    padding: 15px;
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-select, .form-input {
+    width: 100%;
+    padding: 12px 15px;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-select:focus, .form-input:focus {
+    border-color: #3798D4;
+    box-shadow: 0 0 0 3px rgba(55, 152, 212, 0.2);
+    outline: none;
+}
+
+.form-input {
+    height: 46px;
+}
+
+.calc-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #3798D4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.calc-btn:hover {
+    background-color: #113E71;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+#calculation-result {
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    display: none;
+}
+
+.recommendations-container {
+    margin-top: 30px;
+    background-color: white;
+    border-radius: 12px;
+    padding: 25px;
+    display: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 .recommendations-container h3 {
-    margin-top: 0;
-    color: #333;
-    font-size: 18px;
+    color: #113E71;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
 .recommendations-list {
-    list-style-type: none;
-    padding-left: 0;
-    margin-bottom: 10px;
+    list-style: none;
+    padding: 0;
 }
 
 .recommendations-list li {
-    margin-bottom: 8px;
-    padding: 8px;
-    background-color: #fff;
-    border-radius: 4px;
-    border-left: 3px solid #28a745;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
     transition: all 0.3s ease;
+    border-left: 4px solid #3798D4;
 }
 
 .recommendations-list li:hover {
     transform: translateX(5px);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.recommendations-list li.recommended-product {
+    background-color: #ebf6ff;
+    border-left: 4px solid #28a745;
+}
+
+.recommended-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-bottom: 8px;
 }
 
 .recommendations-list a {
-    color: #0066cc;
+    color: #113E71;
+    font-weight: 600;
     text-decoration: none;
     display: block;
-    font-weight: 500;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
 }
 
 .recommendations-list a:hover {
-    text-decoration: underline;
+    color: #3798D4;
 }
 
-.no-city-selected {
-    margin-top: 15px;
-    padding: 10px;
-    background-color: #fff3cd;
-    border-left: 3px solid #ffc107;
-    border-radius: 4px;
-}
-
-.no-city-selected a {
-    color: #0066cc;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.no-city-selected a:hover {
-    text-decoration: underline;
-}
-
-/* Адаптивные стили */
-
-/* Для устройств с шириной экрана до 768px (планшеты и небольшие десктопы) */
-@media screen and (max-width: 768px) {
-    .concrete-calculator-container {
-        flex-direction: column;
-    }
-
-    .concrete-calculator {
-        padding: 15px;
-    }
-
-    .concrete-calculator h1 {
-        font-size: 24px;
-    }
-
-    .concrete-calculator button {
-        font-size: 0.9em;
-    }
-
-    #calculation-result {
-        font-size: 1em;
-    }
-
-    .structure-description h2 {
-        font-size: 20px;
-    }
-
-    .structure-description p {
-        font-size: 14px;
-    }
-
-    .recommendations-container h3 {
-        font-size: 16px;
-    }
-
-    .recommendations-list li {
-        padding: 6px;
-    }
-}
-
-/* Стили для информации о цене */
 .price-info {
-    display: block;
-    margin-top: 5px;
-    font-size: 0.9em;
-    color: #555;
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.5;
 }
 
 .price-info strong {
     color: #28a745;
-    font-size: 1.1em;
+    font-weight: 700;
+    font-size: 1.1rem;
 }
 
-/* Улучшение отображения рекомендаций с ценами */
-.recommendations-list li {
-    padding: 12px;
+/* Секция описания и пользы */
+.calculator-benefits {
+    margin: 60px 0;
+    background-color: #f8f9fa;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.benefits-title {
+    font-size: 2.2rem;
+    color: #113E71;
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.benefits-title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 80px;
+    height: 3px;
+    background-color: #3798D4;
+    transform: translateX(-50%);
+}
+
+.benefits-text {
+    color: #333;
+    line-height: 1.8;
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+}
+
+.benefits-list {
+    margin-bottom: 25px;
+    padding-left: 20px;
+}
+
+.benefits-list li {
     margin-bottom: 12px;
+    color: #333;
+    font-size: 1.1rem;
+    position: relative;
+    padding-left: 15px;
+    /*background-color: #3798D4;*/
 }
 
-.recommendations-list a {
-    font-size: 1.05em;
-    margin-bottom: 5px;
+.benefits-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    /*background-color: #3798D4;*/
 }
 
+.benefits-cta {
+    text-align: center;
+    margin-top: 40px;
+}
 
+.benefits-btn {
+    display: inline-block;
+    padding: 14px 30px;
+    background-color: #3798D4;
+    color: white;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+}
 
-/* Для устройств с шириной экрана до 480px (смартфоны) */
-@media screen and (max-width: 480px) {
-    .concrete-calculator-container {
+.benefits-btn:hover {
+    background-color: #113E71;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .calc-hero h1 {
+        font-size: 2rem;
+    }
+
+    .calc-hero p {
+        font-size: 1.1rem;
+    }
+
+    .calculator-container {
         flex-direction: column;
     }
 
-    .concrete-calculator {
-        padding: 10px;
+    .calculator-panel, .structure-info {
+        width: 100%;
     }
 
-    .concrete-calculator h1 {
-        font-size: 20px;
-    }
-
-    .concrete-calculator button {
-        padding: 8px 16px;
-        font-size: 0.8em;
-    }
-
-    #calculation-result {
-        font-size: 0.9em;
-    }
-
-    .structure-description h2 {
-        font-size: 18px;
-    }
-
-    .structure-description p {
-        font-size: 13px;
-    }
-
-    .recommendations-list li {
-        padding: 8px;
-        margin-bottom: 5px;
-    }
-
-    .recommendations-container {
-        padding: 10px;
-    }
-
-    .price-info {
-        font-size: 0.8em;
+    .benefits-title {
+        font-size: 1.8rem;
     }
 }
 
@@ -1924,28 +2002,35 @@ form#callback-form .agree-with-terms label {
     border-radius: 30px;
     gap: 20px;
 }
+
 @media (max-width: 768px) {
     .goods__header-with-image {
         flex-direction: column-reverse;
     }
+
     .header-image {
         max-width: 100%;
     }
+
     .header-image img {
         max-width: 100%;
     }
+
     .good__header_button {
         width: 100%;
         text-align: center;
     }
 }
+
 @media (max-width: 425px) {
     .goods__header-with-image {
         flex-direction: column-reverse;
     }
+
     .header-image {
         max-width: 100%;
     }
+
     .header-image img {
         max-width: 100%;
     }
@@ -1986,22 +2071,26 @@ form#callback-form .agree-with-terms label {
 .related-products {
     margin-top: 40px;
 }
+
 .related-products__list {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
 }
+
 .related-product {
     width: 200px;
     text-align: center;
     overflow: hidden; /* скрыть лишнее */
 }
+
 .related-product img {
     width: 100%;
     height: 150px;
     border-radius: 8px;
     object-fit: cover;
 }
+
 @media screen and (max-width: 768px) {
     .related-products__list {
         justify-content: center;
@@ -2047,16 +2136,45 @@ form#callback-form .agree-with-terms label {
 }
 
 /* Установка задержек для анимации */
-.about-hero { animation-delay: 0.1s; }
-.about-company { animation-delay: 0.2s; }
-.about-features { animation-delay: 0.3s; }
-.about-production { animation-delay: 0.4s; }
-.about-logistics { animation-delay: 0.5s; }
-.about-clients { animation-delay: 0.6s; }
-.about-mission { animation-delay: 0.7s; }
-.about-digital { animation-delay: 0.8s; }
-.about-social { animation-delay: 0.9s; }
-.about-cta { animation-delay: 1s; }
+.about-hero {
+    animation-delay: 0.1s;
+}
+
+.about-company {
+    animation-delay: 0.2s;
+}
+
+.about-features {
+    animation-delay: 0.3s;
+}
+
+.about-production {
+    animation-delay: 0.4s;
+}
+
+.about-logistics {
+    animation-delay: 0.5s;
+}
+
+.about-clients {
+    animation-delay: 0.6s;
+}
+
+.about-mission {
+    animation-delay: 0.7s;
+}
+
+.about-digital {
+    animation-delay: 0.8s;
+}
+
+.about-social {
+    animation-delay: 0.9s;
+}
+
+.about-cta {
+    animation-delay: 1s;
+}
 
 /* Стили для заголовков */
 .about-page-container h1,
@@ -2429,261 +2547,589 @@ form#callback-form .agree-with-terms label {
 
 /*CONTACT PAGE*/
 
-.contact-header {
-    position: relative; /* Необходимо для позиционирования псевдоэлемента */
+.contact-ways {
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+
+.contact-ways h3 {
+    color: #113E71;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+.contact-ways ul {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.contact-ways li {
+    margin-bottom: 15px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.messenger-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.messenger-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    border-radius: 50px;
+    text-decoration: none;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.messenger-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+.whatsapp-btn {
+    background-color: #25D366;
+}
+
+.whatsapp-btn:hover {
+    background-color: #128C7E;
+    transform: translateY(-2px);
+}
+
+.telegram-btn {
+    background-color: #0088cc;
+}
+
+.telegram-btn:hover {
+    background-color: #0077b5;
+    transform: translateY(-2px);
+}
+
+.contact-hero {
+    position: relative;
     background: url('/static/images/background/zavod_back.jpeg') no-repeat center center/cover;
     color: white;
     text-align: center;
-    padding: 100px 20px;
+    padding: 120px 20px;
     margin-top: 21px;
+    border-radius: 15px;
+    overflow: hidden;
 }
 
-.contact-header::before {
+.contact-hero::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Полупрозрачный чёрный фон */
-    z-index: 0; /* Под текстом */
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 0;
 }
 
-.contact-header h1,
-.contact-header p {
-    position: relative; /* Убедитесь, что текст будет над псевдоэлементом */
-    z-index: 1; /* Текст над затемнением */
-    margin: 0;
+.contact-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.contact-header h1 {
-    font-size: 48px;
+.contact-hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
     color: white;
 }
 
-.contact-header p {
-    font-size: 24px;
-    color: white;
+.contact-hero p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: #f0f0f0;
 }
 
-.contact-section {
+.contact-cta {
+    display: inline-block;
+    background-color: #3798D4;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.contact-cta:hover {
+    background-color: #113E71;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.contact-sections {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 20px 5%;
-    align-items: flex-start;
+    gap: 30px;
+    margin: 60px 0;
 }
 
-.keep-in-touch, .contact-form-container {
+.contact-section-left {
     flex: 1;
-    margin: 10px;
-    padding: 20px;
-    box-sizing: border-box;
+    min-width: 300px;
 }
 
-.keep-in-touch {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    max-width: 500px;
+.contact-section-right {
+    flex: 1;
+    min-width: 300px;
 }
 
-.keep-in-touch h2 {
-    margin-top: 0;
+/* Стили для новой секции калькуляторов */
+.calculators-section {
+    margin: 60px 0;
 }
 
-.button-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px; /* Расстояние между кнопками */
-    margin-top: 20px; /* Отступ сверху */
-}
-
-.contact-form-container {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    max-width: 100%;
-    width: 100%;
-}
-
-.contact-form-container h2 {
+.calculators-description {
     text-align: center;
-    margin-bottom: 20px;
-    font-size: 1.5em;
+    max-width: 800px;
+    margin: 0 auto 40px;
 }
 
-.contact-form-container input, .contact-form-container textarea, .contact-form-container select {
+.calculators-description p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+.calculators-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+.calculator-card {
+    flex: 1;
+    min-width: 300px;
+    max-width: 450px;
+    background-color: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.calculator-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.calculator-icon {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f7ff;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.calculator-icon img {
+    width: 40px;
+    height: 40px;
+}
+
+.calculator-card h3 {
+    font-size: 1.5rem;
+    color: #113E71;
+    margin-bottom: 15px;
+}
+
+.calculator-card p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.calculator-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #3798D4;
+    color: white;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: auto;
+}
+
+.calculator-btn:hover {
+    background-color: #113E71;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.contact-card {
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.contact-card h2 {
+    font-size: 1.8rem;
+    color: #113E71;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.contact-card h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    height: 3px;
+    background-color: #3798D4;
+}
+
+.contact-card p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.contact-method {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.contact-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eef5fd;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.contact-icon img {
+    width: 24px;
+    height: 24px;
+}
+
+.contact-info {
+    flex-grow: 1;
+}
+
+.contact-info h4 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.contact-info p, .contact-info a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-info a:hover {
+    color: #3798D4;
+}
+
+.contact-form {
+    background-color: white;
+    border-radius: 15px;
+    padding: 35px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+}
+
+.contact-form h2 {
+    font-size: 1.8rem;
+    color: #113E71;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-sizing: border-box;
-    font-size: 1em;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #3798D4;
+    box-shadow: 0 0 0 3px rgba(55, 152, 212, 0.2);
+    outline: none;
+}
+
+.form-control::placeholder {
+    color: #aaa;
+}
+
+textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-submit {
+    width: 100%;
+    padding: 15px;
+    background-color: #3798D4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.form-submit:hover {
+    background-color: #113E71;
+    transform: translateY(-3px);
 }
 
 .agree-container {
-    margin: 1.5rem 0;
-    padding: 12px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    transition: background 0.3s ease;
+    margin-bottom: 25px;
 }
 
 .custom-checkbox {
     display: flex;
-    align-items: center;
-    position: relative;
+    align-items: flex-start;
+    gap: 10px;
     cursor: pointer;
-    user-select: none;
-    font-size: 14px;
-    line-height: 1.4;
-    color: #495057;
 }
 
 .checkbox-input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
+    width: auto !important;
+    margin-top: 3px;
 }
 
-.checkmark {
-    position: relative;
-    height: 20px;
-    width: 20px;
-    min-width: 20px;
-    background-color: #fff;
-    border: 2px solid #007bff;
-    border-radius: 4px;
-    margin-right: 12px;
-    transition: all 0.3s ease;
-}
-
-.checkbox-input:checked ~ .checkmark {
-    background-color: #007bff;
-}
-
-.checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-    left: 6px;
-    top: 2px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-}
-
-.checkbox-input:checked ~ .checkmark:after {
-    display: block;
+.checkbox-text {
+    font-size: 0.9rem;
+    color: #666;
 }
 
 .privacy-link {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.privacy-link:hover {
-    color: #0056b3;
+    color: #3798D4;
     text-decoration: underline;
 }
 
-/* Для акцента на обязательность поля */
-.custom-checkbox::before {
-    content: "*";
-    color: #dc3545;
-    margin-right: 4px;
-    font-size: 16px;
+.privacy-link:hover {
+    color: #113E71;
 }
 
-.contact-form-container button {
-    width: 100%;
-    padding: 10px;
-    background-color: #3698D4;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.2vw;
+.locations-section {
+    margin: 60px 0;
 }
 
-.locations {
+.section-title {
+    font-size: 2.2rem;
+    color: #113E71;
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 80px;
+    height: 3px;
+    background-color: #3798D4;
+    transform: translateX(-50%);
+}
+
+.locations-grid {
     display: flex;
-    justify-content: space-around;
     flex-wrap: wrap;
-    padding: 20px 5%;
+    gap: 25px;
+    justify-content: center;
 }
 
 .location-card {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    margin: 10px;
-    transition: background-color 0.3s, color 0.3s;
     flex: 1;
+    min-width: 300px;
+    max-width: 350px;
+    background-color: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
     text-align: center;
-    box-sizing: border-box;
-}
-
-/* Изменение фона и цвета текста при наведении */
-.location-card:hover,
-.location-card:active {
-    background-color: #0C4A79; /* Изменение фона */
-}
-
-.location-card:hover h3, .location-card:active h3 {
-    color: #fff; /* Изменение цвета текста */
-}
-
-.location-card:hover p, .location-card:active p {
-    color: #fff; /* Изменение цвета текста */
-}
-
-.map {
-    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.map iframe {
+.location-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 400px;
-    border: 0;
+    height: 5px;
+    background-color: #3798D4;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
 }
 
-/* Адаптивные стили */
+.location-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.location-card:hover::before {
+    transform: scaleX(1);
+}
+
+.location-card h3 {
+    font-size: 1.5rem;
+    color: #113E71;
+    margin-bottom: 15px;
+}
+
+.location-card p {
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.location-card a {
+    color: #3798D4;
+    text-decoration: none;
+}
+
+.location-card a:hover {
+    text-decoration: underline;
+}
+
+.map-container {
+    height: 450px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    margin-top: 40px;
+}
+
+#map-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Адаптивность */
 @media (max-width: 768px) {
-    .contact-section {
+    .contact-hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .contact-hero p {
+        font-size: 1.2rem;
+    }
+
+    .contact-sections {
         flex-direction: column;
-        align-items: center;
     }
 
-    .keep-in-touch, .contact-form-container {
-        max-width: none;
-        width: 90%;
-    }
-
-    .contact-form-container input,
-    .contact-form-container textarea,
-    .contact-form-container select,
-    .contact-form-container button {
-        font-size: 4vw;
-    }
-
-    .locations {
+    .locations-grid {
         flex-direction: column;
         align-items: center;
     }
 
     .location-card {
-        width: 90%;
+        width: 100%;
+        max-width: none;
     }
+}
+
+/* Стили для модального окна успешной отправки */
+.success-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #333;
+}
+
+.success-icon {
+    font-size: 3rem;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.success-message {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 25px;
 }

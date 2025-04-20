@@ -1,5 +1,238 @@
 {% extends "base.html" %}
 {% load static %}
+{% block api %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ТД Ленинградский",
+  "alternateName": "Торговый дом Ленинградский",
+  "url": "https://tdleningrad.ru",
+  "logo": "https://tdleningrad.ru/static/images/logo/logo.svg",
+  "description": "Производитель бетона и бетонных смесей ТД Ленинградский. Продажа бетона всех марок, щебня, песка и других нерудных материалов с доставкой.",
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+7 (949) 624-2644",
+      "contactType": "customer service",
+      "availableLanguage": "Russian"
+    }
+  ],
+  "address": [
+    {
+      "@type": "PostalAddress",
+      "addressLocality": "Мариуполь",
+      "addressRegion": "ДНР",
+      "streetAddress": "улица Сортировочная 1",
+      "addressCountry": "RU"
+    },
+    {
+      "@type": "PostalAddress",
+      "addressLocality": "Санкт-Петербург",
+      "addressRegion": "Ленинградская область",
+      "streetAddress": "Красное Село, ул. Свободы, д. 57, литер Д, помещ. 3-Н, кабинет 202-1",
+      "addressCountry": "RU"
+    }
+  ],
+  "email": "info@tdleningrad.ru",
+  "sameAs": [
+    "https://t.me/tdleningradsky",
+    "https://wa.me/+79496242644"
+  ],
+  "openingHoursSpecification": [
+  {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "opens": "08:00",
+    "closes": "20:00"
+  },
+],
+  "potentialAction": {
+    "@type": "OrderAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://tdleningrad.ru/contacts/",
+      "inLanguage": "ru-RU",
+      "actionPlatform": [
+        "http://schema.org/DesktopWebPlatform",
+        "http://schema.org/IOSPlatform",
+        "http://schema.org/AndroidPlatform"
+      ]
+    },
+    "result": {
+      "@type": "Order",
+      "orderStatus": "http://schema.org/OrderProcessing"
+    }
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "url": "https://tdleningrad.ru/",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://tdleningrad.ru/catalog/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Главная",
+      "item": "https://tdleningrad.ru/"
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Бетон от производителя",
+  "description": "Качественный бетон всех марок для любых строительных целей от производителя ТД Ленинградский с доставкой",
+  "brand": {
+    "@type": "Brand",
+    "name": "ТД Ленинградский"
+  },
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "RUB",
+    "lowPrice": "1800",
+    "highPrice": "9000",
+    "offerCount": "15",
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Бетон М150",
+        "price": "7000",
+        "priceCurrency": "RUB",
+        "availability": "https://schema.org/InStock",
+        "url": "https://tdleningrad.ru/catalog/mariupol/beton/beton-m150/",
+        "deliveryLeadTime": {
+          "@type": "QuantitativeValue",
+          "minValue": "1",
+          "maxValue": "2",
+          "unitCode": "DAY"
+        }
+      },
+      {
+        "@type": "Offer",
+        "name": "Бетон М200",
+        "price": "7500",
+        "priceCurrency": "RUB",
+        "availability": "https://schema.org/InStock",
+        "url": "https://tdleningrad.ru/catalog/mariupol/beton/beton-m200/",
+        "deliveryLeadTime": {
+          "@type": "QuantitativeValue",
+          "minValue": "1",
+          "maxValue": "2",
+          "unitCode": "DAY"
+        }
+      },
+      {
+        "@type": "Offer",
+        "name": "Бетон М300",
+        "price": "8000",
+        "priceCurrency": "RUB",
+        "availability": "https://schema.org/InStock",
+        "url": "https://tdleningrad.ru/catalog/mariupol/beton/beton-m300/",
+        "deliveryLeadTime": {
+          "@type": "QuantitativeValue",
+          "minValue": "1",
+          "maxValue": "2",
+          "unitCode": "DAY"
+        }
+      }
+    ]
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Как выбрать марку бетона для фундамента?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Для фундамента частного дома обычно рекомендуют бетон марки М250-М300. Для небольших конструкций можно использовать М200. Для промышленных зданий лучше выбрать М350-М400."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Как рассчитать необходимый объем бетона?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Для расчета объема бетона умножьте длину на ширину и высоту конструкции. Например, для плиты 10×8 м толщиной 0,2 м вам понадобится 10×8×0,2 = 16 кубометров бетона. Рекомендуем добавить 5-10% на погрешности и потери."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Какие сроки и условия доставки?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Доставка осуществляется в течение 1-2 дней после оформления заказа. Мы работаем по Мариуполю, Донецку, Луганску и прилегающим регионам. Стоимость доставки зависит от расстояния и объема заказа."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Какой минимальный объем заказа?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Минимальный объем заказа бетона с доставкой - 1 кубический метр."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Доставка бетона",
+  "provider": {
+    "@type": "Organization",
+    "name": "ТД Ленинградский"
+  },
+  "description": "Оперативная доставка бетона и нерудных материалов автотранспортом на ваш объект",
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Мариуполь"
+    },
+    {
+      "@type": "City",
+      "name": "Донецк"
+    },
+    {
+      "@type": "City",
+      "name": "Луганск"
+    }
+  ],
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "RUB",
+    "price": "600",
+    "description": "600 руб/км за 1 м³"
+  }
+}
+</script>
+{% endblock %}
 {% block content %}
     {# HERO SECTION #}
     <section class="hero-section">

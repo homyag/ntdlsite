@@ -20,3 +20,15 @@ def format_property(property_line):
         return f'<strong>{property_name}:</strong> {property_value}'
     else:
         return property_line
+
+@register.filter
+def splitlines(text):
+    """
+    Разделяет текст на строки, учитывая различные разделители строк
+    """
+    if text:
+        # Заменяем комбинацию \r\n на \n для унификации
+        text = text.replace('\r\n', '\n')
+        # Разделяем текст по переносам строк
+        return text.split('\n')
+    return []

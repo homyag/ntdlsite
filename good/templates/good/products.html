@@ -90,9 +90,18 @@
 
                                 {% if p.product_card_property %}
                                     <div class="product-properties">
-                                        {% for property_line in p.product_card_property.split|slice:":4" %}
-                                            <div class="product-property">{{ property_line|format_property|safe }}</div>
-                                        {% endfor %}
+                                        {% with property_lines=p.product_card_property|splitlines %}
+                                            {% for property_line in property_lines|slice:":4" %}
+                                                <div class="product-property">{{ property_line|format_property|safe }}</div>
+                                            {% endfor %}
+                                            {% if property_lines|length > 4 %}
+                                                <div class="product-property more-properties">
+                                                    <a href="{% url 'product' city_slug=city_slug category_slug=p.category.slug product_slug=p.slug %}">
+                                                        Смотреть все характеристики...
+                                                    </a>
+                                                </div>
+                                            {% endif %}
+                                        {% endwith %}
                                     </div>
                                 {% endif %}
                                 <div class="product-actions">

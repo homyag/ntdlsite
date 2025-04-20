@@ -1,14 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load l10n %}
+{% load good_filters %}
 
-
-{% block sidebar %}
-    <div class="goods__sections">
-    {% include "good/includes/sidebar.html" %}
-{% endblock %}
 {% block content %}
-
     {% if good %}
         <script type="application/ld+json">
         {
@@ -47,80 +42,140 @@
             }
         }
         </script>
-        <div class="goods__sections--content">
-            <!-- Хлебные крошки -->
-            {% include 'good/includes/breadcrumbs.html' %}
-            <!-- Конец хлебных крошек -->
-            <div class="goods__header-with-image">
-                <div class="header--title--with--button">
-                    <div class="header-title">
-                        <h1>{{ title }}</h1>
-                    </div>
-                    <div class="good__price">
-                        <p><strong>{{ good_price }} руб/ед</strong></p>
-                    </div>
-                    <div class="good__property">
-                    <span>
-                        {{ property|linebreaks }}
-                    </span>
-                    </div>
-                    <div class="good__header_button">
-                        <button class="hero__button--popup" type="button">
-                            Заказать {{ good.name|truncatewords:2 }}
-                        </button>
-                    </div>
-                </div>
-                <div class="header-image">
-                    {% if img %}
-                        <img src="{{ img }}" alt="{{ title }}"
-                             class="content-image">
-                    {% else %}
-                        <img src="{% static 'images/mainpage/zavod.webp' %}"
-                             alt="{{ title }}" class="content-image">
-                    {% endif %}
-                </div>
-            </div>
-            <div class="good-description">
-                <span>
-            {{ content|safe }}
-    </span>
-            </div>
-            <div class="related-products">
-                <h3>Похожие товары</h3>
-                <div class="related-products__list">
-                    {% for related_good in related_goods %}
-                        <div class="related-product">
-                            <a href="{% url 'product' city_slug category_selected related_good.slug %}">
-                                {% if related_good.img %}
-                                    <img src="{{ related_good.img.url }}"
-                                         alt="{{ related_good.name }}">
-                                {% else %}
-                                    <img src="{% static 'images/mainpage/zavod.webp' %}"
-                                         alt="ТД Ленинградский">
-                                {% endif %}
-                                <h4>{{ related_good.name }}</h4>
-                            </a>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
 
+        <div class="catalog-container">
+            <!-- DESKTOP SIDEBAR -->
+            <aside class="catalog-sidebar">
+                <div class="sidebar-box">
+                    <h3 class="sidebar-title">Категории</h3>
+                    <ul class="category-list">
+                        {% if category_selected == 0 or category_selected is None %}
+                            <li>
+                                <a href="{% url 'catalog' city_slug=city_slug %}" class="active">Все категории</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="{% url 'catalog' city_slug=city_slug %}">Все категории</a>
+                            </li>
+                        {% endif %}
+
+                        {% load good_tags %}
+                        {% show_categories city_slug=city_slug category_selected=category_selected %}
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- CATALOG MAIN CONTENT -->
+            <div class="catalog-content">
+                <!-- MOBILE CATEGORY SELECTOR -->
+                <div class="mobile-category-selector">
+                    <!-- MOBILE MENU ADD -->
+                    {% include "good/includes/mobile_menu.html" %}
+                </div>
+
+                <div class="goods__sections--content">
+                    <!-- Хлебные крошки -->
+                    {% include 'good/includes/breadcrumbs.html' %}
+                    <!-- Конец хлебных крошек -->
+
+                    <div class="goods__header-with-image">
+                        <div class="header--title--with--button">
+                            <div class="header-title">
+                                <h1>{{ title }}</h1>
+                            </div>
+                            <div class="good__price">
+                                <p><strong>{{ good_price }} руб/ед</strong></p>
+                            </div>
+
+                            <div class="good__property">
+                                {% if good.product_card_property %}
+                                    <div class="product-properties product-properties-detail">
+                                        {% with property_lines=good.product_card_property|splitlines %}
+                                            {% for property_line in property_lines %}
+                                                <div class="product-property">{{ property_line|format_property|safe }}</div>
+                                            {% endfor %}
+                                        {% endwith %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="good__header_button">
+                                <button class="hero__button--popup" type="button">
+                                    Заказать {{ good.name|truncatewords:2 }}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="header-image">
+                            {% if img %}
+                                <img src="{{ img }}" alt="{{ title }}" class="content-image">
+                            {% else %}
+                                <img src="{% static 'images/mainpage/zavod.webp' %}" alt="{{ title }}" class="content-image">
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="good-description">
+                        {{ content|safe }}
+                    </div>
+
+                    <div class="related-products">
+                        <h3>Похожие товары</h3>
+                        <div class="related-products__list">
+                            {% for related_good in related_goods %}
+                                <div class="related-product">
+                                    <a href="{% url 'product' city_slug category_selected related_good.slug %}">
+                                        {% if related_good.img %}
+                                            <img src="{{ related_good.img.url }}" alt="{{ related_good.name }}">
+                                        {% else %}
+                                            <img src="{% static 'images/mainpage/zavod.webp' %}" alt="ТД Ленинградский">
+                                        {% endif %}
+                                        <h4>{{ related_good.name }}</h4>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     {% else %}
         <!-- Content when 'good' does not exist -->
-        <div class="goods__sections--content">
-            <!-- Хлебные крошки -->
-            {% include 'good/includes/breadcrumbs.html' %}
-            <!-- Конец хлебных крошек -->
-            <h1>{{ title }}</h1>
-            <p>К сожалению, данный товар отсутствует в выбранном городе или
-                город не выбран.</p>
+        <div class="catalog-container">
+            <!-- DESKTOP SIDEBAR -->
+            <aside class="catalog-sidebar">
+                <div class="sidebar-box">
+                    <h3 class="sidebar-title">Категории</h3>
+                    <ul class="category-list">
+                        <li>
+                            <a href="{% url 'catalog' city_slug=city_slug %}">Все категории</a>
+                        </li>
+                        {% load good_tags %}
+                        {% show_categories city_slug=city_slug category_selected=0 %}
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- CATALOG MAIN CONTENT -->
+            <div class="catalog-content">
+                <!-- MOBILE CATEGORY SELECTOR -->
+                <div class="mobile-category-selector">
+                    <!-- MOBILE MENU ADD -->
+                    {% include "good/includes/mobile_menu.html" %}
+                </div>
+
+                <div class="goods__sections--content">
+                    <!-- Хлебные крошки -->
+                    {% include 'good/includes/breadcrumbs.html' %}
+                    <!-- Конец хлебных крошек -->
+                    <h1>{{ title }}</h1>
+                    <p>К сожалению, данный товар отсутствует в выбранном городе или
+                        город не выбран.</p>
+                </div>
+            </div>
         </div>
     {% endif %}
-    </div>
-
 {% endblock %}
-
 
 {% block extra_scripts %}
     {% if show_city_modal %}

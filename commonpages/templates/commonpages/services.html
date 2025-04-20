@@ -1,7 +1,130 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-    <h1>{{ title }}</h1>
-    <a href="{% url 'delivery' %}">Калькулятор доставки</a>
-    <a href="{% url 'concrete_calculator' %}">Калькулятор бетона</a>
+    <!-- SERVICES HERO SECTION -->
+    <section class="catalog-hero">
+        <div class="catalog-hero-content">
+            <h1>{{ title }}</h1>
+            <p>Профессиональные строительные услуги для любых проектов</p>
+        </div>
+    </section>
+
+    <!--SERVICES MAIN CONTENT -->
+    <div class="catalog-container">
+        <!-- DESKTOP SIDEBAR -->
+        <aside class="catalog-sidebar">
+            <div class="sidebar-box">
+                <h3 class="sidebar-title">Наши услуги</h3>
+                <ul class="category-list">
+                    {% for service in services %}
+                        <li {% if service.id == selected_service %}class="selected"{% endif %}>
+                            <a href="{% url service.url_name %}">{{ service.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </aside>
+
+        <!-- CATALOG MAIN CONTENT -->
+        <div class="catalog-content">
+            <!-- MOBILE CATEGORY SELECTOR -->
+            <div class="mobile-category-selector">
+                <div class="category-slider">
+                    <div class="category-slider-track">
+                        <ul id="slider">
+                            {% for service in services %}
+                                <li>
+                                    <a href="{% url service.url_name %}" {% if service.id == selected_service %}class="active"{% endif %}>
+                                        {{ service.title }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BREADCRUMBS AND TITLE -->
+            <div class="catalog-header">
+                <!-- BREADCRUMBS -->
+                <div aria-label="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+                    <ol class="breadcrumb">
+                        {% for crumb in breadcrumbs %}
+                            <li class="breadcrumb-item"
+                                itemprop="itemListElement"
+                                itemscope
+                                itemtype="https://schema.org/ListItem">
+                                {% if not forloop.last and crumb.url %}
+                                    <a href="{{ crumb.url }}" itemprop="item">
+                                        <span itemprop="name">{{ crumb.title }}</span>
+                                    </a>
+                                {% else %}
+                                    <span itemprop="name">{{ crumb.title }}</span>
+                                {% endif %}
+                                <meta itemprop="position" content="{{ forloop.counter }}">
+                            </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+
+                <h1 class="catalog-title">{{ title }}</h1>
+
+                {% if description %}
+                    <div class="catalog-description">
+                        {{ description|safe }}
+                    </div>
+                {% else %}
+                    <div class="catalog-description">
+                        <p>ТД Ленинградский предлагает широкий спектр строительных услуг. Мы обеспечиваем высокое качество работ, выполняемых профессиональными специалистами, и соблюдение всех строительных норм и стандартов.</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- SERVICES LIST -->
+            <div class="services-grid">
+                {% for service in services %}
+                    <div class="service-card">
+                        <div class="service-image">
+                            {% if service.image %}
+                                <img src="{{ service.image }}" alt="{{ service.title }}">
+                            {% else %}
+                                <img src="{% static 'images/mainpage/zavod.webp' %}" alt="{{ service.title }}">
+                            {% endif %}
+                        </div>
+                        <div class="service-info">
+                            <h3 class="service-name">
+                                <a href="{% url service.url_name %}">
+                                    {{ service.title }}
+                                </a>
+                            </h3>
+
+                            <div class="service-description">
+                                <p>{{ service.short_description }}</p>
+                            </div>
+
+                            <div class="service-actions">
+                                <button class="btn-order hero__button--popup" type="button">
+                                    Заказать
+                                </button>
+                                <a href="{% url service.url_name %}" class="btn-details">
+                                    Подробнее
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- ADDITIONAL DESCRIPTION -->
+            {% if additional_content %}
+                <div class="category-description">
+                    <h2>Подробнее о наших услугах</h2>
+                    {{ additional_content|safe }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
 {% endblock %}

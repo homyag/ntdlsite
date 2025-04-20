@@ -65,11 +65,20 @@
                     {% endfor %}
                     </div>
                     </div>
+                {% elif m.url_name == 'services' %}
+                    <div class="menu__item dropdown">
+                        <a class="menu__link dropdown__toggle" href="{% url m.url_name %}">{{ m.title }}
+                            <span class="dropdown__arrow">&#9662;</span>
+                        </a>
+                        <!-- Выпадающее меню услуг -->
+                        <div class="dropdown__content">
+                            <a class="dropdown__link" href="{% url 'delivery' %}">Калькулятор доставки</a>
+                            <a class="dropdown__link" href="{% url 'concrete_calculator' %}">Калькулятор бетона</a>
+                        </div>
+                    </div>
                 {% else %}
-
                     <a class="menu__link"
                        href="{% url m.url_name %}">{{ m.title }}</a>
-
                 {% endif %}
                 {% endif %}
             {% endfor %}

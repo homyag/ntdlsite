@@ -1402,7 +1402,125 @@ form#callback-form .agree-with-terms label {
     }
 }
 
-/*CONCRETE CALCULATOR*/
+/*SERVICES PAGE*/
+/* Добавьте этот CSS в ваш основной файл styles.css */
+
+/* Сетка для карточек услуг */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+/* Стили для карточки услуги */
+.service-card {
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.service-image {
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.service-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+/* Для иконок услуг */
+.service-image img[src*="icons"] {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.service-card:hover .service-image img {
+    transform: scale(1.05);
+}
+
+.service-info {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-name {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #113E71;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.service-name a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.service-name a:hover {
+    color: #3798D4;
+}
+
+.service-description {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.service-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+/* Адаптивность */
+@media (max-width: 992px) {
+    .services-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .service-image {
+        height: 160px;
+    }
+}
+
+
+/*CONCRETE CALCULATOR PAGE*/
 .calc-hero {
     position: relative;
     background: url('/static/images/background/zavod_back.jpeg') no-repeat center center/cover;

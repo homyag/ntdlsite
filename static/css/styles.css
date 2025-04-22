@@ -3380,7 +3380,7 @@ form#callback-form .agree-with-terms label {
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
-    margin: 60px 0;
+    margin-top: 60px;
 }
 
 .contact-section-left {
@@ -3396,6 +3396,7 @@ form#callback-form .agree-with-terms label {
 /* Стили для новой секции калькуляторов */
 .calculators-section {
     margin: 60px 0;
+    text-align: center;
 }
 
 .calculators-description {
@@ -3661,7 +3662,7 @@ textarea.form-control {
 }
 
 .locations-section {
-    margin: 60px 0;
+    text-align: center;
 }
 
 .section-title {

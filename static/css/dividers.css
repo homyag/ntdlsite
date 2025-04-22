@@ -1,0 +1,50 @@
+/* Стили для простого разделителя с геометрическим акцентом */
+.simple-divider {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  margin: 40px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.divider-line {
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    rgba(17, 62, 113, 0.1),
+    rgba(17, 62, 113, 0.3) 20%,
+    rgba(54, 152, 212, 0.5) 50%,
+    rgba(17, 62, 113, 0.3) 80%,
+    rgba(17, 62, 113, 0.1)
+  );
+}
+
+.divider-accent {
+  position: relative;
+  z-index: 2;
+  background: #fff;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(0deg);
+  transition: transform 0.5s ease;
+}
+
+.simple-divider:hover .divider-accent {
+  transform: rotate(45deg);
+}
+
+/* Анимация геометрического акцента при появлении */
+@keyframes pulse-accent {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.7; }
+}
+
+.divider-accent svg {
+  animation: pulse-accent 1.5s ease-in-out;
+}

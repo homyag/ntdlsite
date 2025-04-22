@@ -2,23 +2,23 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <!-- Google Tag Manager -->
-    <script>
-        (function (w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start':
-                    new Date().getTime(), event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src =
-                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-5P8VKM4F');
-    </script>
-    <!-- End Google Tag Manager -->
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(98660706, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/98660706" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
     <title>
         {% block title %}
             {% if seo_title %}
@@ -41,10 +41,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
           rel="stylesheet">
-
+    <link rel="stylesheet" href="{% static 'css/dividers.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animations.css' %}">
     <link rel="shortcut icon" href="{% static 'images/logo/logo.svg' %}"
           type="image/x-icon"/>
-
     <link rel="icon" type="image/png"
           href="{% static 'images/logo/favicon/favicon-96x96.png' %}"
           sizes="96x96"/>
@@ -71,15 +71,9 @@
         window.setCityUrl = "{% url 'set_city' %}";
     </script>
 <script src="//code.jivo.ru/widget/FR6ZpV7iXD" async></script>
+
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P8VKM4F"
-            height="0" width="0"
-            style="display:none;visibility:hidden"></iframe>
-</noscript>
-<!-- End Google Tag Manager (noscript) -->
 <!--Header-->
 <div class="wrapper">
     {% block header %}
@@ -110,6 +104,8 @@
 <script src="{% static 'js/header/cityDropdown.js' %}"></script>
 <script src="https://www.google.com/recaptcha/api.js?render=6LchN2EqAAAAAFEYLgQZmZLrF_czptpdExkUsusM"></script>
 <script src="{% static 'js/telegram-popup.js' %}"></script>
+<script src="{% static 'js/dividers.js' %}"></script>
+<script src="{% static 'js/animations.js' %}"></script>
 {% block extra_scripts %}
 {% endblock %}
 </body>

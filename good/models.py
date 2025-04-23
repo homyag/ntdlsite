@@ -62,6 +62,11 @@ class Product(models.Model):
         db_table: str = "good"
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
+        indexes = [
+            models.Index(fields=['city', 'category']),
+            models.Index(fields=['on_stock']),
+            models.Index(fields=['slug', 'city', 'category']),
+        ]
 
     def __str__(self):
         return self.name
@@ -110,6 +115,10 @@ class Category(models.Model):
     class Meta:
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
+        indexes = [
+            models.Index(fields=['parent']),
+            models.Index(fields=['slug']),
+        ]
 
     def __str__(self):
         return self.name

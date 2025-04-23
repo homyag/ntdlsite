@@ -10,8 +10,8 @@ def product(request, city_slug):
     # Получение города
     city = get_object_or_404(City, slug=city_slug)
 
-    # Получение продуктов
-    products = Product.objects.filter(city=city)
+    # Получение продуктов с оптимизацией
+    products = Product.objects.select_related('category', 'city').filter(city=city)
 
     # Условное формирование заголовка
     if city.region:
@@ -45,14 +45,19 @@ def show_product(request, city_slug, category_slug, product_slug):
     city = get_object_or_404(City, slug=city_slug)
     category = get_object_or_404(Category, slug=category_slug)
     try:
-        good = Product.objects.get(slug=product_slug, category=category, city=city)
+        good = Product.objects.select_related('category', 'city').get(
+            slug=product_slug, 
+            category=category, 
+            city=city
+        )
     except Product.DoesNotExist:
         good = None
 
     if good:
-        related_goods = Product.objects.filter(category=category, city=city).exclude(
-            id=good.id
-        )[:3]
+        related_goods = Product.objects.select_related('category', 'city').filter(
+            category=category, 
+            city=city
+        ).exclude(id=good.id)[:3]
         data = {
             "title": f"Купить {good.name} в городе {city.name}",
             "content": good.description,
@@ -107,7 +112,7 @@ def show_category(request, city_slug, category_slug):
     city = get_object_or_404(City, slug=city_slug)
     category = get_object_or_404(Category, slug=category_slug)
     subcategories = Category.objects.filter(parent=category)
-    products = Product.objects.filter(
+    products = Product.objects.select_related('category', 'city').filter(
         (Q(category=category) | Q(category__in=subcategories)) & Q(city=city)
     )
 

@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', function() {
   // Находим все секции на странице
   const sections = document.querySelectorAll('.hero-section, .services-section, .about-section, .products-section, .advantages-section, .cta-section');
 
+  // Проверяем, есть ли секции на странице
+  if (sections.length === 0) {
+    return; // Прекращаем выполнение, если секции отсутствуют
+  }
+
   // HTML для простого разделителя
   const dividerHTML = `
   <div class="simple-divider">
@@ -34,36 +39,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const scrolled = (winScroll / height) * 100;
     scrollIndicator.style.width = scrolled + "%";
 
-    // Фиксация шапки при прокрутке
-    toggleFixedHeader();
-
     // Анимация элементов при прокрутке
     animateOnScroll();
   });
 
-  // Функция для фиксации шапки при скролле
-  function toggleFixedHeader() {
-    const header = document.querySelector('.header');
-    const wrapper = document.querySelector('.wrapper');
-
-    if (!header || !wrapper) return;
-
-    if (window.scrollY > 100) {
-      if (!header.classList.contains('fixed')) {
-        header.classList.add('fixed');
-        wrapper.style.paddingTop = header.offsetHeight + 'px';
-      }
-    } else {
-      if (header.classList.contains('fixed')) {
-        header.classList.remove('fixed');
-        wrapper.style.paddingTop = '0';
-      }
-    }
-  }
-
   // Функция для анимации элементов при прокрутке
   function animateOnScroll() {
     const elements = document.querySelectorAll('.animate-on-scroll');
+
+    if (elements.length === 0) {
+      return; // Если нет элементов с этим классом, выходим
+    }
 
     elements.forEach(element => {
       const position = element.getBoundingClientRect();
@@ -76,17 +62,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Добавление класса для анимации элементов
   document.querySelectorAll('.services-section, .about-section, .products-section, .advantages-section, .cta-section, .service-card, .advantage-card').forEach(element => {
-    element.classList.add('animate-on-scroll');
+    if (element) {
+      element.classList.add('animate-on-scroll');
+    }
   });
 
   // Эффект пульсации для кнопок CTA
   const ctaButtons = document.querySelectorAll('.hero__button--popup');
-  ctaButtons.forEach(button => {
-    setInterval(() => {
-      button.classList.add('pulse');
-      setTimeout(() => {
-        button.classList.remove('pulse');
-      }, 1000);
-    }, 5000);
-  });
+  if (ctaButtons.length > 0) {
+    ctaButtons.forEach(button => {
+      setInterval(() => {
+        button.classList.add('pulse');
+        setTimeout(() => {
+          button.classList.remove('pulse');
+        }, 1000);
+      }, 5000);
+    });
+  }
 });

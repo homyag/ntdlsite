@@ -10,7 +10,7 @@
     display: flex; /* Отображать блоки в строку */
     flex-direction: column; /* Отображать блоки в колонку */
     min-height: 100vh; /* Высота контейнера */
-    /*border: 1px solid red; !* Для отладки *!*/
+    /*transition: padding-top 0.3s ease; !* стиль для wrapper при фиксированном хедере *!*/
 }
 
 /*HEADER*/

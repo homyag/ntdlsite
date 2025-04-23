@@ -258,18 +258,9 @@ function showTelegramPopup() {
         // Устанавливаем флаг, что попап был показан
         localStorage.setItem('telegramPopupShown', 'true');
 
-        const pageType = document.querySelector('.telegram-button')?.getAttribute('data-page-type') || 'default';
-
+        // Отправляем событие в Яндекс.Метрику, если она доступна
         if (typeof ym !== 'undefined') {
             ym(98660706, 'reachGoal', 'tg_popup_shown');
-            }
-
-        // Отправляем событие в аналитику (если есть)
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'telegram_popup_shown', {
-                'event_category': 'engagement',
-                'page_type': pageType
-            });
         }
     }
 }
@@ -285,18 +276,12 @@ function closeTelegramPopup() {
 
 // Функция для отслеживания кликов по кнопке (для аналитики)
 function trackTelegramClick() {
+    // Проверяем, определена ли переменная ym (Яндекс.Метрика)
     if (typeof ym !== 'undefined') {
         ym(98660706, 'reachGoal', 'tg_popup_button');
-        console.log('Яндекс.Метрика: цель tg_popup_button отправлена');
     }
 
-    if (typeof gtag !== 'undefined') {
-        const button = document.querySelector('.telegram-button');
-        gtag('event', 'telegram_subscription_click', {
-            'event_category': 'engagement',
-            'page_type': button?.getAttribute('data-page-type') || 'default'
-        });
-    }
+    // Закрываем попап в любом случае
     closeTelegramPopup();
 
     return true;

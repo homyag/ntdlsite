@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic.base import TemplateView
 
-from new_tdl_site.views import page_not_found
+from commonpages.views import page_not_found
 
 from leads.views import (CallsApiList, \
                          CallsApiUpdate, CallsByManagerTgIdApiList,
@@ -66,8 +66,9 @@ urlpatterns = [
         content_type='text/plain')),
 ]
 
-handler404 = page_not_found
-
-
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Обработчик 404 ошибки
+handler404 = page_not_found

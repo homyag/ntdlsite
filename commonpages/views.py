@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.http import require_POST
 from django.conf import settings
+from django.views.defaults import page_not_found as django_page_not_found
 
 from good.models import Product, City, Category
 from django.db.models import Q
@@ -334,3 +335,10 @@ def set_city(request):
     # Определяем URL для перенаправления обратно
     referer = request.META.get('HTTP_REFERER', '/')
     return redirect(referer)
+
+
+def page_not_found(request, exception):
+    """
+    Кастомный обработчик 404 ошибки.
+    """
+    return render(request, '404.html', status=404)

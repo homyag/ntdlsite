@@ -1,4 +1,201 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
-<h1>{{ title }}</h1>
+    <!-- Hero Section -->
+    <section class="blog-hero">
+        <div class="blog-hero-content">
+            <h1>{{ title }}</h1>
+            <p>Полезные материалы о бетоне, строительстве и наших продуктах</p>
+        </div>
+    </section>
+
+    <!-- Blog Content Section -->
+    <div class="blog-container">
+        <!-- Sidebar -->
+        <aside class="blog-sidebar">
+            <div class="sidebar-box">
+                <h3 class="sidebar-title">Категории</h3>
+                <ul class="category-list">
+                    <li><a href="{% url 'blog' %}" class="{% if not category %}active{% endif %}">Все статьи</a></li>
+                    {% for cat in categories %}
+                        <li>
+                            <a href="{% url 'blog_category' cat.slug %}" class="{% if category.slug == cat.slug %}active{% endif %}">
+                                {{ cat.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="sidebar-box">
+                <h3 class="sidebar-title">Популярные статьи</h3>
+                <ul class="popular-posts">
+                    {% for post in popular_posts %}
+                        <li>
+                            <a href="{% url 'blog_post' post.slug %}">
+                                <div class="post-mini-image">
+                                    {% if post.image %}
+                                        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                                    {% else %}
+                                        <img src="{% static 'images/mainpage/zavod.webp' %}" alt="{{ post.title }}">
+                                    {% endif %}
+                                </div>
+                                <div class="post-mini-content">
+                                    <h4>{{ post.title }}</h4>
+                                    <span class="post-date">{{ post.pub_date|date:"d.m.Y" }}</span>
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="sidebar-box">
+                <h3 class="sidebar-title">Поиск по блогу</h3>
+                <form action="{% url 'blog' %}" method="get" class="blog-search-form">
+                    <input type="text" name="q" placeholder="Поиск по блогу..." class="search-input" value="{{ search_query }}">
+                    <button type="submit" class="search-button">
+                        <img src="{% static 'images/icons/search.svg' %}" alt="Поиск" onerror="this.src='{% static 'images/icons/search.png' %}'; this.onerror=null;">
+                    </button>
+                </form>
+            </div>
+
+            {% if tags %}
+            <div class="sidebar-box">
+                <h3 class="sidebar-title">Теги</h3>
+                <div class="tag-cloud">
+                    {% for tag in tags %}
+                        <a href="{% url 'blog_tag' tag.slug %}" class="tag-item {% if tag == current_tag %}active{% endif %}">
+                            {{ tag.name }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </aside>
+
+        <!-- Main Content -->
+        <div class="blog-content">
+            <!-- Breadcrumbs -->
+            {% include 'good/includes/breadcrumbs.html' %}
+
+            <!-- Category Title and Filters -->
+            <div class="blog-header">
+                <h2 class="blog-title">
+                    {% if category %}
+                        {{ category.name }}
+                    {% elif tag %}
+                        Статьи с тегом: {{ tag.name }}
+                    {% elif search_query %}
+                        Результаты поиска: {{ search_query }}
+                    {% else %}
+                        Все статьи блога
+                    {% endif %}
+                </h2>
+
+                <div class="blog-filters">
+                    <form action="" method="get" id="sort-form">
+                        {% if search_query %}
+                            <input type="hidden" name="q" value="{{ search_query }}">
+                        {% endif %}
+                        <select name="sort" class="filter-select" onchange="document.getElementById('sort-form').submit()">
+                            <option value="latest" {% if current_sort == 'latest' %}selected{% endif %}>Новые статьи</option>
+                            <option value="popular" {% if current_sort == 'popular' %}selected{% endif %}>Популярные</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Description for category if available -->
+            {% if category and category.description %}
+                <div class="category-description">
+                    {{ category.description|safe }}
+                </div>
+            {% endif %}
+
+            <!-- Blog Posts Grid -->
+            <div class="blog-posts-grid">
+                {% for post in posts %}
+                    <div class="blog-post-card">
+                        <div class="post-image">
+                            {% if post.image %}
+                                <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                            {% else %}
+                                <img src="{% static 'images/mainpage/zavod.webp' %}" alt="{{ post.title }}">
+                            {% endif %}
+                            {% if post.category %}
+                                <a href="{% url 'blog_category' post.category.slug %}" class="post-category">{{ post.category.name }}</a>
+                            {% endif %}
+                        </div>
+                        <div class="post-info">
+                            <h3 class="post-title">
+                                <a href="{% url 'blog_post' post.slug %}">{{ post.title }}</a>
+                            </h3>
+                            <div class="post-meta">
+                                <span class="post-date">{{ post.pub_date|date:"d.m.Y" }}</span>
+                                <span class="post-views">{{ post.views }} просмотров</span>
+                            </div>
+                            <div class="post-excerpt">
+                                <p>{{ post.excerpt }}</p>
+                            </div>
+                            <div class="post-actions">
+                                <a href="{% url 'blog_post' post.slug %}" class="read-more-btn">Читать далее</a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="no-posts">
+                        {% if search_query %}
+                            <p>По вашему запросу "{{ search_query }}" ничего не найдено. Попробуйте изменить параметры поиска.</p>
+                        {% elif category %}
+                            <p>В категории "{{ category.name }}" пока нет статей. Пожалуйста, загляните позже.</p>
+                        {% elif tag %}
+                            <p>Статей с тегом "{{ tag.name }}" пока нет. Пожалуйста, загляните позже.</p>
+                        {% else %}
+                            <p>В блоге пока нет статей. Мы скоро их добавим!</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if is_paginated %}
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1{% if search_query %}&q={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" class="page-link">&laquo; Первая</a>
+                        <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" class="page-link">Предыдущая</a>
+                    {% endif %}
+
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <span class="page-link active">{{ num }}</span>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <a href="?page={{ num }}{% if search_query %}&q={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" class="page-link">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" class="page-link">Следующая</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}{% if search_query %}&q={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" class="page-link">Последняя &raquo;</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <section class="blog-cta">
+        <div class="cta-content">
+            <h2>Остались вопросы по бетону и строительству?</h2>
+            <p>Свяжитесь с нашими специалистами для получения профессиональной консультации</p>
+            <div class="cta-buttons">
+                <button class="btn-primary hero__button--popup" type="button">Получить консультацию</button>
+                {% if city_slug %}
+                    <a href="{% url 'catalog' city_slug=city_slug %}" class="btn-secondary">Перейти в каталог</a>
+                {% else %}
+                    <a href="#" class="btn-secondary" onclick="openCityModal();">Перейти в каталог</a>
+                {% endif %}
+            </div>
+        </div>
+    </section>
 {% endblock %}

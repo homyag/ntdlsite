@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="order-success-container">
+    <div class="order-success-content">
+        <div class="success-icon">
+            <img src="{% static 'images/icons/order-success.svg' %}" alt="Заказ успешно оформлен">
+        </div>
+
+        <h1 class="success-title">Заказ успешно оформлен!</h1>
+
+        <div class="order-details">
+            <p class="order-number">Номер заказа: <strong>#{{ order.id }}</strong></p>
+            <p class="order-date">Дата заказа: <strong>{{ order.created_at|date:"d.m.Y H:i" }}</strong></p>
+        </div>
+
+        <div class="success-message">
+            <p>Уважаемый(ая) <strong>{{ order.customer_name }}</strong>, благодарим за ваш заказ!</p>
+            <p>Копия деталей заказа отправлена на ваш email: <strong>{{ order.customer_email }}</strong>.</p>
+            <p>Наш менеджер свяжется с вами в ближайшее время для подтверждения деталей заказа.</p>
+        </div>
+
+        <div class="order-summary">
+            <h2>Информация о заказе</h2>
+
+            <div class="order-items">
+                <table class="items-table">
+                    <thead>
+                        <tr>
+                            <th>Товар</th>
+                            <th>Количество</th>
+                            <th>Цена</th>
+                            <th>Сумма</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order.items.all %}
+                            <tr>
+                                <td>{{ item.product.name }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.price }} руб.</td>
+                                <td>{{ item.get_cost }} руб.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="total-label">Итого:</td>
+                            <td class="total-value">{{ order.total_cost }} руб.</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="shipping-info">
+                <h3>Информация о доставке</h3>
+                <p><strong>Город:</strong> {{ order.city }}</p>
+                <p><strong>Адрес:</strong> {{ order.shipping_address }}</p>
+                <p><strong>Телефон:</strong> {{ order.customer_phone }}</p>
+                {% if order.comment %}
+                    <p><strong>Комментарий:</strong> {{ order.comment }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="next-steps">
+            <p>Что дальше?</p>
+            <ol>
+                <li>Наш менеджер проверит наличие всех товаров</li>
+                <li>Мы свяжемся с вами для уточнения деталей доставки</li>
+                <li>После подтверждения заказа мы доставим товар по указанному адресу</li>
+            </ol>
+        </div>
+
+        <div class="success-actions">
+            <a href="{% if city_slug %}{% url 'catalog' city_slug=city_slug %}{% else %}{% url 'home' %}{% endif %}" class="btn-primary">Вернуться в каталог</a>
+            <a href="{% url 'home' %}" class="btn-secondary">На главную</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

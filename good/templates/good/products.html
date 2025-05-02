@@ -1,10 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 {% load good_filters %}
-{#{% block sidebar %}#}
-{#    <div class="goods__sections">#}
-{#    {% include "good/includes/sidebar.html" %}#}
-{#{% endblock %}#}
 {% block content %}
     <!-- PRODUCTS HERO SECTION -->
     <section class="catalog-hero">
@@ -105,9 +101,16 @@
                                     </div>
                                 {% endif %}
                                 <div class="product-actions">
-                                    <button class="btn-order hero__button--popup" type="button">
-                                        Заказать
-                                    </button>
+                                    <!-- Add to Cart Form -->
+                                    <form action="{% url 'cart:cart_add' p.id %}" method="post" class="add-to-cart-form">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="quantity" value="1">
+                                        <input type="hidden" name="override" value="False">
+                                        <button type="submit" class="btn-order">
+                                            В корзину
+                                        </button>
+                                    </form>
+
                                     <a href="{% url 'product' city_slug=city_slug category_slug=p.category.slug product_slug=p.slug %}"
                                        class="btn-details">
                                         Подробнее
@@ -146,4 +149,5 @@
             });
         </script>
     {% endif %}
+    <script src="{% static 'js/cart.js' %}"></script>
 {% endblock %}

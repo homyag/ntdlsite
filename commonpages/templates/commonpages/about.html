@@ -174,11 +174,11 @@
                     <strong>ТД Ленинградский — надёжный фундамент вашего успеха в строительстве.</strong>
                 </p>
                 <div class="cta-buttons">
-                    <button class="hero__button--popup" type="button">Получить консультацию</button>
+                    <button class="btn-primary hero__button--popup" type="button">Получить консультацию</button>
                     {% if city_slug %}
-                        <a href="{% url 'catalog' city_slug=city_slug %}" class="hero__button">Перейти в каталог</a>
+                        <a href="{% url 'catalog' city_slug=city_slug %}" class="btn-secondary" type="button">Перейти в каталог</a>
                     {% else %}
-                        <a href="#" class="hero__button" onclick="openCityModal();">Перейти в каталог</a>
+                        <a href="#" class="btn-secondary" type="button" onclick="openCityModal();">Перейти в каталог</a>
                     {% endif %}
                 </div>
             </div>

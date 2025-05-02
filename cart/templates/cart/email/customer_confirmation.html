@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ваш заказ №{{ order.id }} в ТД Ленинградский</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #113E71;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+        .content {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        .order-info {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .thank-you {
+            font-size: 1.2em;
+            color: #113E71;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f0f7ff;
+        }
+        .total {
+            font-weight: bold;
+            font-size: 1.1em;
+            text-align: right;
+        }
+        .shipping-info {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .next-steps {
+            background-color: #f0f7ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .next-steps h3 {
+            margin-top: 0;
+            color: #113E71;
+        }
+        .next-steps ol {
+            margin-left: 20px;
+            padding-left: 10px;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #888;
+            font-size: 0.9em;
+        }
+        .contact {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .contact a {
+            color: #3698D4;
+            text-decoration: none;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #3698D4;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Заказ №{{ order.id }} успешно оформлен</h1>
+    </div>
+
+    <div class="content">
+        <div class="logo">
+{#            <img src="{{ site_url }}{% url 'static' 'images/logo/logo.svg' %}" alt="ТД Ленинградский" width="200">#}
+        </div>
+
+        <p class="thank-you">Уважаемый(ая) {{ order.customer_name }}, благодарим Вас за заказ!</p>
+
+        <div class="order-info">
+            <p><strong>Номер заказа:</strong> #{{ order.id }}</p>
+            <p><strong>Дата заказа:</strong> {{ order.created_at|date:"d.m.Y H:i" }}</p>
+            <p><strong>Статус:</strong> Новый</p>
+        </div>
+
+        <h2>Ваш заказ</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Товар</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                    <th>Сумма</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order_items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.price }} руб.</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.get_cost }} руб.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="total">Итого:</td>
+                    <td class="total">{{ order.total_cost }} руб.</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="shipping-info">
+            <h2>Информация о доставке</h2>
+            <p><strong>Город:</strong> {{ order.city }}</p>
+            <p><strong>Адрес доставки:</strong> {{ order.shipping_address }}</p>
+            <p><strong>Телефон:</strong> {{ order.customer_phone }}</p>
+
+            {% if order.comment %}
+            <p><strong>Ваш комментарий:</strong> {{ order.comment }}</p>
+            {% endif %}
+        </div>
+
+        <div class="next-steps">
+            <h3>Что дальше?</h3>
+            <ol>
+                <li>Наш менеджер проверит наличие товаров на складе</li>
+                <li>Мы свяжемся с вами в ближайшее время для подтверждения деталей заказа</li>
+                <li>После подтверждения мы организуем доставку по указанному адресу</li>
+                <li>Вы получите уведомление, когда заказ будет отправлен</li>
+            </ol>
+        </div>
+
+        <div class="contact">
+            <p>Если у вас возникли вопросы по заказу, пожалуйста, свяжитесь с нами:</p>
+            <p><strong>Телефон:</strong> <a href="tel:+79496242644">+7 (949) 624-2644</a></p>
+            <p><strong>Email:</strong> <a href="mailto:info@tdleningrad.ru">info@tdleningrad.ru</a></p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Спасибо, что выбрали ТД Ленинградский!</p>
+        <p>&copy; 2025 ТД Ленинградский. Все права защищены.</p>
+    </div>
+</body>
+</html>

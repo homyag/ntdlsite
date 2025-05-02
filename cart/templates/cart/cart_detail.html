@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="cart-container">
+    <h1 class="cart-title">Корзина</h1>
+
+    <div class="cart-content">
+        {% if cart|length > 0 %}
+            <div class="cart-items">
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Товар</th>
+                            <th>Описание</th>
+                            <th>Цена</th>
+                            <th>Количество</th>
+                            <th>Сумма</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart %}
+                            {% with product=item.product %}
+                                <tr class="cart-item" data-product-id="{{ product.id }}">
+                                    <td class="product-cart-image">
+                                        <a href="{{ product.get_absolute_url }}">
+                                            {% if product.img %}
+                                                <img src="{{ product.img.url }}" alt="{{ product.name }}">
+                                            {% else %}
+                                                <img src="{% static 'images/mainpage/zavod.webp' %}" alt="{{ product.name }}">
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                    <td class="product-cart-info">
+                                        <a href="{{ product.get_absolute_url }}" class="product-name">{{ product.name }}</a>
+                                        <div class="product-category">{{ product.category.name }}</div>
+                                    </td>
+                                    <td class="product-cart-price">{{ item.price }} руб.</td>
+                                    <td class="product-quantity">
+                                        <form class="quantity-form" method="post" action="{% url 'cart:cart_update' product.id %}">
+                                            {% csrf_token %}
+                                            {{ item.update_quantity_form.quantity }}
+                                            {{ item.update_quantity_form.override }}
+                                            <button type="submit" class="quantity-update-btn">Обновить</button>
+                                        </form>
+                                    </td>
+                                    <td class="product-total">{{ item.total_price }} руб.</td>
+                                    <td class="product-remove">
+                                        <form method="post" action="{% url 'cart:cart_remove' product.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="remove-btn">
+                                                <img src="{% static 'images/icons/trash.svg' %}" alt="Удалить">
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endwith %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="cart-summary">
+                <div class="cart-total">
+                    <span class="total-title">Итого:</span>
+                    <span class="total-amount">{{ cart.get_total_price }} руб.</span>
+                </div>
+                <div class="cart-actions">
+                    <a href="{% url 'cart:checkout' %}" class="btn-order checkout-btn">Оформить заказ</a>
+                    <a href="{% if city_slug %}{% url 'catalog' city_slug=city_slug %}{% else %}{% url 'home' %}{% endif %}" class="btn-details continue-shopping-btn">Продолжить покупки</a>
+                </div>
+            </div>
+        {% else %}
+            <div class="empty-cart">
+                <img src="{% static 'images/icons/cart-empty.svg' %}" alt="Пустая корзина" class="empty-cart-icon">
+                <h2>Ваша корзина пуста</h2>
+                <p>Добавьте товары в корзину, чтобы продолжить покупки</p>
+                <a href="{% if city_slug %}{% url 'catalog' city_slug=city_slug %}{% else %}{% url 'home' %}{% endif %}" class="btn-primary">Перейти в каталог</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

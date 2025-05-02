@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load l10n %}
+{% load cart_filters %}
 {% load good_filters %}
 
 {% block content %}
     {% if good %}
         <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Product",
-            "name": "{{ good.name|escapejs }}",
+            {
+                "@context": "https://schema.org",
+                "@type": "Product",
+                "name": "{{ good.name|escapejs }}",
             "description": "{{ good.description|striptags|escapejs }}",
             {% if good.img %}
-            "image": "{{ request.scheme }}://{{ request.get_host }}{{ good.img.url }}",
+                "image": "{{ request.scheme }}://{{ request.get_host }}{{ good.img.url }}",
             {% else %}
-            "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/mainpage/zavod.webp' %}",
+                "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/mainpage/zavod.webp' %}",
             {% endif %}
             "brand": {
                 "@type": "Brand",
@@ -100,9 +101,28 @@
                             </div>
 
                             <div class="good__header_button">
-                                <button class="hero__button--popup" type="button">
-                                    Заказать {{ good.name|truncatewords:2 }}
-                                </button>
+                                <!-- Add to Cart Form -->
+                                <form action="{% url 'cart:cart_add' good.id %}" method="post" class="add-to-cart-form">
+                                    {% csrf_token %}
+                                    <div class="add-to-cart-container">
+                                        <div class="quantity-selector">
+                                            <label for="id_quantity">Количество:</label>
+                                            <select name="quantity" id="id_quantity">
+                                                {% for i in '123456789'|make_list %}
+                                                    <option value="{{ i }}">{{ i }}</option>
+                                                {% endfor %}
+                                                {% for i in 10|item_range:21 %}
+                                                    <option value="{{ i }}">{{ i }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <input type="hidden" name="override" value="False">
+                                            <input type="hidden" name="next" value="{{ request.path }}">
+                                        </div>
+                                        <button type="submit" class="btn-order">
+                                            Добавить в корзину
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
 
@@ -110,7 +130,8 @@
                             {% if img %}
                                 <img src="{{ img }}" alt="{{ title }}" class="content-image">
                             {% else %}
-                                <img src="{% static 'images/mainpage/zavod.webp' %}" alt="{{ title }}" class="content-image">
+                                <img src="{% static 'images/mainpage/zavod.webp' %}" alt="{{ title }}"
+                                     class="content-image">
                             {% endif %}
                         </div>
                     </div>
@@ -128,7 +149,8 @@
                                         {% if related_good.img %}
                                             <img src="{{ related_good.img.url }}" alt="{{ related_good.name }}">
                                         {% else %}
-                                            <img src="{% static 'images/mainpage/zavod.webp' %}" alt="ТД Ленинградский">
+                                            <img src="{% static 'images/mainpage/zavod.webp' %}"
+                                                 alt="{{ related_good.name }}">
                                         {% endif %}
                                         <h4>{{ related_good.name }}</h4>
                                     </a>
@@ -188,4 +210,5 @@
             });
         </script>
     {% endif %}
+    <script src="{% static 'js/cart.js' %}"></script>
 {% endblock %}

@@ -56,6 +56,7 @@ urlpatterns = [
          CallResultUpdateView.as_view()), # обновляет статус заявки
     path('api/v1/callslist/manager_update/<int:pk>/',
          CallManagerUpdateView.as_view()), # обновляет менеджера в заявке
+    path('cart/', include(('cart.urls', 'cart'), namespace='cart')),
     path('catalog/', include('good.urls')),
     path('', include('commonpages.urls')),
     path('', include('blog.urls')),

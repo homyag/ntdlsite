@@ -1,0 +1,10 @@
+{% load static %}
+<!-- Floating Cart Button -->
+<div id="floating-cart" class="floating-cart">
+    <a href="{% url 'cart:cart_detail' %}" class="floating-cart-link">
+        <div class="floating-cart-icon">
+            <img src="{% static 'images/icons/cart.svg' %}" alt="Корзина">
+            <span class="floating-cart-count">0</span>
+        </div>
+    </a>
+</div>

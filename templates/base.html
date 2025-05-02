@@ -42,11 +42,19 @@
 {{ seo_description }}{% else %}{{ seo_description }}{% endif %}">
     <meta name="keywords" content="{% if seo_keywords %}{{ seo_keywords }}
 {% else %}{{ seo_keywords }}{% endif %}">
+ <link rel="preconnect" href="https://mc.yandex.ru">
+    <link rel="dns-prefetch" href="https://mc.yandex.ru">
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.google.com">
+
     <link type="text/css" href="{% static 'css/styles.css' %}"
           rel="stylesheet">
     <link type="text/css" href="{% static 'css/modal.css' %}" rel="stylesheet">
     <link type="text/css" href="{% static 'css/telegram-popup.css' %}" rel="stylesheet">
     <link type="text/css" href="{% static 'css/blog.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'css/cart.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'css/popup_cart.css' %}" rel="stylesheet">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -81,7 +89,6 @@
     <script>
         window.setCityUrl = "{% url 'set_city' %}";
     </script>
-    <script src="//code.jivo.ru/widget/FR6ZpV7iXD" async></script>
 
 </head>
 <body>
@@ -108,16 +115,18 @@
 <!-- Передача данных о городах -->
 {{ city_slugs|json_script:'cities-data'|safe }}
 {% include 'includes/city_modal.html' %}
-<script src="{% static 'js/cityModal.js' %}"></script>
-<script src="{% static 'js/header/headerPopup.js' %}"></script>
-<script src="{% static 'js/header/headerNavDisplay.js' %}"></script>
-<script src="{% static 'js/header/headerCallbackPopup.js' %}"></script>
-<script src="{% static 'js/header/cityDropdown.js' %}"></script>
-<script src="https://www.google.com/recaptcha/api.js?render=6LchN2EqAAAAAFEYLgQZmZLrF_czptpdExkUsusM"></script>
-<script src="{% static 'js/telegram-popup.js' %}"></script>
-<script src="{% static 'js/dividers.js' %}"></script>
-<script src="{% static 'js/animations.js' %}"></script>
+<script src="{% static 'js/cityModal.js' %}" defer></script>
+<script src="{% static 'js/header/headerPopup.js' %}" defer></script>
+<script src="{% static 'js/header/headerNavDisplay.js' %}" defer></script>
+<script src="{% static 'js/header/headerCallbackPopup.js' %}" defer></script>
+<script src="{% static 'js/header/cityDropdown.js' %}" defer></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LchN2EqAAAAAFEYLgQZmZLrF_czptpdExkUsusM" async></script>
+<script src="{% static 'js/telegram-popup.js' %}" defer></script>
+<script src="{% static 'js/dividers.js' %}" defer></script>
+<script src="{% static 'js/animations.js' %}" defer></script>
+<script src="{% static 'js/cart.js' %}" defer></script>
 {% block extra_scripts %}
 {% endblock %}
+{% include 'includes/popup_cart.html' %}
 </body>
 </html>

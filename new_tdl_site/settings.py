@@ -18,6 +18,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = ['tdleningrad.ru']
 
+SITE_URL = 'https://tdleningrad.ru'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -33,6 +35,7 @@ INSTALLED_APPS = [
     'commonpages.apps.CommonpagesConfig',
     'blog.apps.BlogConfig',
     'leads.apps.LeadsConfig',
+    'cart.apps.CartConfig',
 
     'django_extensions',
     'rest_framework',
@@ -161,6 +164,7 @@ REST_FRAMEWORK = {
 # CSRF_TRUSTED_ORIGINS = ['https://*.tdleningrad.ru']
 
 SITE_ID = 1
+CART_SESSION_ID = 'cart'
 
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
@@ -171,40 +175,15 @@ CELERY_TIMEZONE = 'Europe/Moscow'
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 
-#LOGGING = {
-#    'version': 1,
-#    'disable_existing_loggers': False,
-#    'formatters': {
-#        'verbose': {
-#            'format': '{levelname} {asctime} {module} {message}',
-#            'style': '{',
-#        },
-#        'simple': {
-#            'format': '{levelname} {message}',
-#            'style': '{',
-#        },
-#    },
-#    'handlers': {
-#        'file': {
-#            'level': 'DEBUG',
-#            'class': 'logging.FileHandler',
-#            'filename': '/home/igor/ntdlsite/logs/django_error.log',
-#            'formatter': 'verbose',
-#        },
-#	'console': {
-#            'level': 'DEBUG',
-#            'class': 'logging.StreamHandler',
-#            'formatter': 'simple',
-#        },
-#    },
-#    'loggers': {
-#        'django': {
-#            'handlers': ['file', 'console'],
-#            'level': 'DEBUG',
-#            'propagate': True,
-#        },
-#    },
-#}
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.hosting.reg.ru' #SMTP server
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = 'info@tdleningrad.ru'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = 'ТД Ленинградский <info@tdleningrad.ru>'
+ADMIN_EMAIL = 'homyaga@gmail.com'
 
 # включить на проде
 # SECURE_BROWSER_XSS_FILTER = True

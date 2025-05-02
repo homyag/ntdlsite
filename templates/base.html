@@ -42,9 +42,9 @@
 {{ seo_description }}{% else %}{{ seo_description }}{% endif %}">
     <meta name="keywords" content="{% if seo_keywords %}{{ seo_keywords }}
 {% else %}{{ seo_keywords }}{% endif %}">
- <link rel="preconnect" href="https://mc.yandex.ru">
+    <link rel="preconnect" href="https://mc.yandex.ru">
     <link rel="dns-prefetch" href="https://mc.yandex.ru">
- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://www.google.com">
 
@@ -55,6 +55,8 @@
     <link type="text/css" href="{% static 'css/blog.css' %}" rel="stylesheet">
     <link type="text/css" href="{% static 'css/cart.css' %}" rel="stylesheet">
     <link type="text/css" href="{% static 'css/popup_cart.css' %}" rel="stylesheet">
+    {% block extra_css %}
+    {% endblock %}
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

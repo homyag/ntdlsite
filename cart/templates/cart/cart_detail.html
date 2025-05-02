@@ -1,12 +1,26 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+<link rel="stylesheet" href="{% static 'css/mobile-cart.css' %}">
+{% endblock %}
+
+
 {% block content %}
 <div class="cart-container">
     <h1 class="cart-title">Корзина</h1>
 
     <div class="cart-content">
         {% if cart|length > 0 %}
+            <!-- Mobile cart summary - visible only on mobile -->
+            <div class="mobile-cart-summary">
+                <div class="mobile-cart-total">
+                    <span class="mobile-total-title">Итого:</span>
+                    <span class="mobile-total-amount">{{ cart.get_total_price }} руб.</span>
+                </div>
+            </div>
+
             <div class="cart-items">
                 <table class="cart-table">
                     <thead>
@@ -71,6 +85,11 @@
                     <a href="{% if city_slug %}{% url 'catalog' city_slug=city_slug %}{% else %}{% url 'home' %}{% endif %}" class="btn-details continue-shopping-btn">Продолжить покупки</a>
                 </div>
             </div>
+
+            <!-- Mobile help text -->
+            <div class="mobile-cart-help">
+                <p><small>Совет: проведите пальцем влево по товару, чтобы удалить его из корзины.</small></p>
+            </div>
         {% else %}
             <div class="empty-cart">
                 <img src="{% static 'images/icons/cart-empty.svg' %}" alt="Пустая корзина" class="empty-cart-icon">
@@ -81,4 +100,8 @@
         {% endif %}
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/mobile-cart.js' %}"></script>
 {% endblock %}

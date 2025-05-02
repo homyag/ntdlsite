@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+<link rel="stylesheet" href="{% static 'css/mobile-checkout.css' %}">
+{% endblock %}
+
+
 {% block content %}
 <div class="checkout-container">
     <h1 class="checkout-title">Оформление заказа</h1>
@@ -8,7 +14,7 @@
     <div class="checkout-content">
         <div class="checkout-form-container">
             <h2>Информация для доставки</h2>
-            <form method="post" class="checkout-form">
+            <form method="post" class="checkout-form" id="checkout-form">
                 {% csrf_token %}
 
                 <div class="form-group">
@@ -133,7 +139,7 @@
             <div class="order-totals">
                 <div class="subtotal">
                     <span>Подытог:</span>
-                    <span>{{ cart.get_total_price }} руб.</span>
+                    <span class="subtotal-value">{{ cart.get_total_price }} руб.</span>
                 </div>
                 <div class="delivery">
                     <span>Доставка:</span>
@@ -141,23 +147,100 @@
                 </div>
                 <div class="total">
                     <span>Итого:</span>
-                    <span>{{ cart.get_total_price }} руб.</span>
+                    <span class="total-value">{{ cart.get_total_price }} руб.</span>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Mobile-only sticky checkout button -->
+    <div class="sticky-checkout-footer" id="sticky-checkout-footer" style="display: none;">
+        <div class="sticky-order-price">{{ cart.get_total_price }} руб.</div>
+        <button type="button" id="sticky-order-btn" class="sticky-order-btn">Оформить заказ</button>
     </div>
 </div>
 {% endblock %}
 
 {% block extra_scripts %}
+<script src="{% static 'js/mobile-checkout.js' %}"></script>
 <script>
-    // Если пользователь уже выбрал город на сайте, используем его для формы
+    // Basic script for City field pre-population and mobile enhancements
     document.addEventListener('DOMContentLoaded', function() {
+        // Pre-populate city field if available
         const cityInput = document.getElementById('{{ form.city.id_for_label }}');
         const currentCity = "{{ city_name }}";
 
         if (cityInput && currentCity && !cityInput.value) {
             cityInput.value = currentCity;
+        }
+
+        // Initialize mobile-specific features
+        if (window.innerWidth <= 768) {
+            // Show sticky footer
+            const stickyFooter = document.getElementById('sticky-checkout-footer');
+            if (stickyFooter) {
+                stickyFooter.style.display = 'flex';
+                document.body.classList.add('has-sticky-footer');
+
+                // Calculate proper bottom padding
+                const footerHeight = stickyFooter.offsetHeight;
+                document.body.style.paddingBottom = `${footerHeight + 20}px`;
+            }
+
+            // Make sticky button submit the form
+            const stickyBtn = document.getElementById('sticky-order-btn');
+            const checkoutForm = document.getElementById('checkout-form');
+
+            if (stickyBtn && checkoutForm) {
+                stickyBtn.addEventListener('click', function() {
+                    checkoutForm.submit();
+                });
+            }
+
+            // Hide sticky footer when in form view
+            const formContainer = document.querySelector('.checkout-form-container');
+            if (formContainer) {
+                const options = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.3
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && stickyFooter) {
+                            stickyFooter.style.transform = 'translateY(100%)';
+                            stickyFooter.style.opacity = '0';
+                        } else if (stickyFooter) {
+                            stickyFooter.style.transform = 'translateY(0)';
+                            stickyFooter.style.opacity = '1';
+                        }
+                    });
+                }, options);
+
+                observer.observe(formContainer);
+            }
+
+            // Add placeholder text to make mobile fields clearer
+            const addressField = document.getElementById('{{ form.shipping_address.id_for_label }}');
+            if (addressField && !addressField.placeholder) {
+                addressField.placeholder = 'Введите полный адрес доставки';
+            }
+
+            // Auto-scroll to form section after summary view
+            // Small delay to ensure page is fully loaded
+            setTimeout(() => {
+                const formSection = document.querySelector('.checkout-form-container');
+                if (formSection) {
+                    const rect = formSection.getBoundingClientRect();
+                    if (rect.top < 0 || rect.bottom > window.innerHeight) {
+                        window.scrollTo({
+                            top: formSection.offsetTop - 20,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            }, 500);
         }
     });
 </script>

@@ -97,7 +97,7 @@ class Order(models.Model):
 
     def save(self, *args, **kwargs):
         send_notification = kwargs.pop('send_notification', True)
-        self.__dict__['_send_notification'] = send_notification  # Используем __dict__ напрямую
+        self.__dict__['_send_notification'] = send_notification
         super().save(*args, **kwargs)
 
 

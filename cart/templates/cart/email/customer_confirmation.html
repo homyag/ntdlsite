@@ -138,6 +138,10 @@
                     <td>{{ item.quantity }}</td>
                     <td>{{ item.get_cost }} руб.</td>
                 </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" style="text-align: center;">Нет товаров в заказе</td>
+                </tr>
                 {% endfor %}
             </tbody>
             <tfoot>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Circle background -->
+  <circle cx="60" cy="60" r="54" fill="#E6F4FF" />
+
+  <!-- Outer circle -->
+  <circle cx="60" cy="60" r="50" stroke="#3698D4" stroke-width="4" />
+
+  <!-- Success checkmark -->
+  <path d="M40 60L55 75L85 45" stroke="#3698D4" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Order document -->
+  <g opacity="0.85">
+    <rect x="75" y="55" width="25" height="35" rx="2" fill="white" stroke="#113E71" stroke-width="1.5" />
+    <line x1="80" y1="62" x2="95" y2="62" stroke="#113E71" stroke-width="1.5" />
+    <line x1="80" y1="68" x2="95" y2="68" stroke="#113E71" stroke-width="1.5" />
+    <line x1="80" y1="74" x2="90" y2="74" stroke="#113E71" stroke-width="1.5" />
+    <line x1="80" y1="80" x2="95" y2="80" stroke="#113E71" stroke-width="1.5" />
+  </g>
+</svg>

@@ -91,20 +91,36 @@ class Order(models.Model):
     def __str__(self):
         return f"Заказ №{self.id} от {self.created_at.strftime('%d.%m.%Y')}"
 
+    def get_total_items(self):
+        """Получить общее количество товаров в заказе"""
+        return sum(item.quantity for item in self.items.all())
+
+    def save(self, *args, **kwargs):
+        send_notification = kwargs.pop('send_notification', True)
+        self.__dict__['_send_notification'] = send_notification  # Используем __dict__ напрямую
+        super().save(*args, **kwargs)
+
 
 class OrderItem(models.Model):
     """Individual items in an order"""
-    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.PROTECT)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    quantity = models.PositiveIntegerField(default=1)
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE, verbose_name="Заказ")
+    product = models.ForeignKey(Product, on_delete=models.PROTECT, verbose_name="Товар")
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
+    quantity = models.PositiveIntegerField(default=1, verbose_name="Количество")
 
     class Meta:
         verbose_name = "Товар в заказе"
         verbose_name_plural = "Товары в заказе"
+        indexes = [
+            models.Index(fields=['order']),
+            models.Index(fields=['product']),
+        ]
 
     def __str__(self):
         return f"{self.quantity} x {self.product.name}"
 
     def get_cost(self):
+        """Получить стоимость этого товара в заказе"""
+        if self.price is None:
+            return 0
         return self.price * self.quantity

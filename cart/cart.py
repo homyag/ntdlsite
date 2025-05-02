@@ -52,14 +52,27 @@ class SessionCart:
         product_ids = self.cart.keys()
         # Get product objects and add them to the cart
         products = Product.objects.filter(id__in=product_ids)
-        cart = self.cart.copy()
-        for product in products:
-            cart[str(product.id)]['product'] = product
 
-        for item in cart.values():
-            item['price'] = Decimal(item['price'])
-            item['total_price'] = item['price'] * item['quantity']
-            yield item
+        # Создаем копию корзины для работы
+        cart = self.cart.copy()
+
+        # Создаем словарь продуктов по ID для быстрого доступа
+        products_dict = {str(product.id): product for product in products}
+
+        for product_id, item in cart.items():
+            # Если продукт существует в базе данных
+            if product_id in products_dict:
+                # Добавляем объект продукта в словарь элемента корзины
+                item['product'] = products_dict[product_id]
+                # Преобразуем цену из строки в Decimal
+                item['price'] = Decimal(item['price'])
+                # Вычисляем общую стоимость
+                item['total_price'] = item['price'] * item['quantity']
+                # Возвращаем элемент
+                yield item
+            else:
+                # Журналирование ошибки, если продукт не найден
+                print(f"Предупреждение: продукт с ID {product_id} не найден в базе данных")
 
     def __len__(self):
         """Count all items in the cart."""

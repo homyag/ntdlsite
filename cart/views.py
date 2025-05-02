@@ -117,16 +117,32 @@ def checkout(request):
             order = form.save(commit=False)
             # Calculate total cost
             order.total_cost = session_cart.get_total_price()
-            order.save()
+            # Установим параметр для предотвращения запуска сигнала
+            order.save(send_notification=False)  # Добавим этот параметр в метод save
 
             # Add order items
             for item in session_cart:
-                OrderItem.objects.create(
-                    order=order,
-                    product=item['product'],
-                    price=item['price'],
-                    quantity=item['quantity']
-                )
+                # Проверяем, что продукт существует
+                if 'product' in item:
+                    OrderItem.objects.create(
+                        order=order,
+                        product=item['product'],
+                        price=item['price'],
+                        quantity=item['quantity']
+                    )
+                else:
+                    # Логирование ошибки, если продукт отсутствует
+                    print(f"Ошибка: элемент корзины не содержит продукт: {item}")
+
+            # Теперь, когда все товары созданы, вручную отправляем уведомления
+            from cart.signals import send_admin_notification, send_customer_confirmation
+            send_admin_notification(order)
+            send_customer_confirmation(order)
+
+            # Вывод информации о созданном заказе и его элементах для отладки
+            print(f"Создан заказ #{order.id} с {order.items.count()} товарами")
+            for item in order.items.all():
+                print(f"- {item.quantity} x {item.product.name} (цена: {item.price})")
 
             # Clear the cart
             session_cart.clear()

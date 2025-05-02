@@ -1,4 +1,65 @@
 /**
+ * Проверка на очень маленький экран (320px)
+ * и применение соответствующих стилей
+ */
+function checkVerySmallScreen() {
+    if (window.innerWidth <= 320) {
+        // Применяем специальные стили для экранов 320px
+        document.querySelectorAll('.quantity-form').forEach(form => {
+            const select = form.querySelector('select');
+            const updateBtn = form.querySelector('.quantity-update-btn');
+            const controlsWrapper = form.querySelector('.quantity-controls');
+
+            if (controlsWrapper) {
+                // Меняем расположение элементов для ультра-маленьких экранов
+                controlsWrapper.style.flexDirection = 'column';
+
+                const decrementBtn = controlsWrapper.querySelector('.quantity-decrement');
+                const incrementBtn = controlsWrapper.querySelector('.quantity-increment');
+
+                if (decrementBtn && incrementBtn) {
+                    // Создаем обертку для кнопок +/-
+                    const buttonsWrapper = document.createElement('div');
+                    buttonsWrapper.style.display = 'flex';
+                    buttonsWrapper.style.justifyContent = 'center';
+                    buttonsWrapper.style.gap = '10px';
+                    buttonsWrapper.style.marginBottom = '5px';
+
+                    // Перемещаем кнопки в новую обертку
+                    decrementBtn.parentNode.insertBefore(buttonsWrapper, decrementBtn);
+                    buttonsWrapper.appendChild(decrementBtn);
+                    buttonsWrapper.appendChild(select);
+                    buttonsWrapper.appendChild(incrementBtn);
+                }
+
+                // Перемещаем кнопку Обновить вниз
+                if (updateBtn) {
+                    updateBtn.style.width = '100%';
+                    updateBtn.style.marginTop = '5px';
+                    updateBtn.style.marginLeft = '0';
+                }
+            }
+        });
+
+        // Адаптируем кнопки в итоговом блоке
+        const checkoutBtn = document.querySelector('.checkout-btn');
+        const continueBtn = document.querySelector('.continue-shopping-btn');
+
+        if (checkoutBtn) {
+            checkoutBtn.style.fontSize = '0.9rem';
+            checkoutBtn.style.padding = '8px 10px';
+        }
+
+        if (continueBtn) {
+            continueBtn.style.fontSize = '0.9rem';
+            continueBtn.style.padding = '8px 10px';
+        }
+    }
+}
+
+// Вызываем функцию при загрузке и при изменении размера окна
+document.addEventListener('DOMContentLoaded', checkVerySmallScreen);
+window.addEventListener('resize', checkVerySmallScreen);/**
  * Mobile-friendly cart enhancements
  * This script adds mobile-specific functionality to the shopping cart
  */
@@ -15,6 +76,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add sticky checkout button on mobile
     initStickyCheckout();
+
+    // Применяем специальные стили для экранов 320px
+    checkVerySmallScreen();
 });
 
 /**
@@ -32,7 +96,7 @@ function initMobileCart() {
 
         // Add appropriate aria attributes for accessibility
         item.setAttribute('role', 'article');
-        item.setAttribute('aria-label', 'Cart item');
+        item.setAttribute('aria-label', 'Товар в корзине');
 
         // Add touch feedback
         item.addEventListener('touchstart', function() {
@@ -43,6 +107,12 @@ function initMobileCart() {
             this.classList.remove('touch-active');
         });
     });
+
+    // Show mobile cart summary
+    const cartSummary = document.querySelector('.mobile-cart-summary');
+    if (cartSummary && window.innerWidth <= 768) {
+        cartSummary.style.display = 'block';
+    }
 }
 
 /**
@@ -56,7 +126,7 @@ function initSwipeToRemove() {
     if (window.innerWidth > 768) return;
 
     cartItems.forEach(item => {
-        let startX, moveX, threshold = 100;
+        let startX, moveX, threshold = 80;
         let isLongTouch = false;
         let touchTimeout;
 
@@ -100,7 +170,7 @@ function initSwipeToRemove() {
                 const removeButton = item.querySelector('.remove-btn');
                 if (removeButton) {
                     // Animate item out
-                    item.style.transform = 'translateX(-100%)';
+                    item.classList.add('swipe-left');
                     item.style.opacity = '0';
 
                     // Trigger remove button click after animation
@@ -235,18 +305,20 @@ function enhanceQuantitySelector() {
         controlsWrapper.className = 'quantity-controls';
         controlsWrapper.style.display = 'flex';
         controlsWrapper.style.alignItems = 'center';
+        controlsWrapper.style.justifyContent = 'center';
+        controlsWrapper.style.width = '100%';
 
         // Create decrement button
         const decrementBtn = document.createElement('button');
         decrementBtn.type = 'button';
         decrementBtn.className = 'quantity-btn quantity-decrement';
         decrementBtn.innerHTML = '-';
-        decrementBtn.style.width = '30px';
-        decrementBtn.style.height = '30px';
+        decrementBtn.style.width = '28px';
+        decrementBtn.style.height = '28px';
         decrementBtn.style.border = '1px solid #ddd';
         decrementBtn.style.borderRadius = '50%';
         decrementBtn.style.backgroundColor = '#f8f9fa';
-        decrementBtn.style.fontSize = '18px';
+        decrementBtn.style.fontSize = '16px';
         decrementBtn.style.display = 'flex';
         decrementBtn.style.alignItems = 'center';
         decrementBtn.style.justifyContent = 'center';
@@ -256,28 +328,30 @@ function enhanceQuantitySelector() {
         incrementBtn.type = 'button';
         incrementBtn.className = 'quantity-btn quantity-increment';
         incrementBtn.innerHTML = '+';
-        incrementBtn.style.width = '30px';
-        incrementBtn.style.height = '30px';
+        incrementBtn.style.width = '28px';
+        incrementBtn.style.height = '28px';
         incrementBtn.style.border = '1px solid #ddd';
         incrementBtn.style.borderRadius = '50%';
         incrementBtn.style.backgroundColor = '#f8f9fa';
-        incrementBtn.style.fontSize = '18px';
+        incrementBtn.style.fontSize = '16px';
         incrementBtn.style.display = 'flex';
         incrementBtn.style.alignItems = 'center';
         incrementBtn.style.justifyContent = 'center';
 
         // Style select
-        select.style.width = '50px';
+        select.style.width = '45px';
         select.style.textAlign = 'center';
         select.style.margin = '0 5px';
+        select.style.border = '1px solid #ddd';
+        select.style.borderRadius = '4px';
+        select.style.padding = '4px';
 
         // Add event listeners
         decrementBtn.addEventListener('click', function() {
             const currentIndex = select.selectedIndex;
             if (currentIndex > 0) {
                 select.selectedIndex = currentIndex - 1;
-                // Auto-submit form on change
-                updateBtn.click();
+                // Не автоматически обновляем, пользователь должен нажать кнопку Обновить
             }
         });
 
@@ -285,8 +359,7 @@ function enhanceQuantitySelector() {
             const currentIndex = select.selectedIndex;
             if (currentIndex < select.options.length - 1) {
                 select.selectedIndex = currentIndex + 1;
-                // Auto-submit form on change
-                updateBtn.click();
+                // Не автоматически обновляем, пользователь должен нажать кнопку Обновить
             }
         });
 
@@ -295,8 +368,11 @@ function enhanceQuantitySelector() {
         controlsWrapper.appendChild(select);
         controlsWrapper.appendChild(incrementBtn);
 
-        // Hide the update button (we're auto-submitting)
-        updateBtn.style.display = 'none';
+        // Show the update button inline with other controls
+        updateBtn.style.display = 'block';
+        updateBtn.style.marginLeft = '5px';
+        updateBtn.style.padding = '4px 8px';
+        updateBtn.style.fontSize = '0.85rem';
 
         // Insert quantity controls in place of original elements
         select.parentNode.insertBefore(controlsWrapper, select);
@@ -348,9 +424,16 @@ function initStickyCheckout() {
     }
 
     // Clone the checkout button
-    const stickyCheckoutBtn = checkoutBtn.cloneNode(true);
-    stickyCheckoutBtn.style.width = 'auto';
-    stickyCheckoutBtn.style.padding = '12px 20px';
+    const stickyCheckoutBtn = document.createElement('a');
+    stickyCheckoutBtn.href = checkoutBtn.href;
+    stickyCheckoutBtn.className = 'sticky-checkout-btn';
+    stickyCheckoutBtn.textContent = 'Оформить заказ';
+    stickyCheckoutBtn.style.backgroundColor = '#3698D4';
+    stickyCheckoutBtn.style.color = 'white';
+    stickyCheckoutBtn.style.padding = '10px 20px';
+    stickyCheckoutBtn.style.borderRadius = '50px';
+    stickyCheckoutBtn.style.textDecoration = 'none';
+    stickyCheckoutBtn.style.fontWeight = 'bold';
 
     // Add elements to container
     stickyContainer.appendChild(priceDisplay);
@@ -362,12 +445,6 @@ function initStickyCheckout() {
     // Add padding to bottom of document to account for sticky footer
     const footerHeight = stickyContainer.offsetHeight;
     document.body.style.paddingBottom = `${footerHeight + 20}px`;
-
-    // Handle the button click
-    stickyCheckoutBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        window.location.href = checkoutBtn.href;
-    });
 
     // Hide the sticky footer when near the actual checkout button
     window.addEventListener('scroll', function() {

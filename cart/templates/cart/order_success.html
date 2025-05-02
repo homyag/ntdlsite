@@ -5,6 +5,7 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/cart.css' %}">
 <link rel="stylesheet" href="{% static 'css/mobile-cart.css' %}">
+<link rel="stylesheet" href="{% static 'css/mobile-order-success.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -43,10 +44,10 @@
                     <tbody>
                         {% for item in order.items.all %}
                             <tr>
-                                <td>{{ item.product.name }}</td>
-                                <td>{{ item.quantity }}</td>
-                                <td>{{ item.price }} руб.</td>
-                                <td>{{ item.get_cost }} руб.</td>
+                                <td data-label="Товар">{{ item.product.name }}</td>
+                                <td data-label="Количество">{{ item.quantity }}</td>
+                                <td data-label="Цена">{{ item.price }} руб.</td>
+                                <td data-label="Сумма">{{ item.get_cost }} руб.</td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -101,99 +102,6 @@
 </div>
 {% endblock %}
 
-{% block extra_js %}
+{% block extra_scripts %}
 <script src="{% static 'js/mobile-order-success.js' %}"></script>
-<script>
-    // Add mobile styling when on small screens
-    document.addEventListener('DOMContentLoaded', function() {
-        if (window.innerWidth <= 768) {
-            // Add mobile-specific classes
-            document.querySelector('.order-success-content').classList.add('mobile-success');
-            document.body.classList.add('mobile-success-page');
-
-            // Style the mobile contact section
-            const contactSection = document.querySelector('.mobile-contact-section');
-            if (contactSection) {
-                contactSection.style.backgroundColor = '#f0f7ff';
-                contactSection.style.padding = '15px';
-                contactSection.style.borderRadius = '10px';
-                contactSection.style.textAlign = 'center';
-                contactSection.style.marginBottom = '25px';
-
-                const buttons = contactSection.querySelectorAll('.mobile-contact-buttons a');
-                buttons.forEach(btn => {
-                    btn.style.display = 'inline-block';
-                    btn.style.margin = '0 10px';
-                    btn.style.padding = '10px 20px';
-                    btn.style.borderRadius = '50px';
-                    btn.style.textDecoration = 'none';
-                    btn.style.fontWeight = 'bold';
-                });
-
-                const phoneBtn = contactSection.querySelector('.mobile-phone-btn');
-                if (phoneBtn) {
-                    phoneBtn.style.backgroundColor = '#4CAF50';
-                    phoneBtn.style.color = 'white';
-                }
-
-                const emailBtn = contactSection.querySelector('.mobile-email-btn');
-                if (emailBtn) {
-                    emailBtn.style.backgroundColor = '#3698D4';
-                    emailBtn.style.color = 'white';
-                }
-            }
-
-            // Collapse large tables on mobile
-            const itemsTable = document.querySelector('.items-table');
-            if (itemsTable) {
-                // Create a collapsed version for mobile
-                const collapsedTable = document.createElement('div');
-                collapsedTable.className = 'mobile-items-summary';
-                collapsedTable.innerHTML = `
-                    <div class="mobile-items-header">
-                        <span>Всего товаров: ${itemsTable.querySelectorAll('tbody tr').length}</span>
-                        <button class="mobile-view-items">Посмотреть список</button>
-                    </div>
-                `;
-
-                // Style the collapsed view
-                collapsedTable.style.backgroundColor = '#f8f9fa';
-                collapsedTable.style.padding = '15px';
-                collapsedTable.style.borderRadius = '8px';
-                collapsedTable.style.marginBottom = '20px';
-
-                const header = collapsedTable.querySelector('.mobile-items-header');
-                header.style.display = 'flex';
-                header.style.justifyContent = 'space-between';
-                header.style.alignItems = 'center';
-
-                const viewButton = collapsedTable.querySelector('.mobile-view-items');
-                viewButton.style.backgroundColor = '#3698D4';
-                viewButton.style.color = 'white';
-                viewButton.style.border = 'none';
-                viewButton.style.padding = '8px 15px';
-                viewButton.style.borderRadius = '50px';
-                viewButton.style.fontSize = '0.9rem';
-                viewButton.style.cursor = 'pointer';
-
-                // Add click functionality
-                viewButton.addEventListener('click', function() {
-                    if (itemsTable.style.display === 'none') {
-                        itemsTable.style.display = 'table';
-                        viewButton.textContent = 'Скрыть список';
-                    } else {
-                        itemsTable.style.display = 'none';
-                        viewButton.textContent = 'Посмотреть список';
-                    }
-                });
-
-                // Initially hide the table
-                itemsTable.style.display = 'none';
-
-                // Add the collapsed view before the table
-                itemsTable.parentNode.insertBefore(collapsedTable, itemsTable);
-            }
-        }
-    });
-</script>
 {% endblock %}

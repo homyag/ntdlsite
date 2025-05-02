@@ -1,10 +1,75 @@
-/* Mobile-Friendly Checkout Styles */
+/* Специальные стили для экранов 321px-425px */
+@media (min-width: 321px) and (max-width: 425px) {
+    .checkout-container {
+        padding: 0 10px;
+        margin: 15px auto;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    .checkout-content {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .checkout-form-container,
+    .order-summary {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0;
+    }
+
+    .checkout-form {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .form-group {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    body, html {
+        overflow-x: hidden;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .wrapper {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+}/* Mobile-Friendly Checkout Styles */
 
 @media (max-width: 768px) {
     /* Container adjustments */
     .checkout-container {
         padding: 0 15px;
         margin: 20px auto;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    body, html {
+        overflow-x: hidden;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .wrapper {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .checkout-title {
@@ -21,6 +86,8 @@
     /* Order summary first on mobile */
     .order-summary {
         order: -1;
+        width: 100%;
+        margin-bottom: 30px;
     }
 
     /* Style improvements for order summary */
@@ -37,59 +104,66 @@
     .order-items {
         padding: 15px;
         margin-bottom: 15px;
+        border-radius: 10px;
     }
 
     /* Improve order item styling */
     .order-item {
-        display: grid;
-        grid-template-columns: 60px 1fr auto;
-        gap: 10px;
-        padding-bottom: 12px;
-        margin-bottom: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #e0e0e0;
     }
 
     .item-image {
-        width: 60px;
-        height: 60px;
-        grid-column: 1;
-        grid-row: 1 / span 2;
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 10px;
+        border-radius: 5px;
     }
 
     .item-details {
-        grid-column: 2;
-        padding-right: 10px;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
     }
 
     .item-details h3 {
         font-size: 1rem;
-        margin-bottom: 3px;
+        margin-bottom: 5px;
     }
 
     .item-meta {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
     }
 
     .item-total {
-        grid-column: 3;
-        grid-row: 1 / span 2;
-        align-self: center;
         font-size: 1rem;
+        font-weight: 600;
     }
 
     /* Order totals */
     .order-totals {
         padding: 15px;
+        border-radius: 10px;
     }
 
-    .subtotal, .delivery {
-        margin-bottom: 8px;
-        font-size: 0.95rem;
+    .subtotal,
+    .delivery,
+    .total {
+        justify-content: space-between;
+        margin-bottom: 10px;
+        display: flex;
     }
 
     .total {
-        margin-top: 12px;
-        padding-top: 12px;
+        margin-top: 15px;
+        padding-top: 15px;
         font-size: 1.1rem;
+        border-top: 1px solid #e0e0e0;
     }
 
     /* Form improvements */
@@ -109,6 +183,8 @@
 
     .checkout-form {
         padding: 15px;
+        border-radius: 10px;
+        background-color: #f8f9fa;
     }
 
     .form-group {
@@ -118,11 +194,21 @@
     .form-group label {
         margin-bottom: 5px;
         font-size: 0.95rem;
+        display: block;
     }
 
     .form-control {
         padding: 10px;
         font-size: 0.95rem;
+        width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+
+    .form-control:focus {
+        border-color: #3698D4;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(54, 152, 212, 0.2);
     }
 
     /* Checkbox for terms */
@@ -140,6 +226,10 @@
         margin-right: 8px;
     }
 
+    .checkbox-label span {
+        font-size: 0.9rem;
+    }
+
     /* Form button actions */
     .form-actions {
         flex-direction: column;
@@ -147,10 +237,13 @@
         margin-top: 20px;
     }
 
-    .place-order-btn, .back-to-cart-btn {
+    .place-order-btn,
+    .back-to-cart-btn {
         width: 100%;
         padding: 12px 15px;
         font-size: 1rem;
+        text-align: center;
+        border-radius: 8px;
     }
 
     /* Sticky order button for mobile */
@@ -191,18 +284,20 @@
     }
 }
 
+/* Styles for smaller screens */
 @media (max-width: 480px) {
     .checkout-title {
         font-size: 1.5rem;
     }
 
     .order-item {
-        grid-template-columns: 50px 1fr auto;
+        padding-bottom: 12px;
+        margin-bottom: 12px;
     }
 
     .item-image {
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
     }
 
     .item-details h3 {
@@ -213,7 +308,103 @@
         padding: 8px 10px;
     }
 
-    .place-order-btn, .back-to-cart-btn {
+    .place-order-btn,
+    .back-to-cart-btn {
         padding: 10px;
+        font-size: 0.95rem;
+    }
+
+    .sticky-order-price {
+        font-size: 1rem;
+    }
+
+    .sticky-order-btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Styles for very small screens (320px) */
+@media (max-width: 320px) {
+    .checkout-container {
+        padding: 0 10px;
+        margin: 15px auto;
+    }
+
+    .checkout-title {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    /* Order summary items */
+    .order-items {
+        padding: 10px;
+    }
+
+    .item-image {
+        width: 50px;
+        height: 50px;
+    }
+
+    .item-details h3 {
+        font-size: 0.85rem;
+    }
+
+    .item-meta {
+        font-size: 0.8rem;
+    }
+
+    .item-total {
+        font-size: 0.9rem;
+    }
+
+    /* Order totals */
+    .order-totals {
+        padding: 10px;
+    }
+
+    .subtotal,
+    .delivery,
+    .total {
+        font-size: 0.9rem;
+    }
+
+    /* Form elements */
+    .checkout-form {
+        padding: 10px;
+    }
+
+    .form-group label {
+        font-size: 0.85rem;
+    }
+
+    .form-control {
+        padding: 7px;
+        font-size: 0.85rem;
+    }
+
+    .checkbox-label span {
+        font-size: 0.8rem;
+    }
+
+    /* Buttons */
+    .place-order-btn,
+    .back-to-cart-btn {
+        padding: 8px;
+        font-size: 0.85rem;
+    }
+
+    /* Sticky footer */
+    .sticky-checkout-footer {
+        padding: 8px 10px;
+    }
+
+    .sticky-order-price {
+        font-size: 0.9rem;
+    }
+
+    .sticky-order-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
     }
 }

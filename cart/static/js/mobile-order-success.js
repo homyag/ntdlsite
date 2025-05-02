@@ -6,14 +6,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize mobile order success features
     initMobileOrderSuccess();
 
-    // Add confetti animation for celebration
-    showSuccessConfetti();
+    // Make order details collapsible
+    makeOrderDetailsCollapsible();
 
-    // Add delivery tracking preview
-    addDeliveryTrackingPreview();
+    // Add timeline visualization for steps
+    addStepsTimeline();
 
     // Add order sharing options
-    addOrderShareOptions();
+    addOrderSharingOptions();
+
+    // Check for very small screens
+    checkVerySmallScreen();
 });
 
 /**
@@ -31,6 +34,17 @@ function initMobileOrderSuccess() {
     successContent.classList.add('mobile-success');
 
     // Add back to home button at top for easier navigation
+    addBackButton(successContent);
+
+    // Transform the order items table for mobile
+    transformOrderTable();
+}
+
+/**
+ * Add a back button for easy navigation
+ * @param {HTMLElement} container - The container to add the button to
+ */
+function addBackButton(container) {
     const backButton = document.createElement('button');
     backButton.className = 'mobile-back-button';
     backButton.innerHTML = '&larr; На главную';
@@ -43,6 +57,7 @@ function initMobileOrderSuccess() {
     backButton.style.cursor = 'pointer';
     backButton.style.textAlign = 'left';
     backButton.style.marginBottom = '15px';
+    backButton.style.width = '100%';
 
     // Add click event
     backButton.addEventListener('click', function() {
@@ -50,16 +65,86 @@ function initMobileOrderSuccess() {
     });
 
     // Insert at the top of container
-    successContent.insertBefore(backButton, successContent.firstChild);
+    container.insertBefore(backButton, container.firstChild);
+}
 
-    // Make order details collapsible
+/**
+ * Transform the order items table for better mobile display
+ */
+function transformOrderTable() {
+    const table = document.querySelector('.items-table');
+    if (!table) return;
+
+    // Add data-label attributes to cells based on headers
+    const headers = table.querySelectorAll('thead th');
+    const headerTexts = Array.from(headers).map(header => header.textContent.trim());
+
+    const rows = table.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        cells.forEach((cell, index) => {
+            if (index < headerTexts.length) {
+                cell.setAttribute('data-label', headerTexts[index]);
+            }
+        });
+    });
+
+    // Create a mobile-friendly summary
+    const itemCount = rows.length;
+
+    // Create collapsed view for mobile
+    const collapsedView = document.createElement('div');
+    collapsedView.className = 'mobile-items-summary';
+    collapsedView.style.backgroundColor = '#f8f9fa';
+    collapsedView.style.padding = '15px';
+    collapsedView.style.borderRadius = '10px';
+    collapsedView.style.marginBottom = '20px';
+    collapsedView.style.textAlign = 'center';
+    collapsedView.innerHTML = `
+        <div class="mobile-items-header">
+            <span>Всего товаров: ${itemCount}</span>
+            <button class="mobile-view-items">Посмотреть список</button>
+        </div>
+    `;
+
+    // Style the button
+    const viewButton = collapsedView.querySelector('.mobile-view-items');
+    viewButton.style.backgroundColor = '#3698D4';
+    viewButton.style.color = 'white';
+    viewButton.style.border = 'none';
+    viewButton.style.padding = '8px 15px';
+    viewButton.style.borderRadius = '50px';
+    viewButton.style.fontSize = '0.9rem';
+    viewButton.style.cursor = 'pointer';
+    viewButton.style.marginTop = '10px';
+
+    // Add click functionality
+    viewButton.addEventListener('click', function() {
+        if (table.style.display === 'none') {
+            table.style.display = 'table';
+            viewButton.textContent = 'Скрыть список';
+        } else {
+            table.style.display = 'none';
+            viewButton.textContent = 'Посмотреть список';
+        }
+    });
+
+    // Initially hide the table
+    table.style.display = 'none';
+
+    // Add the collapsed view before the table
+    table.parentNode.insertBefore(collapsedView, table);
+}
+
+/**
+ * Make sections collapsible for mobile view
+ */
+function makeOrderDetailsCollapsible() {
+    // Only apply on mobile
+    if (window.innerWidth > 768) return;
+
     makeCollapsible('.order-summary', 'Детали заказа');
-
-    // Make shipping info collapsible
     makeCollapsible('.shipping-info', 'Информация о доставке');
-
-    // Enhance next steps section
-    enhanceNextSteps();
 }
 
 /**
@@ -132,13 +217,16 @@ function makeCollapsible(selector, title) {
 }
 
 /**
- * Enhance the next steps section
+ * Add timeline visualization for steps
  */
-function enhanceNextSteps() {
+function addStepsTimeline() {
+    // Only apply on mobile
+    if (window.innerWidth > 768) return;
+
     const nextSteps = document.querySelector('.next-steps');
     if (!nextSteps) return;
 
-    // Create a timeline visualization
+    // Get steps from ordered list
     const stepsOl = nextSteps.querySelector('ol');
     if (!stepsOl) return;
 
@@ -157,13 +245,14 @@ function enhanceNextSteps() {
         timelineStep.className = 'timeline-step';
         timelineStep.style.display = 'flex';
         timelineStep.style.marginBottom = '15px';
+        timelineStep.style.position = 'relative';
 
         // Create step number indicator
         const stepNumber = document.createElement('div');
         stepNumber.className = 'step-number';
         stepNumber.textContent = index + 1;
-        stepNumber.style.width = '30px';
-        stepNumber.style.height = '30px';
+        stepNumber.style.width = '28px';
+        stepNumber.style.height = '28px';
         stepNumber.style.borderRadius = '50%';
         stepNumber.style.backgroundColor = '#3698D4';
         stepNumber.style.color = 'white';
@@ -172,13 +261,16 @@ function enhanceNextSteps() {
         stepNumber.style.justifyContent = 'center';
         stepNumber.style.fontWeight = 'bold';
         stepNumber.style.flexShrink = '0';
+        stepNumber.style.fontSize = '0.9rem';
 
         // Create line connecting steps
         const line = document.createElement('div');
         line.className = 'timeline-line';
+        line.style.position = 'absolute';
+        line.style.left = '14px'; // Half of the step number width
+        line.style.top = '28px';
         line.style.width = '2px';
         line.style.backgroundColor = '#3698D4';
-        line.style.margin = '0 auto';
         line.style.height = '15px';
         line.style.opacity = '0.5';
 
@@ -193,22 +285,18 @@ function enhanceNextSteps() {
         stepContent.textContent = step.textContent;
         stepContent.style.marginLeft = '15px';
         stepContent.style.paddingTop = '5px';
+        stepContent.style.fontSize = '0.95rem';
+        stepContent.style.color = '#333';
 
         // Add to timeline step
         timelineStep.appendChild(stepNumber);
         timelineStep.appendChild(stepContent);
+        if (index < steps.length - 1) {
+            timelineStep.appendChild(line);
+        }
 
         // Add to timeline container
         timelineContainer.appendChild(timelineStep);
-
-        // Add connecting line if not last step
-        if (index < steps.length - 1) {
-            const lineContainer = document.createElement('div');
-            lineContainer.style.display = 'flex';
-            lineContainer.style.paddingLeft = '15px';
-            lineContainer.appendChild(line);
-            timelineContainer.appendChild(lineContainer);
-        }
     });
 
     // Replace the original ordered list with the timeline
@@ -216,192 +304,10 @@ function enhanceNextSteps() {
 }
 
 /**
- * Show success confetti animation
- */
-function showSuccessConfetti() {
-    // Check if we're on mobile
-    if (window.innerWidth > 768) return;
-
-    // Find success icon
-    const successIcon = document.querySelector('.success-icon');
-    if (!successIcon) return;
-
-    // Create canvas for confetti
-    const canvas = document.createElement('canvas');
-    canvas.id = 'success-confetti';
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    canvas.style.position = 'fixed';
-    canvas.style.top = '0';
-    canvas.style.left = '0';
-    canvas.style.pointerEvents = 'none';
-    canvas.style.zIndex = '100';
-
-    // Add to DOM
-    document.body.appendChild(canvas);
-
-    // Simple confetti effect using canvas
-    const ctx = canvas.getContext('2d');
-    const particles = [];
-    const colors = ['#3698D4', '#113E71', '#4CAF50', '#FFC107', '#FF5722'];
-
-    // Create particles
-    for (let i = 0; i < 100; i++) {
-        particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height - canvas.height,
-            size: Math.random() * 5 + 5,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            speed: Math.random() * 3 + 2,
-            angle: Math.random() * 2 - 1,
-            rotation: Math.random() * 360,
-            rotationSpeed: Math.random() * 10 - 5
-        });
-    }
-
-    // Animation function
-    function animate() {
-        // Clear canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Draw and update particles
-        for (let i = 0; i < particles.length; i++) {
-            const particle = particles[i];
-
-            // Draw particle
-            ctx.save();
-            ctx.translate(particle.x, particle.y);
-            ctx.rotate(particle.rotation * Math.PI / 180);
-            ctx.fillStyle = particle.color;
-            ctx.fillRect(-particle.size / 2, -particle.size / 2, particle.size, particle.size);
-            ctx.restore();
-
-            // Update particle
-            particle.y += particle.speed;
-            particle.x += particle.angle;
-            particle.rotation += particle.rotationSpeed;
-
-            // Reset particle when it goes off screen
-            if (particle.y > canvas.height) {
-                particles[i].y = -particle.size;
-                particles[i].x = Math.random() * canvas.width;
-            }
-        }
-
-        // Continue animation
-        requestAnimationFrame(animate);
-    }
-
-    // Start animation
-    animate();
-
-    // Remove after 5 seconds
-    setTimeout(() => {
-        canvas.remove();
-    }, 5000);
-}
-
-/**
- * Add delivery tracking preview
- */
-function addDeliveryTrackingPreview() {
-    // Check if we're on mobile
-    if (window.innerWidth > 768) return;
-
-    // Find shipping info section
-    const shippingInfo = document.querySelector('.shipping-info');
-    if (!shippingInfo) return;
-
-    // Create tracking preview
-    const trackingPreview = document.createElement('div');
-    trackingPreview.className = 'delivery-tracking-preview';
-    trackingPreview.innerHTML = `
-        <h4>Статус доставки</h4>
-        <div class="tracking-status">
-            <div class="status-circle active"></div>
-            <div class="status-line"></div>
-            <div class="status-circle"></div>
-            <div class="status-line"></div>
-            <div class="status-circle"></div>
-            <div class="status-line"></div>
-            <div class="status-circle"></div>
-        </div>
-        <div class="tracking-labels">
-            <div class="status-label active">Заказ принят</div>
-            <div class="status-label">Обработка</div>
-            <div class="status-label">Отправлен</div>
-            <div class="status-label">Доставлен</div>
-        </div>
-        <p class="tracking-note">Следите за статусом заказа в личном кабинете</p>
-    `;
-
-    // Style the tracking preview
-    trackingPreview.style.backgroundColor = '#f8f9fa';
-    trackingPreview.style.padding = '15px';
-    trackingPreview.style.borderRadius = '8px';
-    trackingPreview.style.marginTop = '20px';
-
-    // Style tracking status
-    const trackingStatus = trackingPreview.querySelector('.tracking-status');
-    trackingStatus.style.display = 'flex';
-    trackingStatus.style.alignItems = 'center';
-    trackingStatus.style.marginBottom = '10px';
-
-    // Style status circles
-    const statusCircles = trackingPreview.querySelectorAll('.status-circle');
-    statusCircles.forEach(circle => {
-        circle.style.width = '20px';
-        circle.style.height = '20px';
-        circle.style.borderRadius = '50%';
-        circle.style.backgroundColor = '#ddd';
-        circle.style.flexShrink = '0';
-    });
-
-    // Style active circle
-    const activeCircle = trackingPreview.querySelector('.status-circle.active');
-    if (activeCircle) {
-        activeCircle.style.backgroundColor = '#4CAF50';
-    }
-
-    // Style status lines
-    const statusLines = trackingPreview.querySelectorAll('.status-line');
-    statusLines.forEach(line => {
-        line.style.flex = '1';
-        line.style.height = '2px';
-        line.style.backgroundColor = '#ddd';
-    });
-
-    // Style tracking labels
-    const trackingLabels = trackingPreview.querySelector('.tracking-labels');
-    trackingLabels.style.display = 'flex';
-    trackingLabels.style.justifyContent = 'space-between';
-    trackingLabels.style.fontSize = '0.8rem';
-    trackingLabels.style.color = '#666';
-
-    // Style active label
-    const activeLabel = trackingPreview.querySelector('.status-label.active');
-    if (activeLabel) {
-        activeLabel.style.color = '#4CAF50';
-        activeLabel.style.fontWeight = 'bold';
-    }
-
-    // Style tracking note
-    const trackingNote = trackingPreview.querySelector('.tracking-note');
-    trackingNote.style.fontSize = '0.85rem';
-    trackingNote.style.color = '#666';
-    trackingNote.style.marginTop = '15px';
-    trackingNote.style.textAlign = 'center';
-    trackingNote.style.fontStyle = 'italic';
-
-    // Add to shipping info section
-    shippingInfo.appendChild(trackingPreview);
-}
-
-/**
  * Add order sharing options for mobile
  */
-function addOrderShareOptions() {
-    // Check if we're on mobile
+function addOrderSharingOptions() {
+    // Only apply on mobile
     if (window.innerWidth > 768) return;
 
     // Find success actions
@@ -423,21 +329,16 @@ function addOrderShareOptions() {
     shareSection.innerHTML = `
         <p>Поделиться заказом:</p>
         <div class="share-buttons">
-            <button class="share-btn whatsapp-share">
-                <span>WhatsApp</span>
-            </button>
-            <button class="share-btn telegram-share">
-                <span>Telegram</span>
-            </button>
-            <button class="share-btn copy-order">
-                <span>Копировать №</span>
-            </button>
+            <button class="share-btn whatsapp-share">WhatsApp</button>
+            <button class="share-btn telegram-share">Telegram</button>
+            <button class="share-btn copy-order">Копировать №</button>
         </div>
     `;
 
     // Style share section
     shareSection.style.marginTop = '25px';
     shareSection.style.textAlign = 'center';
+    shareSection.style.marginBottom = '20px';
 
     // Style share buttons container
     const shareButtons = shareSection.querySelector('.share-buttons');
@@ -445,6 +346,7 @@ function addOrderShareOptions() {
     shareButtons.style.justifyContent = 'center';
     shareButtons.style.gap = '10px';
     shareButtons.style.marginTop = '10px';
+    shareButtons.style.flexWrap = 'wrap';
 
     // Style share buttons
     const buttons = shareSection.querySelectorAll('.share-btn');
@@ -455,9 +357,7 @@ function addOrderShareOptions() {
         button.style.fontSize = '0.9rem';
         button.style.fontWeight = '500';
         button.style.cursor = 'pointer';
-        button.style.display = 'flex';
-        button.style.alignItems = 'center';
-        button.style.justifyContent = 'center';
+        button.style.minWidth = '110px';
     });
 
     // Style WhatsApp button
@@ -508,12 +408,70 @@ function addOrderShareOptions() {
 
         // Reset button after 2 seconds
         setTimeout(() => {
-            copyBtn.innerHTML = '<span>Копировать №</span>';
+            copyBtn.textContent = 'Копировать №';
             copyBtn.style.backgroundColor = '#f0f0f0';
             copyBtn.style.color = '#333';
         }, 2000);
     });
 
     // Add to DOM
-    successActions.parentNode.insertBefore(shareSection, successActions.nextSibling);
+    successActions.parentNode.insertBefore(shareSection, successActions);
 }
+
+/**
+ * Проверка на очень маленький экран (320px)
+ * и применение соответствующих стилей
+ */
+function checkVerySmallScreen() {
+    if (window.innerWidth <= 320) {
+        // Adapt share buttons
+        const shareButtons = document.querySelector('.share-buttons');
+        if (shareButtons) {
+            shareButtons.style.flexDirection = 'column';
+            shareButtons.style.gap = '8px';
+
+            const buttons = shareButtons.querySelectorAll('.share-btn');
+            buttons.forEach(button => {
+                button.style.width = '100%';
+                button.style.fontSize = '0.85rem';
+                button.style.padding = '7px 10px';
+            });
+        }
+
+        // Make timeline more compact
+        const timelineSteps = document.querySelectorAll('.timeline-step');
+        if (timelineSteps.length > 0) {
+            timelineSteps.forEach(step => {
+                const stepNumber = step.querySelector('.step-number');
+                if (stepNumber) {
+                    stepNumber.style.width = '24px';
+                    stepNumber.style.height = '24px';
+                    stepNumber.style.fontSize = '0.8rem';
+                }
+
+                const stepContent = step.querySelector('.step-content');
+                if (stepContent) {
+                    stepContent.style.fontSize = '0.85rem';
+                }
+
+                const line = step.querySelector('.timeline-line');
+                if (line) {
+                    line.style.left = '12px'; // Adjust position of line
+                    line.style.top = '24px';
+                }
+            });
+        }
+
+        // Adjust buttons in success-actions
+        const actionButtons = document.querySelectorAll('.success-actions a');
+        if (actionButtons.length > 0) {
+            actionButtons.forEach(button => {
+                button.style.fontSize = '0.85rem';
+                button.style.padding = '8px 12px';
+            });
+        }
+    }
+}
+
+// Add resize event listener
+window.addEventListener('resize', checkVerySmallScreen);

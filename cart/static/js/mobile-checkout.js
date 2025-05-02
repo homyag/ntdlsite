@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize sticky checkout button
     initStickyCheckoutButton();
 
-    // Add autofill helper for address
-    initAddressHelper();
+    // Проверка на очень маленький экран
+    checkVerySmallScreen();
 });
 
 /**
@@ -22,10 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
 function initMobileCheckout() {
     // Check if we're on mobile
     if (window.innerWidth > 768) return;
-
-    // Add mobile-specific styles and behaviors
-    const checkoutForm = document.querySelector('.checkout-form');
-    if (!checkoutForm) return;
 
     // Enhance form inputs for mobile
     enhanceFormInputs();
@@ -47,12 +43,14 @@ function enhanceFormInputs() {
         phoneInput.setAttribute('type', 'tel');
         phoneInput.setAttribute('pattern', '[+]?[0-9]{10,15}');
         phoneInput.setAttribute('autocomplete', 'tel');
+        phoneInput.setAttribute('inputmode', 'tel');
     }
 
     const emailInput = document.querySelector('input[name="customer_email"]');
     if (emailInput) {
         emailInput.setAttribute('type', 'email');
         emailInput.setAttribute('autocomplete', 'email');
+        emailInput.setAttribute('inputmode', 'email');
     }
 
     const nameInput = document.querySelector('input[name="customer_name"]');
@@ -102,6 +100,14 @@ function addProgressIndicator() {
 
     // Style the progress indicator
     progressIndicator.style.marginBottom = '20px';
+    progressIndicator.style.display = 'flex';
+    progressIndicator.style.justifyContent = 'center';
+
+    const progressSteps = progressIndicator.querySelector('.progress-steps');
+    progressSteps.style.display = 'flex';
+    progressSteps.style.alignItems = 'center';
+    progressSteps.style.width = '100%';
+    progressSteps.style.maxWidth = '300px';
 
     const steps = progressIndicator.querySelectorAll('.progress-step');
     steps.forEach(step => {
@@ -114,8 +120,8 @@ function addProgressIndicator() {
 
     const stepNumbers = progressIndicator.querySelectorAll('.step-number');
     stepNumbers.forEach(number => {
-        number.style.width = '30px';
-        number.style.height = '30px';
+        number.style.width = '26px';
+        number.style.height = '26px';
         number.style.borderRadius = '50%';
         number.style.backgroundColor = '#f0f0f0';
         number.style.display = 'flex';
@@ -124,6 +130,7 @@ function addProgressIndicator() {
         number.style.marginBottom = '5px';
         number.style.fontWeight = 'bold';
         number.style.color = '#666';
+        number.style.fontSize = '0.9rem';
     });
 
     const activeSteps = progressIndicator.querySelectorAll('.progress-step.active');
@@ -193,6 +200,7 @@ function addDeliveryEstimate() {
     deliveryEstimate.style.backgroundColor = '#f0f7ff';
     deliveryEstimate.style.borderRadius = '8px';
     deliveryEstimate.style.fontSize = '0.9rem';
+    deliveryEstimate.style.textAlign = 'center';
 
     // Add to DOM
     orderTotals.appendChild(deliveryEstimate);
@@ -208,7 +216,7 @@ function initMobileFormValidation() {
     // Add novalidate to use custom validation
     form.setAttribute('novalidate', 'true');
 
-    // Validate on submit
+    // Add validation on submit
     form.addEventListener('submit', function(e) {
         if (!validateForm(form)) {
             e.preventDefault();
@@ -264,11 +272,15 @@ function validateField(field) {
     if (!errorElement) {
         errorElement = document.createElement('div');
         errorElement.className = 'form-error hidden';
+        errorElement.style.color = '#dc3545';
+        errorElement.style.fontSize = '0.85rem';
+        errorElement.style.marginTop = '5px';
         formGroup.appendChild(errorElement);
     }
 
     // Reset error
     errorElement.classList.add('hidden');
+    errorElement.style.display = 'none';
     field.classList.remove('is-invalid');
 
     // Skip validation for non-required fields if empty
@@ -280,7 +292,9 @@ function validateField(field) {
     if (field.hasAttribute('required') && !field.value.trim()) {
         errorElement.textContent = 'Это поле обязательно для заполнения';
         errorElement.classList.remove('hidden');
+        errorElement.style.display = 'block';
         field.classList.add('is-invalid');
+        field.style.borderColor = '#dc3545';
         return false;
     }
 
@@ -290,7 +304,9 @@ function validateField(field) {
         if (!emailRegex.test(field.value.trim())) {
             errorElement.textContent = 'Введите корректный email адрес';
             errorElement.classList.remove('hidden');
+            errorElement.style.display = 'block';
             field.classList.add('is-invalid');
+            field.style.borderColor = '#dc3545';
             return false;
         }
     }
@@ -301,7 +317,9 @@ function validateField(field) {
         if (!phoneRegex.test(field.value.trim())) {
             errorElement.textContent = 'Введите корректный номер телефона';
             errorElement.classList.remove('hidden');
+            errorElement.style.display = 'block';
             field.classList.add('is-invalid');
+            field.style.borderColor = '#dc3545';
             return false;
         }
     }
@@ -310,9 +328,13 @@ function validateField(field) {
     if (field.type === 'checkbox' && field.name === 'agree_to_terms' && !field.checked) {
         errorElement.textContent = 'Необходимо согласиться с условиями';
         errorElement.classList.remove('hidden');
+        errorElement.style.display = 'block';
         field.classList.add('is-invalid');
         return false;
     }
+
+    // Field is valid
+    field.style.borderColor = '#28a745';
 
     return true;
 }
@@ -377,6 +399,7 @@ function initStickyCheckoutButton() {
     // Add padding to bottom of document to account for sticky footer
     const footerHeight = stickyContainer.offsetHeight;
     document.body.style.paddingBottom = `${footerHeight + 20}px`;
+    document.body.classList.add('has-sticky-footer');
 
     // Handle the button click - submit the form
     submitBtn.addEventListener('click', function() {
@@ -395,13 +418,100 @@ function initStickyCheckoutButton() {
     // Hide the sticky footer when form is visible in viewport
     window.addEventListener('scroll', function() {
         const formRect = checkoutForm.getBoundingClientRect();
-        // If form is visible
-        if (formRect.top < window.innerHeight * 0.7 && formRect.bottom > 0) {
-            stickyContainer.style.transform = 'translateY(100%)';
-            stickyContainer.style.opacity = '0';
+        const submitBtn = checkoutForm.querySelector('.form-actions');
+
+        if (submitBtn) {
+            const btnRect = submitBtn.getBoundingClientRect();
+            // If form submit button is visible
+            if (btnRect.top < window.innerHeight && btnRect.bottom > 0) {
+                stickyContainer.style.transform = 'translateY(100%)';
+                stickyContainer.style.opacity = '0';
+            } else {
+                stickyContainer.style.transform = 'translateY(0)';
+                stickyContainer.style.opacity = '1';
+            }
         } else {
-            stickyContainer.style.transform = 'translateY(0)';
-            stickyContainer.style.opacity = '1';
+            // Fallback if submit button not found
+            if (formRect.bottom < window.innerHeight) {
+                stickyContainer.style.transform = 'translateY(100%)';
+                stickyContainer.style.opacity = '0';
+            } else {
+                stickyContainer.style.transform = 'translateY(0)';
+                stickyContainer.style.opacity = '1';
+            }
         }
     });
 }
+
+/**
+ * Проверка на очень маленький экран (320px)
+ * и применение соответствующих стилей
+ */
+function checkVerySmallScreen() {
+    if (window.innerWidth <= 320) {
+        // Adjust progress indicator
+        const progressIndicator = document.querySelector('.checkout-progress');
+        if (progressIndicator) {
+            const stepNumbers = progressIndicator.querySelectorAll('.step-number');
+            stepNumbers.forEach(number => {
+                number.style.width = '22px';
+                number.style.height = '22px';
+                number.style.fontSize = '0.8rem';
+            });
+
+            const stepLabels = progressIndicator.querySelectorAll('.step-label');
+            stepLabels.forEach(label => {
+                label.style.fontSize = '0.7rem';
+            });
+        }
+
+        // Adjust order items
+        const orderItems = document.querySelectorAll('.order-item');
+        orderItems.forEach(item => {
+            const itemImage = item.querySelector('.item-image');
+            if (itemImage) {
+                itemImage.style.width = '50px';
+                itemImage.style.height = '50px';
+            }
+
+            const itemTitle = item.querySelector('h3');
+            if (itemTitle) {
+                itemTitle.style.fontSize = '0.85rem';
+            }
+        });
+
+        // Adjust form inputs
+        const formControls = document.querySelectorAll('.form-control');
+        formControls.forEach(input => {
+            input.style.padding = '7px';
+            input.style.fontSize = '0.85rem';
+        });
+
+        // Adjust delivery estimate
+        const deliveryEstimate = document.querySelector('.delivery-estimate');
+        if (deliveryEstimate) {
+            deliveryEstimate.style.fontSize = '0.8rem';
+            deliveryEstimate.style.padding = '8px 10px';
+        }
+
+        // Adjust sticky button
+        const stickyFooter = document.querySelector('.sticky-checkout-footer');
+        if (stickyFooter) {
+            stickyFooter.style.padding = '8px 10px';
+
+            const priceDisplay = stickyFooter.querySelector('.sticky-order-price');
+            if (priceDisplay) {
+                priceDisplay.style.fontSize = '0.9rem';
+            }
+
+            const orderBtn = stickyFooter.querySelector('.sticky-order-btn');
+            if (orderBtn) {
+                orderBtn.style.padding = '6px 12px';
+                orderBtn.style.fontSize = '0.8rem';
+            }
+        }
+    }
+}
+
+// Add listener for window resize
+window.addEventListener('resize', checkVerySmallScreen);

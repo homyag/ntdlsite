@@ -183,7 +183,7 @@ EMAIL_USE_SSL = False
 EMAIL_HOST_USER = 'info@tdleningrad.ru'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = 'ТД Ленинградский <info@tdleningrad.ru>'
-ADMIN_EMAIL = 'homyaga@gmail.com'
+ADMIN_EMAIL = 'info@tdleningrad.ru'
 
 # включить на проде
 # SECURE_BROWSER_XSS_FILTER = True

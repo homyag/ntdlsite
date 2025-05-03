@@ -1,6 +1,75 @@
 {% extends "base.html" %}
 {% load static %}
+
+{% block api %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ТД Ленинградский",
+  "alternateName": "Торговый дом Ленинградский",
+  "url": "{{ request.build_absolute_uri }}",
+  "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.svg' %}",
+  "description": "Торговый Дом Ленинградский — надёжный поставщик бетона и нерудных материалов в Донецке, Луганске и Мариуполе. Более 10 лет работы, собственное производство и автопарк.",
+  "foundingDate": "2013",
+  "numberOfEmployees": {
+    "@type": "QuantitativeValue",
+    "value": "50+"
+  },
+  "address": [
+    {
+      "@type": "PostalAddress",
+      "addressLocality": "Мариуполь",
+      "streetAddress": "улица Сортировочная 1",
+      "addressCountry": "RU"
+    },
+    {
+      "@type": "PostalAddress",
+      "addressLocality": "Санкт-Петербург",
+      "streetAddress": "Красное Село, ул. Свободы, д. 57, литер Д, помещ. 3-Н, кабинет 202-1",
+      "addressCountry": "RU"
+    }
+  ],
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+7 (949) 624-2644",
+      "contactType": "sales",
+      "email": "info@tdleningrad.ru",
+      "availableLanguage": "Russian"
+    }
+  ],
+  "sameAs": [
+    "https://t.me/tdleningradsky",
+    "https://wa.me/+79496242644"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Продукция ТД Ленинградский",
+    "itemListElement": [
+      {
+        "@type": "OfferCatalog",
+        "name": "Бетон",
+        "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'catalog' city_slug=city_slug %}beton/"
+      },
+      {
+        "@type": "OfferCatalog",
+        "name": "Нерудные материалы",
+        "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'catalog' city_slug=city_slug %}nerudnye/"
+      },
+      {
+        "@type": "OfferCatalog",
+        "name": "Асфальт",
+        "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'catalog' city_slug=city_slug %}asfalt/"
+      }
+    ]
+  }
+}
+</script>
+{% endblock %}
+
 {% block content %}
+    {% include 'good/includes/breadcrumbs.html' %}
     <div class="about-page-container">
         <section class="about-hero">
             <h1>О компании ТД Ленинградский</h1>

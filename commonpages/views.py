@@ -31,23 +31,33 @@ def index(request):
 
 
 def about(request):
+    breadcrumbs = [
+        {"title": "Главная", "url": reverse("home")},
+        {"title": "О компании", "url": None},
+    ]
     data = {
         "title": "Бетонный завод ТД Ленинградский",
         "seo_title": "О производителе бетона и бетонных смесей ТД Ленинградский",
         'seo_description': 'Узнайте об опыте, миссии и преимуществах нашей компании. Работаем в Донецке, Луганске и Мариуполе.',
         'seo_keywords': 'ТД Ленинградский, бетон, бетонные смеси, о компании',
+        'breadcrumbs': breadcrumbs,
     }
     return render(request, "commonpages/about.html", context=data)
 
 
 def contacts(request):
     products = Product.objects.order_by('name').distinct('name')
+    breadcrumbs = [
+        {"title": "Главная", "url": reverse("home")},
+        {"title": "Контакты", "url": None},
+    ]
     data = {
         "title": "Контакты бетонного завода ТД Ленинградский. Производство и отдел продаж",
         "seo_title": "Контакты бетонного завода ТД Ленинградский — Донецк, Луганск, Мариуполь",
         'seo_description': 'Адрес, телефоны, email для связи и заказов. Работаем без выходных.',
         'seo_keywords': 'ТД Ленинградский, бетон, бетонные смеси, о компании',
         'products': products,
+        'breadcrumbs': breadcrumbs,
     }
     return render(request, "commonpages/contacts.html", context=data)
 
@@ -132,6 +142,12 @@ def services(request):
 
 
 def delivery(request):
+    breadcrumbs = [
+        {'title': 'Главная', 'url': reverse('home')},
+        {'title': 'Услуги', 'url': reverse('services')},
+        {'title': 'Калькулятор доставки', 'url': None},
+    ]
+
     data = {
         "title": "Калькулятор доставки бетона от завода ТД Ленинградский",
         "seo_title": "Калькулятор доставка бетона | Заказать бетон с доставкой",
@@ -147,12 +163,19 @@ def delivery(request):
                         'бетон с доставкой, бетон с доставкой цена, доставка'
                         ' бетона миксером, миксер бетона цена с доставкой, '
                         'заказать бетон с доставкой цена',
+        'breadcrumbs': breadcrumbs,
     }
     return render(request, "commonpages/delivery.html", context=data)
 
 
 def concrete_calculator(request):
     city_slug = request.session.get('city_slug', 'mariupol')
+
+    breadcrumbs = [
+        {'title': 'Главная', 'url': reverse('home')},
+        {'title': 'Услуги', 'url': reverse('services')},
+        {'title': 'Калькулятор бетона', 'url': None},
+    ]
 
     # Переменная для хранения продуктов
     concrete_products = []
@@ -238,6 +261,7 @@ def concrete_calculator(request):
                         'калькулятор бетона м3',
         'concrete_products_json': concrete_products_json,
         'debug_concrete_count': len(concrete_products),
+        'breadcrumbs': breadcrumbs,
     }
 
     return render(request, "commonpages/concrete_calculator.html",

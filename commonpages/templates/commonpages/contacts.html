@@ -5,9 +5,148 @@
             type="text/javascript"></script>
     <script src="{% static 'js/feedbackForm.js' %}"
             type="text/javascript"></script>
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "ТД Ленинградский",
+          "url": "{{ request.build_absolute_uri }}",
+  "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.svg' %}",
+  "description": "Производитель и поставщик бетона и нерудных материалов. Собственное производство и автопарк.",
+  "telephone": "+7 (949) 624-2644",
+  "email": "info@tdleningrad.ru",
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+    ],
+    "opens": "08:00",
+    "closes": "20:00"
+  },
+  "location": [
+    {
+      "@type": "Place",
+      "name": "ТД Ленинградский в Мариуполе",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Мариуполь",
+        "streetAddress": "улица Сортировочная дом 1"
+      },
+      "telephone": "+7(949)6242644",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "47.107137",
+        "longitude": "37.546015"
+      }
+    },
+    {
+      "@type": "Place",
+      "name": "ТД Ленинградский в Санкт-Петербурге",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Санкт-Петербург",
+        "streetAddress": "улица Свободы, 57Д, Красное Село"
+      },
+      "telephone": "+7(949)6242644",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "59.733048",
+        "longitude": "30.093723"
+      }
+    }
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+7 (949) 624-2644",
+    "contactType": "customer service",
+    "availableLanguage": "Russian",
+    "email": "info@tdleningrad.ru"
+  },
+  "sameAs": [
+    "https://t.me/tdleningradsky",
+    "https://wa.me/+79496242644"
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "speakable": {
+            "@type": "SpeakableSpecification",
+            "cssSelector": ["h1", ".contact-hero-content p"]
+          },
+          "mainEntity": {
+            "@type": "ContactPage",
+            "name": "Контакты бетонного завода ТД Ленинградский",
+            "description": "Свяжитесь с нами для получения качественного бетона и строительных материалов",
+            "mainContentOfPage": {
+              "@type": "WebPageElement",
+              "isPartOf": {
+                "@id": "{{ request.build_absolute_uri }}"
+      }
+    },
+    "potentialAction": {
+      "@type": "ContactAction",
+      "name": "Отправить заявку",
+      "object": {
+        "@type": "Message",
+        "description": "Задайте вопрос или оставьте заявку на нашем сайте"
+      },
+      "instrument": {
+        "@type": "WebSite",
+        "name": "Сайт ТД Ленинградский"
+      }
+    }
+  }
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Бетонный завод ТД Ленинградский",
+  "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/mainpage/zavod.webp' %}",
+  "priceRange": "₽₽₽",
+  "telephone": "+7 (949) 624-2644",
+  "email": "info@tdleningrad.ru",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Мариуполь",
+    "streetAddress": "улица Сортировочная дом 1"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "47.107137",
+    "longitude": "37.546015"
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+    ],
+    "opens": "08:00",
+    "closes": "20:00"
+  },
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Мариуполь"
+    },
+    {
+      "@type": "City",
+      "name": "Донецк"
+    },
+    {
+      "@type": "City",
+      "name": "Луганск"
+    }
+  ]
+}
+</script>
 {% endblock %}
 {% block content %}
- <!-- Hero section -->
+    <!-- Hero section -->
     <section class="contact-hero">
         <div class="contact-hero-content">
             <h1>Контакты бетонного завода ТД Ленинградский</h1>
@@ -15,13 +154,14 @@
             <button class="contact-cta hero__button--popup">Получить консультацию</button>
         </div>
     </section>
-
+    {% include 'good/includes/breadcrumbs.html' %}
     <!-- Form and information section -->
     <div class="contact-sections">
         <div class="contact-section-left">
             <div class="contact-card">
                 <h2>Как с нами связаться</h2>
-                <p>Связаться с нами — просто. Мы всегда на связи, готовы ответить на вопросы, рассчитать объёмы материалов, подобрать оптимальное решение под ваш строительный проект.</p>
+                <p>Связаться с нами — просто. Мы всегда на связи, готовы ответить на вопросы, рассчитать объёмы
+                    материалов, подобрать оптимальное решение под ваш строительный проект.</p>
 
                 <div class="contact-ways">
                     <h3>Вы можете:</h3>
@@ -33,7 +173,8 @@
                                     <img src="{% static 'images/icons/footer__whatsapp.svg' %}" alt="WhatsApp">
                                     WhatsApp
                                 </a>
-                                <a href="https://t.me/tdleningradsky" target="_blank" class="messenger-btn telegram-btn">
+                                <a href="https://t.me/tdleningradsky" target="_blank"
+                                   class="messenger-btn telegram-btn">
                                     <img src="{% static 'images/icons/footer__telegram.svg' %}" alt="Telegram">
                                     Telegram
                                 </a>
@@ -42,7 +183,8 @@
                         <li>Оставить заявку через форму на сайте — мы перезвоним в течение 15 минут</li>
                         <li>Приехать к нам в офис или на производство — схема проезда доступна ниже</li>
                     </ul>
-                    <p>Наши менеджеры подробно проконсультируют, примут заказ и организуют оперативную доставку. Мы ценим ваше время и стремимся к максимальной эффективности общения.</p>
+                    <p>Наши менеджеры подробно проконсультируют, примут заказ и организуют оперативную доставку. Мы
+                        ценим ваше время и стремимся к максимальной эффективности общения.</p>
                 </div>
 
                 <div class="contact-methods">
@@ -133,38 +275,49 @@
     <section class="locations-section">
         <h2 class="section-title">Адреса ТД Ленинградский</h2>
         <div class="locations-grid">
-            <div class="location-card" data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3A219534a869e753ce396b9284a4d1e67d5a12600f543eacb8abcd7098f2557ef1&amp;source=constructor">
-                <h3>Мариуполь</h3>
-                <p><strong>Телефон:</strong> +7(949)6242644</p>
-                <p><strong>Email:</strong> info@tdleningrad.ru</p>
-                <p><strong>Адрес:</strong> улица Сортировочная дом 1, Мариуполь</p>
+            <div class="location-card" data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3A219534a869e753ce396b9284a4d1e67d5a12600f543eacb8abcd7098f2557ef1&amp;source=constructor" itemscope itemtype="https://schema.org/Place">
+                <h3 itemprop="name">Мариуполь</h3>
+                <p><strong>Телефон:</strong> <span itemprop="telephone">+7(949)6242644</span></p>
+                <p><strong>Email:</strong> <span itemprop="email">info@tdleningrad.ru</span></p>
+                <p><strong>Адрес:</strong> <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                    <span itemprop="streetAddress">улица Сортировочная дом 1</span>,
+                    <span itemprop="addressLocality">Мариуполь</span>
+                </span></p>
+                <meta itemprop="geo" content="47.107137, 37.546015">
             </div>
 
-            <div class="location-card" data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3A5c99cbae86232571aa8a82f28b925a8ebf9827c6a31fdfd46913cdb52deeaf57&amp;source=constructor">
-                <h3>Регион доставки</h3>
-                <p><strong>Телефон:</strong> +7(949)6242644</p>
-                <p><strong>Email:</strong> info@tdleningrad.ru</p>
-                <p><strong>Регионы:</strong> ДНР, ЛНР</p>
+            <div class="location-card" data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3A5c99cbae86232571aa8a82f28b925a8ebf9827c6a31fdfd46913cdb52deeaf57&amp;source=constructor" itemscope itemtype="https://schema.org/Place">
+                <h3 itemprop="name">Регион доставки</h3>
+                <p><strong>Телефон:</strong> <span itemprop="telephone">+7(949)6242644</span></p>
+                <p><strong>Email:</strong> <span itemprop="email">info@tdleningrad.ru</span></p>
+                <p><strong>Регионы:</strong> <span itemprop="address">ДНР, ЛНР</span></p>
             </div>
 
-            <div class="location-card" data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3Ad1889657e89d58406bc643319e36a03292ab1a559f16cb84563d106d2e847a95&amp;source=constructor">
-                <h3>Санкт-Петербург</h3>
-                <p><strong>Телефон:</strong> +7(949)6242644</p>
-                <p><strong>Email:</strong> info@tdleningrad.ru</p>
-                <p><strong>Адрес:</strong> улица Свободы, 57Д, Красное Село, Санкт-Петербург</p>
+            <div class="location-card" data-map-url="https://yandex.ru/map-widget/v1/?um=constructor%3Ad1889657e89d58406bc643319e36a03292ab1a559f16cb84563d106d2e847a95&amp;source=constructor" itemscope itemtype="https://schema.org/Place">
+                <h3 itemprop="name">Санкт-Петербург</h3>
+                <p><strong>Телефон:</strong> <span itemprop="telephone">+7(949)6242644</span></p>
+                <p><strong>Email:</strong> <span itemprop="email">info@tdleningrad.ru</span></p>
+                <p><strong>Адрес:</strong> <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                    <span itemprop="streetAddress">улица Свободы, 57Д, Красное Село</span>,
+                    <span itemprop="addressLocality">Санкт-Петербург</span>
+                </span></p>
+                <meta itemprop="geo" content="59.733048, 30.093723">
             </div>
         </div>
     </section>
     <!-- Map -->
     <div class="map-container">
-        <iframe id="map-frame" src="https://yandex.ru/map-widget/v1/?um=constructor%3A1f6ab6d20d724b84b9429d0528d2aa6e8c20abec0fd4be523dbcd16d4ce88297&amp;source=constructor" loading="lazy"></iframe>
+        <iframe id="map-frame"
+                src="https://yandex.ru/map-widget/v1/?um=constructor%3A1f6ab6d20d724b84b9429d0528d2aa6e8c20abec0fd4be523dbcd16d4ce88297&amp;source=constructor"
+                loading="lazy"></iframe>
     </div>
 
-        <!-- Calculators section -->
+    <!-- Calculators section -->
     <section class="calculators-section">
         <h2 class="section-title">Полезные инструменты для расчетов</h2>
         <div class="calculators-description">
-            <p>Воспользуйтесь нашими калькуляторами для самостоятельного расчета доставки или необходимого объема бетона для вашего строительного проекта</p>
+            <p>Воспользуйтесь нашими калькуляторами для самостоятельного расчета доставки или необходимого объема бетона
+                для вашего строительного проекта</p>
         </div>
         <div class="calculators-grid">
             <div class="calculator-card">

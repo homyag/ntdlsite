@@ -2,159 +2,212 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/cart.css' %}">
-<link rel="stylesheet" href="{% static 'css/mobile-checkout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mobile-checkout.css' %}">
+    <style>
+        .honeypot-field {
+            display: none; /* Скрываем поле-ловушку */
+        }
+    </style>
 {% endblock %}
 
 
 {% block content %}
-<div class="checkout-container">
-    <h1 class="checkout-title">Оформление заказа</h1>
+    <div class="checkout-container">
+        <h1 class="checkout-title">Оформление заказа</h1>
 
-    <div class="checkout-content">
-        <div class="checkout-form-container">
-            <h2>Информация для доставки</h2>
-            <form method="post" class="checkout-form" id="checkout-form">
-                {% csrf_token %}
+        <div class="checkout-content">
+            <div class="checkout-form-container">
+                <h2>Информация для доставки</h2>
+                <form method="post" class="checkout-form" id="checkout-form">
+                    {% csrf_token %}
 
-                <div class="form-group">
-                    <label for="{{ form.customer_name.id_for_label }}">{{ form.customer_name.label }}*</label>
-                    {{ form.customer_name }}
-                    {% if form.customer_name.errors %}
-                        <div class="form-error">
-                            {% for error in form.customer_name.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="form-group">
-                    <label for="{{ form.customer_email.id_for_label }}">{{ form.customer_email.label }}*</label>
-                    {{ form.customer_email }}
-                    {% if form.customer_email.errors %}
-                        <div class="form-error">
-                            {% for error in form.customer_email.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="form-group">
-                    <label for="{{ form.customer_phone.id_for_label }}">{{ form.customer_phone.label }}*</label>
-                    {{ form.customer_phone }}
-                    {% if form.customer_phone.errors %}
-                        <div class="form-error">
-                            {% for error in form.customer_phone.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="form-group">
-                    <label for="{{ form.city.id_for_label }}">{{ form.city.label }}*</label>
-                    {{ form.city }}
-                    {% if form.city.errors %}
-                        <div class="form-error">
-                            {% for error in form.city.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="form-group">
-                    <label for="{{ form.shipping_address.id_for_label }}">{{ form.shipping_address.label }}*</label>
-                    {{ form.shipping_address }}
-                    {% if form.shipping_address.errors %}
-                        <div class="form-error">
-                            {% for error in form.shipping_address.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="form-group">
-                    <label for="{{ form.comment.id_for_label }}">{{ form.comment.label }}</label>
-                    {{ form.comment }}
-                    {% if form.comment.errors %}
-                        <div class="form-error">
-                            {% for error in form.comment.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="form-group agree-to-terms">
-                    <label for="{{ form.agree_to_terms.id_for_label }}" class="checkbox-label">
-                        {{ form.agree_to_terms }}
-                        <span>{{ form.agree_to_terms.label }} <a href="{% url 'privacy' %}" target="_blank">(условия)</a></span>
-                    </label>
-                    {% if form.agree_to_terms.errors %}
-                        <div class="form-error">
-                            {% for error in form.agree_to_terms.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="btn-primary place-order-btn">Оформить заказ</button>
-                    <a href="{% url 'cart:cart_detail' %}" class="btn-secondary back-to-cart-btn">Вернуться в корзину</a>
-                </div>
-            </form>
-        </div>
-
-        <div class="order-summary">
-            <h2>Ваш заказ</h2>
-            <div class="order-items">
-                {% for item in cart %}
-                    <div class="order-item">
-                        <div class="item-image">
-                            {% if item.product.img %}
-                                <img src="{{ item.product.img.url }}" alt="{{ item.product.name }}">
-                            {% else %}
-                                <img src="{% static 'images/mainpage/zavod.webp' %}" alt="{{ item.product.name }}">
-                            {% endif %}
-                        </div>
-                        <div class="item-details">
-                            <h3>{{ item.product.name }}</h3>
-                            <div class="item-meta">
-                                <span class="item-quantity">{{ item.quantity }} × </span>
-                                <span class="item-price">{{ item.price }} руб.</span>
-                            </div>
-                        </div>
-                        <div class="item-total">
-                            {{ item.total_price }} руб.
-                        </div>
+                    <div class="honeypot-field">
+                        {{ form.website }}
                     </div>
-                {% endfor %}
+
+                    {% if form.non_field_errors %}
+                        <div class="form-error">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                        <label for="{{ form.customer_name.id_for_label }}">{{ form.customer_name.label }}*</label>
+                        {{ form.customer_name }}
+                        {% if form.customer_name.errors %}
+                            <div class="form-error">
+                                {% for error in form.customer_name.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.customer_email.id_for_label }}">{{ form.customer_email.label }}*</label>
+                        {{ form.customer_email }}
+                        {% if form.customer_email.errors %}
+                            <div class="form-error">
+                                {% for error in form.customer_email.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.customer_phone.id_for_label }}">{{ form.customer_phone.label }}*</label>
+                        {{ form.customer_phone }}
+                        {% if form.customer_phone.errors %}
+                            <div class="form-error">
+                                {% for error in form.customer_phone.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.city.id_for_label }}">{{ form.city.label }}*</label>
+                        {{ form.city }}
+                        {% if form.city.errors %}
+                            <div class="form-error">
+                                {% for error in form.city.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.shipping_address.id_for_label }}">{{ form.shipping_address.label }}*</label>
+                        {{ form.shipping_address }}
+                        {% if form.shipping_address.errors %}
+                            <div class="form-error">
+                                {% for error in form.shipping_address.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.comment.id_for_label }}">{{ form.comment.label }}</label>
+                        {{ form.comment }}
+                        {% if form.comment.errors %}
+                            <div class="form-error">
+                                {% for error in form.comment.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group agree-to-terms">
+                        <label for="{{ form.agree_to_terms.id_for_label }}" class="checkbox-label">
+                            {{ form.agree_to_terms }}
+                            <span>{{ form.agree_to_terms.label }} <a href="{% url 'privacy' %}" target="_blank">(условия)</a></span>
+                        </label>
+                        {% if form.agree_to_terms.errors %}
+                            <div class="form-error">
+                                {% for error in form.agree_to_terms.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary place-order-btn">Оформить заказ</button>
+                        <a href="{% url 'cart:cart_detail' %}" class="btn-secondary back-to-cart-btn">Вернуться в
+                            корзину</a>
+                    </div>
+                </form>
             </div>
 
-            <div class="order-totals">
-                <div class="subtotal">
-                    <span>Подытог:</span>
-                    <span class="subtotal-value">{{ cart.get_total_price }} руб.</span>
+            <div class="order-summary">
+                <h2>Ваш заказ</h2>
+                <div class="order-items">
+                    {% for item in cart %}
+                        <div class="order-item">
+                            <div class="item-image">
+                                {% if item.product.img %}
+                                    <img src="{{ item.product.img.url }}" alt="{{ item.product.name }}">
+                                {% else %}
+                                    <img src="{% static 'images/mainpage/zavod.webp' %}" alt="{{ item.product.name }}">
+                                {% endif %}
+                            </div>
+                            <div class="item-details">
+                                <h3>{{ item.product.name }}</h3>
+                                <div class="item-meta">
+                                    <span class="item-quantity">{{ item.quantity }} × </span>
+                                    <span class="item-price">{{ item.price }} руб.</span>
+                                </div>
+                            </div>
+                            <div class="item-total">
+                                {{ item.total_price }} руб.
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
-                <div class="delivery">
-                    <span>Доставка:</span>
-                    <span>По запросу</span>
-                </div>
-                <div class="total">
-                    <span>Итого:</span>
-                    <span class="total-value">{{ cart.get_total_price }} руб.</span>
+
+                <div class="order-totals">
+                    <div class="subtotal">
+                        <span>Подытог:</span>
+                        <span class="subtotal-value">{{ cart.get_total_price }} руб.</span>
+                    </div>
+                    <div class="delivery">
+                        <span>Доставка:</span>
+                        <span>По запросу</span>
+                    </div>
+                    <div class="total">
+                        <span>Итого:</span>
+                        <span class="total-value">{{ cart.get_total_price }} руб.</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
 
 {% block extra_scripts %}
-<script src="{% static 'js/mobile-checkout.js' %}"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>
+    <script src="{% static 'js/mobile-checkout.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('checkout-form');
+
+            if (form) {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    // Получаем токен reCAPTCHA v3
+                    grecaptcha.ready(function () {
+                        grecaptcha.execute('{{ recaptcha_site_key }}', {action: 'checkout'}).then(function (token) {
+                            // Добавляем токен в форму
+                            let recaptchaInput = form.querySelector('input[name="g-recaptcha-response"]');
+                            if (!recaptchaInput) {
+                                recaptchaInput = document.createElement('input');
+                                recaptchaInput.type = 'hidden';
+                                recaptchaInput.name = 'g-recaptcha-response';
+                                form.appendChild(recaptchaInput);
+                            }
+                            recaptchaInput.value = token;
+
+                            // Отправляем форму
+                            form.submit();
+                        });
+                    }).catch(function (error) {
+                        console.error('Ошибка reCAPTCHA:', error);
+                        // Отправляем форму даже при ошибке reCAPTCHA,
+                        // валидация будет выполнена на сервере
+                        form.submit();
+                    });
+                });
+            }
+        });
+    </script>
 {% endblock %}

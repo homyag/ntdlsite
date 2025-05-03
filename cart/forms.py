@@ -26,6 +26,13 @@ class OrderCreateForm(forms.ModelForm):
         label="Я согласен с условиями обработки персональных данных"
     )
 
+    # honeypot
+    website = forms.CharField(
+        required=False,
+        widget=forms.HiddenInput(),
+        label="Ловушка"
+    )
+
     class Meta:
         model = Order
         fields = ['customer_name', 'customer_email', 'customer_phone',
@@ -55,3 +62,11 @@ class OrderCreateForm(forms.ModelForm):
         if not agree:
             raise forms.ValidationError('Вы должны согласиться с условиями обработки персональных данных.')
         return agree
+
+    def clean_website(self):
+        """Проверка поля-ловушки"""
+        website = self.cleaned_data.get('website')
+        if website:
+            # Если поле-ловушка заполнено, это, вероятно, бот
+            raise forms.ValidationError("Обнаружен бот.")
+        return website

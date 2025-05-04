@@ -4,6 +4,7 @@ from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
 from good.models import Product, Category, City
+from blog.models import Post, Category as BlogCategory, Tag
 
 
 # Static Sitemap
@@ -108,3 +109,49 @@ class CatalogSitemap(Sitemap):
         if latest_product:
             return latest_product.time_update
         return datetime.datetime.now()
+
+
+class BlogPostSitemap(Sitemap):
+    changefreq = 'weekly'
+    priority = 0.7
+    protocol = 'https'
+
+    def items(self):
+        return Post.objects.filter(is_published=True)
+
+    def lastmod(self, obj):
+        return obj.updated_date
+
+    def location(self, obj):
+        return obj.get_absolute_url()
+
+    def image(self, obj):
+        if obj.image:
+            return [obj.image.url]
+        return []
+
+
+# Добавляем класс для категорий блога
+class BlogCategorySitemap(Sitemap):
+    changefreq = 'monthly'
+    priority = 0.6
+    protocol = 'https'
+
+    def items(self):
+        return BlogCategory.objects.all()
+
+    def location(self, obj):
+        return obj.get_absolute_url()
+
+
+# Добавляем класс для тегов блога
+class BlogTagSitemap(Sitemap):
+    changefreq = 'monthly'
+    priority = 0.5
+    protocol = 'https'
+
+    def items(self):
+        return Tag.objects.all()
+
+    def location(self, obj):
+        return obj.get_absolute_url()

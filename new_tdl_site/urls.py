@@ -15,14 +15,19 @@ from leads.views import (CallsApiList, \
                          CallsDetailView, CallResultUpdateView, ResultsApiList,
                          CallManagerUpdateView)
 
-from .sitemap import StaticViewSitemap, ProductSitemap, CategorySitemap, \
-    CatalogSitemap
+from .sitemap import (StaticViewSitemap, ProductSitemap,
+                     CategorySitemap, CatalogSitemap,
+                     BlogPostSitemap, BlogCategorySitemap,
+                     BlogTagSitemap)
 
 sitemaps = {
     'static': StaticViewSitemap,
     'products': ProductSitemap,
     'categories': CategorySitemap,
     'catalogs': CatalogSitemap,
+    'blog_posts': BlogPostSitemap,
+    'blog_categories': BlogCategorySitemap,
+    'blog_tags': BlogTagSitemap,
 }
 
 

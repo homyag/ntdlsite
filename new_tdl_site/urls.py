@@ -60,6 +60,7 @@ urlpatterns = [
     path('catalog/', include('good.urls')),
     path('', include('commonpages.urls')),
     path('', include('blog.urls')),
+    path('tinymce/', include('tinymce.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps, 'template_name': 'sitemap_with_images.xml'}, name='django.contrib.sitemaps.views.sitemap'),
     path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
     path('1qc4a638hqkvzjrs1rss11hhgqxdqvt5.txt', TemplateView.as_view(

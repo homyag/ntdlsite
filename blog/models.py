@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.html import strip_tags
+from tinymce.models import HTMLField
 import re
 
 
@@ -51,8 +52,8 @@ class Tag(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=200, verbose_name="Заголовок")
     slug = models.SlugField(max_length=200, unique=True, verbose_name="URL статьи")
-    content = models.TextField(verbose_name="Содержание")
-    excerpt = models.TextField(blank=True, verbose_name="Отрывок")
+    content = HTMLField(verbose_name="Контент статьи")
+    excerpt = models.TextField(blank=True, verbose_name="Краткое саммари в карточке")
     image = models.ImageField(upload_to='blog/images/%Y/%m/', blank=True, verbose_name="Изображение")
     pub_date = models.DateTimeField(auto_now_add=True, verbose_name="Дата публикации")
     updated_date = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")

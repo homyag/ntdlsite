@@ -686,6 +686,7 @@ def city_context(request):
         'cities': City.objects.all(),
         'city_slugs': list(City.objects.values_list('slug', flat=True)),
     }
+```
 ## 7. Шаблоны и статические файлы
 
 ### 7.1. Структура шаблонов

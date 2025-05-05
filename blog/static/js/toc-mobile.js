@@ -1,45 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Функция настройки мобильного TOC
-    function setupMobileTOC() {
-        const tocContainer = document.querySelector('.table-of-contents');
-        if (!tocContainer) {
-            return;
-        }
+    const tocContainer = document.querySelector('.table-of-contents');
+    const tocTitle = document.querySelector('.toc-title');
 
-        const tocTitle = tocContainer.querySelector('.toc-title');
-        if (!tocTitle) {
-            return;
-        }
-
-        const isMobile = window.innerWidth <= 576;
-
-        // Добавляем функционал сворачивания на мобильных
-        if (isMobile) {
-            // Инициализируем свернутое состояние на мобильных
-            tocContainer.classList.add('collapsed');
-
-            // Удаляем существующие обработчики, чтобы избежать дубликатов
-            tocTitle.removeEventListener('click', toggleTOC);
-
-            // Добавляем обработчик клика для заголовка
-            tocTitle.addEventListener('click', toggleTOC);
-        } else {
-            // Разворачиваем на десктопах
-            tocContainer.classList.remove('collapsed');
-        }
+    if (!tocContainer || !tocTitle) {
+        return;
     }
 
-    // Функция для переключения состояния TOC
-    function toggleTOC() {
-        const tocContainer = document.querySelector('.table-of-contents');
-        if (tocContainer) {
+    // Проверяем, не установлены ли уже какие-то обработчики
+    const clonedTitle = tocTitle.cloneNode(true);
+    tocTitle.parentNode.replaceChild(clonedTitle, tocTitle);
+
+    // Добавляем явный обработчик
+    clonedTitle.addEventListener('click', function(e) {
+        if (window.innerWidth <= 576) {
             tocContainer.classList.toggle('collapsed');
         }
-    }
-
-    // Вызываем функцию при загрузке
-    setupMobileTOC();
-
-    // И при изменении размера окна
-    window.addEventListener('resize', setupMobileTOC);
+    });
 });

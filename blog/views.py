@@ -216,11 +216,11 @@ class PostDetailView(DetailView):
                             related_products.append(product)
 
                             # Если набрали 4 товара, останавливаемся
-                            if len(related_products) >= 4:
+                            if len(related_products) >= 3:
                                 break
 
                         # Если набрали 4 товара, останавливаемся
-                        if len(related_products) >= 4:
+                        if len(related_products) >= 3:
                             break
 
             # Если город не выбран, показываем разные товары из разных городов
@@ -250,15 +250,15 @@ class PostDetailView(DetailView):
                             seen_product_names.add(product.name.lower())
 
                             # Если набрали 4 товара, останавливаемся
-                            if len(related_products) >= 4:
+                            if len(related_products) >= 3:
                                 break
 
                         # Если набрали 4 товара, останавливаемся
-                        if len(related_products) >= 4:
+                        if len(related_products) >= 3:
                             break
 
                     # Если набрали 4 товара, останавливаемся
-                    if len(related_products) >= 4:
+                    if len(related_products) >= 3:
                         break
 
         # Добавляем связанные товары в контекст

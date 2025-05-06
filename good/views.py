@@ -16,15 +16,17 @@ def product(request, city_slug):
     # Условное формирование заголовка
     if city.region:
         title = f"Товарный каталог продукции ТД Ленинградский в {city.region}: город {city.name}"
+        seo_description = f"Бетон и нерудные материалы в {city.region}, город {city.name} от производителя | ТД Ленинградский"
     else:
         title = f"Товарный каталог продукции ТД Ленинградский в городе {city.name}"
+        seo_description = f"Бетон и нерудные материалы от производителя город {city.name} | ТД Ленинградский"
 
     # Формирование данных для контекста
     data = {
         "title": title,
         "products": products,
         "seo_title": f"Товарный каталог продукции ТД Ленинградский в городе {city.name}",
-        "seo_description": f"Бетон и нерудные материалы в ДНР, город {city.name} от производителя | ТД Ленинградский",
+        "seo_description": seo_description,
         "seo_keywords": "купить бетон, продажа нерудных материалов, бетонный завод ТД Ленинградский",
         "city_slug": city.slug,
         "city_name": city.name,

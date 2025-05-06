@@ -45,9 +45,6 @@
             <div class="catalog-header">
                 <!-- BREADCRUMBS -->
                 {% include 'good/includes/breadcrumbs.html' %}
-
-                <h1 class="catalog-title">{{ title }}</h1>
-
                 {% if short_description %}
                     <div class="catalog-description">
                         {{ short_description }}
@@ -130,8 +127,9 @@
             <!-- CATEGORY DESCRIPTION -->
             {% if description %}
                 <div class="category-description">
-                    <h2>Подробнее о категории</h2>
-                    {{ description|linebreaks }}
+                    <h2>О товаре</h2>
+{#                    {{ description|linebreaks }}#}
+                    {{ description|safe }}
                 </div>
             {% endif %}
         </div>

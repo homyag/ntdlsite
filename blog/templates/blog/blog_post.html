@@ -2,6 +2,80 @@
 {% load static %}
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/table-of-contents.css' %}">
+    <style>
+        /* Стили для связанных товаров в блоге */
+        .related-products {
+            margin-top: 50px;
+            margin-bottom: 60px;
+        }
+
+        .related-products-title {
+            font-size: 2.2rem;
+            color: #113E71;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+            text-align: left;
+        }
+
+        .related-products-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 80px;
+            height: 3px;
+            background-color: #3798D4;
+            transform: none;
+        }
+
+        .product-city {
+            margin-bottom: 15px;
+            padding: 5px 10px;
+            background-color: #f0f7ff;
+            border-radius: 5px;
+            font-size: 0.95rem;
+            color: #113E71;
+            display: inline-block;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #113E71;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .product-name a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .product-name a:hover {
+            color: #3798D4;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .related-products-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .related-products-title {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .related-products-title {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
 {% endblock %}
 {% block schema_org %}
     <script type="application/ld+json">
@@ -45,39 +119,39 @@
     </script>
 {% endblock %}
 {% block og_meta %}
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="article">
-<meta property="og:locale" content="ru_RU">
-<meta property="og:title" content="{{ post.title }}">
-<meta property="og:description" content="{{ post.excerpt|striptags|truncatechars:200 }}">
-<meta property="og:url" content="{{ request.build_absolute_uri }}">
-{% if post.image %}
-    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ post.image.url }}">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-{% else %}
-    <!-- Фолбэк изображение, если у поста нет картинки -->
-    <meta property="og:image"
-          content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.svg' %}">
-    <meta property="og:image:width" content="200">
-    <meta property="og:image:height" content="50">
-{% endif %}
-<meta property="og:site_name" content="ТД Ленинградский">
-<meta property="article:published_time" content="{{ post.pub_date|date:'c' }}">
-{% if post.category %}
-    <meta property="article:section" content="{{ post.category.name }}">
-{% endif %}
-{% for tag in post.tags.all %}
-    <meta property="article:tag" content="{{ tag.name }}">
-{% endfor %}
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:title" content="{{ post.title }}">
+    <meta property="og:description" content="{{ post.excerpt|striptags|truncatechars:200 }}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    {% if post.image %}
+        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ post.image.url }}">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+    {% else %}
+        <!-- Фолбэк изображение, если у поста нет картинки -->
+        <meta property="og:image"
+              content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo/logo.svg' %}">
+        <meta property="og:image:width" content="200">
+        <meta property="og:image:height" content="50">
+    {% endif %}
+    <meta property="og:site_name" content="ТД Ленинградский">
+    <meta property="article:published_time" content="{{ post.pub_date|date:'c' }}">
+    {% if post.category %}
+        <meta property="article:section" content="{{ post.category.name }}">
+    {% endif %}
+    {% for tag in post.tags.all %}
+        <meta property="article:tag" content="{{ tag.name }}">
+    {% endfor %}
 
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{ post.title }}">
-<meta name="twitter:description" content="{{ post.excerpt|striptags|truncatechars:200 }}">
-{% if post.image %}
-    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{{ post.image.url }}">
-{% endif %}
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ post.title }}">
+    <meta name="twitter:description" content="{{ post.excerpt|striptags|truncatechars:200 }}">
+    {% if post.image %}
+        <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{{ post.image.url }}">
+    {% endif %}
 {% endblock %}
 {% block content %}
     <div class="blog-post-container">
@@ -200,11 +274,53 @@
             </aside>
         </div>
 
+
+        <!-- Связанные товары -->
+        {% if related_products %}
+            <div class="related-products">
+                <h2 class="related-products-title">
+                    {{ products_section_title|default:"Материалы для ваших строительных работ" }}</h2>
+                <div class="products-grid">
+                    {% for product in related_products %}
+                        <div class="product-card">
+                            <div class="product-image">
+                                {% if product.img %}
+                                    <img src="{{ product.img.url }}" alt="{{ product.name }}">
+                                {% else %}
+                                    <img src="{% static 'images/mainpage/zavod.webp' %}" alt="{{ product.name }}">
+                                {% endif %}
+                            </div>
+                            <div class="product-info">
+                                <div class="product-name">
+                                    <a href="{% url 'product' city_slug=product.city.slug category_slug=product.category.slug product_slug=product.slug %}">
+                                        {{ product.name }}
+                                    </a>
+                                </div>
+                                <div class="product-price">
+                                    <strong>{{ product.price }} руб/ед</strong>
+                                </div>
+                                <div class="product-city">
+                                    <span>Город: {{ product.city.name }}</span>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="{% url 'product' city_slug=product.city.slug category_slug=product.category.slug product_slug=product.slug %}"
+                                       class="btn-details">
+                                        Подробнее
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+
         <!-- Related Posts -->
         {% if related_posts %}
             <div class="related-posts">
                 <h2 class="related-posts-title">Похожие статьи</h2>
-                <div class="blog-posts-grid related-posts-grid">
+                <div class="blog-posts-grid">
                     {% for rel_post in related_posts %}
                         <div class="blog-post-card">
                             <div class="post-image">

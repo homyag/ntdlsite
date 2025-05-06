@@ -314,9 +314,10 @@
 /* Сетка статей */
 .blog-posts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 350px));
     gap: 30px;
     margin-bottom: 40px;
+    justify-content: flex-start;
 }
 
 .blog-post-card {
@@ -328,6 +329,8 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    max-width: 350px;
 }
 
 .blog-post-card:hover {
@@ -437,6 +440,8 @@
     font-weight: 600;
     transition: all 0.3s ease;
     border: 1px solid #3798D4;
+    text-align: center;
+    width: 100%;
 }
 
 .read-more-btn:hover {
@@ -712,20 +717,24 @@
     background-color: #25D366;
 }
 
-/* Related Posts */
-.related-posts {
+/* Related Posts and Products */
+.related-posts,
+.related-products {
     margin-top: 50px;
 }
 
-.related-posts-title {
+.related-posts-title,
+.related-products-title {
     font-size: 2rem;
     color: #113E71;
     margin-bottom: 30px;
     position: relative;
     padding-bottom: 15px;
+    text-align: left;
 }
 
-.related-posts-title::after {
+.related-posts-title::after,
+.related-products-title::after {
     content: '';
     position: absolute;
     left: 0;
@@ -735,8 +744,127 @@
     background-color: #3798D4;
 }
 
-.related-posts-grid {
-    grid-template-columns: repeat(3, 1fr);
+.related-posts-grid,
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 350px));
+    gap: 30px;
+    margin-bottom: 40px;
+    justify-content: flex-start;
+}
+
+/* Общие стили для карточек товаров и статей */
+.product-card,
+.blog-post-card {
+    width: 100%;
+    max-width: 350px;
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover,
+.blog-post-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.product-image,
+.post-image {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.product-image img,
+.post-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image img,
+.blog-post-card:hover .post-image img {
+    transform: scale(1.05);
+}
+
+.product-info,
+.post-info {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-name,
+.post-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #113E71;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.product-name a,
+.post-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.product-name a:hover,
+.post-title a:hover {
+    color: #3798D4;
+}
+
+.product-price,
+.post-meta {
+    margin-bottom: 15px;
+}
+
+.product-city,
+.post-category {
+    margin-bottom: 15px;
+    padding: 5px 10px;
+    background-color: #f0f7ff;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    color: #113E71;
+    display: inline-block;
+}
+
+.product-actions,
+.post-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.btn-details,
+.read-more-btn {
+    padding: 10px 15px;
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    flex: 1;
+    text-align: center;
+}
+
+.btn-details:hover,
+.read-more-btn:hover {
+    background-color: #3798D4;
+    color: white;
+    border-color: #3798D4;
 }
 
 /* Категория при наведении меняет цвет */
@@ -750,12 +878,10 @@
 
 /* Адаптивность для блога */
 @media (max-width: 1200px) {
+    .related-posts-grid,
+    .products-grid,
     .blog-posts-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    }
-
-    .related-posts-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(auto-fill, minmax(280px, 350px));
     }
 }
 
@@ -796,12 +922,11 @@
 }
 
 @media (max-width: 768px) {
+    .related-posts-grid,
+    .products-grid,
     .blog-posts-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .related-posts-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 350px));
+        justify-content: center;
     }
 
     .blog-header {
@@ -915,7 +1040,8 @@
         margin: 0 3px 6px;
     }
 
-    .related-posts-title {
+    .related-posts-title,
+    .related-products-title {
         font-size: 1.6rem;
     }
 
@@ -924,5 +1050,23 @@
         width: 100%;
         padding: 10px 15px;
         font-size: 1rem;
+    }
+
+    .related-posts-grid,
+    .products-grid,
+    .blog-posts-grid {
+        grid-template-columns: minmax(280px, 100%);
+    }
+
+    .product-card,
+    .blog-post-card {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .related-posts-title,
+    .related-products-title {
+        font-size: 1.4rem;
     }
 }

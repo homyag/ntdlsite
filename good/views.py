@@ -11,7 +11,17 @@ def product(request, city_slug):
     city = get_object_or_404(City, slug=city_slug)
 
     # Получение продуктов с оптимизацией
-    products = Product.objects.select_related('category', 'city').filter(city=city)
+    products = Product.objects.select_related(
+        'category', 'city'
+    ).only(
+        'id', 'name', 'slug', 'price', 'product_card_description',
+        'product_card_property', 'img', 'on_stock',
+        'category__name', 'category__slug',
+        'city__name', 'city__slug'
+    ).filter(
+        city=city,
+        on_stock=True  # Добавляем фильтр по наличию товара
+    )
 
     # Условное формирование заголовка
     if city.region:
@@ -47,19 +57,30 @@ def show_product(request, city_slug, category_slug, product_slug):
     city = get_object_or_404(City, slug=city_slug)
     category = get_object_or_404(Category, slug=category_slug)
     try:
-        good = Product.objects.select_related('category', 'city').get(
-            slug=product_slug, 
-            category=category, 
+        good = Product.objects.select_related(
+            'category', 'city'
+        ).get(
+            slug=product_slug,
+            category=category,
             city=city
         )
     except Product.DoesNotExist:
         good = None
 
     if good:
-        related_goods = Product.objects.select_related('category', 'city').filter(
-            category=category, 
-            city=city
-        ).exclude(id=good.id)[:3]
+        related_goods = Product.objects.select_related(
+            'category', 'city'
+        ).only(
+            'id', 'name', 'slug', 'img',
+            'category__slug',
+            'city__slug'
+        ).filter(
+            category=category,
+            city=city,
+            on_stock=True  # Только товары в наличии
+        ).exclude(
+            id=good.id
+        )[:3]
         data = {
             "title": f"Купить {good.name} в городе {city.name}",
             "content": good.description,
@@ -113,9 +134,17 @@ def show_product(request, city_slug, category_slug, product_slug):
 def show_category(request, city_slug, category_slug):
     city = get_object_or_404(City, slug=city_slug)
     category = get_object_or_404(Category, slug=category_slug)
-    subcategories = Category.objects.filter(parent=category)
-    products = Product.objects.select_related('category', 'city').filter(
-        (Q(category=category) | Q(category__in=subcategories)) & Q(city=city)
+    subcategories = Category.objects.filter(parent=category).values_list('id', flat=True)
+    products = Product.objects.select_related(
+        'category', 'city'
+    ).only(
+        'id', 'name', 'slug', 'price', 'product_card_description',
+        'product_card_property', 'img', 'on_stock',
+        'category__name', 'category__slug', 'category__id',
+        'city__name', 'city__slug'
+    ).filter(
+        (Q(category=category) | Q(category__id__in=subcategories)) & Q(city=city),
+        on_stock=True
     )
 
     # Получаем список названий товаров

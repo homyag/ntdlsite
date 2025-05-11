@@ -63,9 +63,11 @@ class Product(models.Model):
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
         indexes = [
-            models.Index(fields=['city', 'category']),
-            models.Index(fields=['on_stock']),
-            models.Index(fields=['slug', 'city', 'category']),
+            models.Index(fields=['city', 'category', 'on_stock'], name='good_city_cat_stock_idx'),
+            models.Index(fields=['slug'], name='good_slug_idx'),
+            models.Index(fields=['name'], name='good_name_idx'),  # Для поиска по имени
+            models.Index(fields=['price'], name='good_price_idx'),  # Для сортировки по цене
+            models.Index(fields=['time_create'], name='good_time_create_idx'),  # Для сортировки по времени создания
         ]
 
     def __str__(self):
@@ -116,8 +118,8 @@ class Category(models.Model):
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
         indexes = [
-            models.Index(fields=['parent']),
-            models.Index(fields=['slug']),
+            models.Index(fields=['parent'], name='good_cat_parent_idx'),
+            models.Index(fields=['slug'], name='good_cat_slug_idx'),
         ]
 
     def __str__(self):
@@ -138,6 +140,9 @@ class City(models.Model):
     class Meta:
         verbose_name = "Город"
         verbose_name_plural = "Города"
+        indexes = [
+            models.Index(fields=['slug'], name='good_city_slug_idx'),
+        ]
 
     def __str__(self):
         return self.name

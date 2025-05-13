@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
     {% for url in urlset %}
     <url>
         <loc>{{ url.location }}</loc>
-        <lastmod>{{ url.lastmod|date:"Y-m-d" }}</lastmod>
+        {% if url.lastmod %}<lastmod>{{ url.lastmod|date:"Y-m-d" }}</lastmod>{% endif %}
         <changefreq>{{ url.changefreq }}</changefreq>
         <priority>{{ url.priority }}</priority>
-        {% if url.image %}
-        <image:image>
-            <image:loc>{{ url.image.0 }}</image:loc>
-        </image:image>
+        {% if url.images %}
+            {% for image in url.images %}
+            <image:image>
+                {% if image.loc|slice:":4" == "http" %}
+                <image:loc>{{ image.loc }}</image:loc>
+                {% else %}
+                <image:loc>https://tdleningrad.ru{{ image.loc }}</image:loc>
+                {% endif %}
+            </image:image>
+            {% endfor %}
         {% endif %}
     </url>
     {% endfor %}

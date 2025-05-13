@@ -1,14 +1,15 @@
 import datetime
-
-from django.contrib.sitemaps import Sitemap
+from django.utils import timezone
 from django.urls import reverse
 
 from good.models import Product, Category, City
 from blog.models import Post, Category as BlogCategory, Tag
 
+from .base_sitemap import BaseSitemap  # Импортируем наш новый базовый класс
+
 
 # Static Sitemap
-class StaticViewSitemap(Sitemap):
+class StaticViewSitemap(BaseSitemap):  # Используем BaseSitemap вместо Sitemap
     priority = 0.8
     changefreq = 'daily'
     protocol = 'https'
@@ -26,23 +27,25 @@ class StaticViewSitemap(Sitemap):
         return reverse(item)
 
     def lastmod(self, item):
-        return datetime.datetime.now()
+        return timezone.now()
 
-    def image(self, item):
+    def get_images(self, item):
         images = {
-            'home': 'static/images/logo/logo.svg',
+            'home': '/static/images/logo/logo.svg',
         }
-        return [images[item]] if item in images else []
+        if item in images:
+            return [{'loc': images[item]}]
+        return []
 
 
-#Products sitemap
-class ProductSitemap(Sitemap):
+# Products sitemap
+class ProductSitemap(BaseSitemap):  # Используем BaseSitemap вместо Sitemap
     changefreq = 'daily'
     priority = 0.7
     protocol = 'https'
 
     def items(self):
-        return Product.objects.all()  # Выводим только товары в наличии
+        return Product.objects.all()
 
     def lastmod(self, obj):
         return obj.time_update
@@ -50,26 +53,24 @@ class ProductSitemap(Sitemap):
     def location(self, obj):
         return obj.get_absolute_url()
 
-    def image(self, obj):
+    def get_images(self, obj):
         if obj.img:
-            return [obj.img.url]  # Возвращаем URL изображения товара
+            return [{'loc': obj.img.url}]
         return []
 
 
 # Products category sitemap
-class CategorySitemap(Sitemap):
+class CategorySitemap(BaseSitemap):  # Используем BaseSitemap вместо Sitemap
     changefreq = 'weekly'
     priority = 0.6
     protocol = 'https'
 
     def items(self):
-        # Генерируем комбинации городов и категорий, где есть товары
         items = []
         cities = City.objects.all()
         categories = Category.objects.all()
         for city in cities:
             for category in categories:
-                # Проверяем, есть ли продукты в данной категории и городе
                 if Product.objects.filter(city=city,
                                           category=category).exists():
                     items.append((city, category))
@@ -84,15 +85,21 @@ class CategorySitemap(Sitemap):
 
     def lastmod(self, obj):
         city, category = obj
-        # Возвращаем дату последнего обновления продуктов в данной категории и городе
         products = Product.objects.filter(city=city, category=category)
         if products.exists():
             return products.latest('time_update').time_update
-        return None
+        return timezone.now()
+
+    def get_images(self, obj):
+        city, category = obj
+        product = Product.objects.filter(city=city, category=category).first()
+        if product and product.img:
+            return [{'loc': product.img.url}]
+        return []
 
 
-# Catalog Sitemap (для URL /<city_slug>/)
-class CatalogSitemap(Sitemap):
+# Catalog Sitemap
+class CatalogSitemap(BaseSitemap):  # Используем BaseSitemap вместо Sitemap
     changefreq = 'weekly'
     priority = 0.6
     protocol = 'https'
@@ -104,14 +111,19 @@ class CatalogSitemap(Sitemap):
         return reverse("catalog", kwargs={"city_slug": obj.slug})
 
     def lastmod(self, obj):
-        # Возвращаем дату последнего обновления продуктов в данном городе
         latest_product = Product.published.filter(city=obj).order_by('-time_update').first()
         if latest_product:
             return latest_product.time_update
-        return datetime.datetime.now()
+        return timezone.now()
+
+    def get_images(self, obj):  # Переименовано с images на get_images
+        product = Product.objects.filter(city=obj).first()
+        if product and product.img:
+            return [{'loc': product.img.url}]
+        return [{'loc': '/static/images/logo/logo.svg'}]
 
 
-class BlogPostSitemap(Sitemap):
+class BlogPostSitemap(BaseSitemap):  # Используем BaseSitemap вместо Sitemap
     changefreq = 'weekly'
     priority = 0.7
     protocol = 'https'
@@ -125,14 +137,14 @@ class BlogPostSitemap(Sitemap):
     def location(self, obj):
         return obj.get_absolute_url()
 
-    def image(self, obj):
+    def get_images(self, obj):  # Переименовано с images на get_images
         if obj.image:
-            return [obj.image.url]
+            return [{'loc': obj.image.url}]
         return []
 
 
 # Добавляем класс для категорий блога
-class BlogCategorySitemap(Sitemap):
+class BlogCategorySitemap(BaseSitemap):  # Используем BaseSitemap вместо Sitemap
     changefreq = 'monthly'
     priority = 0.6
     protocol = 'https'
@@ -143,9 +155,21 @@ class BlogCategorySitemap(Sitemap):
     def location(self, obj):
         return obj.get_absolute_url()
 
+    def lastmod(self, obj):
+        posts = Post.objects.filter(category=obj, is_published=True).order_by('-updated_date')
+        if posts.exists():
+            return posts.first().updated_date
+        return timezone.now()
+
+    def get_images(self, obj):  # Переименовано с images на get_images
+        post = Post.objects.filter(category=obj, is_published=True).first()
+        if post and post.image:
+            return [{'loc': post.image.url}]
+        return []
+
 
 # Добавляем класс для тегов блога
-class BlogTagSitemap(Sitemap):
+class BlogTagSitemap(BaseSitemap):  # Используем BaseSitemap вместо Sitemap
     changefreq = 'monthly'
     priority = 0.5
     protocol = 'https'
@@ -155,3 +179,15 @@ class BlogTagSitemap(Sitemap):
 
     def location(self, obj):
         return obj.get_absolute_url()
+
+    def lastmod(self, obj):
+        posts = Post.objects.filter(tags=obj, is_published=True).order_by('-updated_date')
+        if posts.exists():
+            return posts.first().updated_date
+        return timezone.now()
+
+    def get_images(self, obj):  # Переименовано с images на get_images
+        post = Post.objects.filter(tags=obj, is_published=True).first()
+        if post and post.image:
+            return [{'loc': post.image.url}]
+        return []

@@ -31,6 +31,9 @@ def product(request, city_slug):
         title = f"Товарный каталог продукции ТД Ленинградский в городе {city.name}"
         seo_description = f"Бетон и нерудные материалы от производителя город {city.name} | ТД Ленинградский"
 
+    # Проверяем, пустая ли страница (нет товаров)
+    empty_page = not products.exists()
+
     # Формирование данных для контекста
     data = {
         "title": title,
@@ -40,6 +43,7 @@ def product(request, city_slug):
         "seo_keywords": "купить бетон, продажа нерудных материалов, бетонный завод ТД Ленинградский",
         "city_slug": city.slug,
         "city_name": city.name,
+        "empty_page": empty_page,
         "breadcrumbs": [
             {"title": "Главная", "url": reverse("home")},
             {
@@ -175,6 +179,9 @@ def show_category(request, city_slug, category_slug):
     else:
         seo_description = seo_description_base
 
+    # Проверяем, пустая ли страница (нет товаров)
+    empty_page = not products.exists()
+
     data = {
         "title": f"Купить {category.name} от производителя продукции ТД "
         f"Ленинградский в городе {city.name}",
@@ -187,6 +194,7 @@ def show_category(request, city_slug, category_slug):
         "seo_keywords": category.meta_keywords,
         "city_slug": city.slug,
         "city_name": city.name,
+        "empty_page": empty_page,
         "breadcrumbs": [
             {"title": "Главная", "url": reverse("home")},
             {

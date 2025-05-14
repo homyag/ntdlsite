@@ -79,6 +79,9 @@ class BlogListView(ListView):
         # Добавляем параметр поиска
         context['search_query'] = self.request.GET.get('q', '')
 
+        # Добавляем признак, что это страница поиска
+        context['is_search_page'] = bool(self.request.GET.get('q', ''))
+
         # Настройка SEO
         if hasattr(self, 'category') and self.category:
             context['title'] = f'Блог ТД Ленинградский - {self.category.name}'

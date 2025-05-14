@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
+{% block meta_robots %}
+    {% if is_search_page or search_query %}
+        <meta name="robots" content="noindex, follow">
+    {% else %}
+        <meta name="robots" content="index, follow">
+    {% endif %}
+{% endblock %}
 {% block content %}
     <!-- Hero Section -->
     <section class="blog-hero">

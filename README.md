@@ -1490,6 +1490,8 @@ class ProductModelTest(TestCase):
             product.get_absolute_url(),
             '/test-city/test-category/test-product/'
         )
+```
+
 ### 13.2. Тесты представлений
 
 ```python

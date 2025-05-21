@@ -170,7 +170,7 @@ def show_category(request, city_slug, category_slug):
     # Формируем seo_description, учитывая ограничения по длине
     seo_description_base = (
         f"Купить {category.name} в городе {city.name}. "
-        f"Каталог продукции ТД Ленинградский: {products_str}."
+        f"Каталог продукции ТД Ленинградский: {products_str}. Собственное производство ✓ Доставка в день заказа ✓ Контроль качества ✓ Выгодные цены"
     )
 
     # Ограничиваем длину seo_description до 160 символов
@@ -189,7 +189,7 @@ def show_category(request, city_slug, category_slug):
         "category_selected": category.pk,
         "description": category.description,
         "short_description": category.small_text_for_catalog,
-        "seo_title": f"{category.meta_title} в городе {city.name}",
+        "seo_title": f"{category.meta_title} в городе {city.name} от ТД Ленинградский",
         "seo_description": seo_description,
         "seo_keywords": category.meta_keywords,
         "city_slug": city.slug,

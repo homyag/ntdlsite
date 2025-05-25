@@ -69,6 +69,7 @@
     <link type="text/css" href="{% static 'css/blog.css' %}" rel="stylesheet">
     <link type="text/css" href="{% static 'css/cart.css' %}" rel="stylesheet">
     <link type="text/css" href="{% static 'css/popup_cart.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'css/cookie-consent.css' %}" rel="stylesheet">
     {% block extra_css %}
     {% endblock %}
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -141,8 +142,10 @@
 <script src="{% static 'js/dividers.js' %}" defer></script>
 <script src="{% static 'js/animations.js' %}" defer></script>
 <script src="{% static 'js/cart.js' %}" defer></script>
+<script src="{% static 'js/cookieConsent.js' %}" defer></script>
 {% block extra_scripts %}
 {% endblock %}
 {% include 'includes/popup_cart.html' %}
+{% include 'includes/cookie_consent.html' %}
 </body>
 </html>

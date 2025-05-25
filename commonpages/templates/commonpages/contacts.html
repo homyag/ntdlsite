@@ -232,43 +232,42 @@
         </div>
 
         <div class="contact-section-right">
-            <div class="contact-form">
-                <h2>Оставить заявку менеджеру</h2>
-                <form id="feedback-form" method="post" data-url="{% url 'submit_feedback' %}">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <input type="text" name="name" class="form-control" placeholder="Ваше имя" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" name="email" class="form-control" placeholder="Ваш e-mail" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="phone" class="form-control" placeholder="Ваш телефон" required>
-                    </div>
-                    <div class="form-group">
-                        <select name="product" class="form-control" required>
-                            <option value="" disabled selected>Выберите товар</option>
-                            {% for product in products %}
-                                <option value="{{ product.id }}">{{ product.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <textarea name="message" class="form-control" placeholder="Ваше сообщение" required></textarea>
-                    </div>
-                    <div class="agree-container">
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="agree_to_terms" required class="checkbox-input" checked>
-                            <span class="checkbox-text">
-                                Согласие на обработку
-                                <a href="{% url 'privacy' %}" class="privacy-link">персональных данных</a>
-                            </span>
-                        </label>
-                    </div>
-                    <button type="submit" class="form-submit">Отправить заявку</button>
-                </form>
-            </div>
+<div class="contact-form">
+    <h2>Оставить заявку менеджеру</h2>
+    <form id="feedback-form" method="post" data-url="{% url 'submit_feedback' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" name="name" class="form-control" placeholder="Ваше имя" required>
         </div>
+        <div class="form-group">
+            <input type="email" name="email" class="form-control" placeholder="Ваш e-mail" required>
+        </div>
+        <div class="form-group">
+            <input type="text" name="phone" class="form-control" placeholder="Ваш телефон" required>
+        </div>
+        <div class="form-group">
+            <select name="product" class="form-control" required>
+                <option value="" disabled selected>Выберите товар</option>
+                {% for product in products %}
+                    <option value="{{ product.id }}">{{ product.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <textarea name="message" class="form-control" placeholder="Ваше сообщение" required></textarea>
+        </div>
+        <div class="agree-container">
+            <label class="custom-checkbox">
+                <input type="checkbox" name="agree_to_terms" required class="checkbox-input">
+                <span class="checkbox-text">
+                    Согласие на обработку
+                    <a href="{% url 'privacy' %}" class="privacy-link" target="_blank">персональных данных</a>
+                </span>
+            </label>
+        </div>
+        <button type="submit" class="form-submit">Отправить заявку</button>
+    </form>
+</div>
     </div>
 
     <!-- Address section -->

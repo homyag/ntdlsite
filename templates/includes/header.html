@@ -85,17 +85,6 @@
         </div>
     </nav>
     <div class="header__callback">
-{#        <!-- Cart Icon -->#}
-{#        <div class="header-cart">#}
-{#            <a href="{% url 'cart:cart_detail' %}" class="cart-link">#}
-{#                <div class="cart-icon">#}
-{#                    <img src="{% static 'images/icons/cart.svg' %}" alt="Корзина">#}
-{#                    <span class="cart-count" style="display: none;">0</span>#}
-{#                </div>#}
-{#                <span class="cart-total-price" style="display: none;">0 руб.</span>#}
-{#            </a>#}
-{#        </div>#}
-
         <div class="header__phone">
             <div class="header__callback--icon">
                 <img class="header__callback--phone--icon"
@@ -124,27 +113,29 @@
         <div class="popup-content">
             <span class="close-btn">&times;</span>
             <span class="popup--header">Заказать обратный звонок</span>
-            <form id="callback-form" method="post" data-url=
-                    "{% url 'submit_callback' %}">
+            <form id="callback-form" method="post" data-url="{% url 'submit_callback' %}">
                 {% csrf_token %}
                 <label for="name">Имя:</label>
                 <input type="text" id="name" name="name" required>
 
                 <label for="phone">Телефон:</label>
                 <input type="tel" id="phone" name="phone" required>
+
+                <!-- Обновленный блок согласия - убрана автоматическая галка -->
                 <div class="agree-with-terms">
                     <label for="agree_to_terms">
-                        <input type="checkbox" id="agree_to_terms"
-                               name="agree_to_terms" required checked>
+                        <input type="checkbox" id="agree_to_terms" name="agree_to_terms" required>
                         <p>Я соглашаюсь на обработку
-                            <a href="{% url 'privacy' %}">персональных данных</a></p>
+                            <a href="{% url 'privacy' %}" target="_blank">персональных данных</a>
+                        </p>
                     </label>
                 </div>
+
                 <div class="popup-buttons">
-                    <button type="submit" class="btn-primary" onclick="ym(98660706,'reachGoal','btn-primary'); return true;">Заказать звонок
+                    <button type="submit" class="btn-primary" onclick="ym(98660706,'reachGoal','btn-primary'); return true;">
+                        Заказать звонок
                     </button>
-                    <button type="reset" class="btn-secondary">Сбросить
-                    </button>
+                    <button type="reset" class="btn-secondary">Сбросить</button>
                 </div>
             </form>
         </div>
@@ -156,8 +147,7 @@
     <div id="success-modal" class="modal" style="display:none;">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-            <p>Заявка на звонок принята. Наш менеджер свяжется с Вами в
-                ближайшее время.</p>
+            <p>Заявка на звонок принята. Наш менеджер свяжется с Вами в ближайшее время.</p>
         </div>
     </div>
 </noindex>

@@ -1,4 +1,3 @@
-// static/js/cookieConsent.js - Production Version
 document.addEventListener('DOMContentLoaded', function() {
     // Проверяем, дал ли пользователь согласие ранее
     const cookieConsent = localStorage.getItem('cookieConsent');
@@ -8,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!cookieConsent && cookieConsentPopup) {
         setTimeout(function() {
             cookieConsentPopup.classList.add('show');
+            // Блокируем скролл страницы
+            document.body.style.overflow = 'hidden';
         }, 2000);
     }
 
@@ -36,16 +37,31 @@ document.addEventListener('DOMContentLoaded', function() {
             if (typeof ym !== 'undefined') {
                 ym(98660706, 'reachGoal', 'cookie_declined');
             }
+
+            // Отключаем аналитику если пользователь отказался
+            disableAnalytics();
         });
     }
 
-    // Обработчик закрытия попапа
-    const closeBtn = document.getElementById('cookie-consent-close');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
-            hideCookieConsent();
+    // УБИРАЕМ обработчик закрытия попапа по крестику
+    // Теперь попап можно закрыть только через кнопки "Принять" или "Отклонить"
+
+    // Блокируем закрытие по клику вне попапа
+    if (cookieConsentPopup) {
+        cookieConsentPopup.addEventListener('click', function(e) {
+            // Если клик был по самому попапу (не по содержимому), ничего не делаем
+            e.stopPropagation();
         });
     }
+
+    // Блокируем закрытие по Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && cookieConsentPopup && cookieConsentPopup.classList.contains('show')) {
+            // Не закрываем попап по Escape
+            e.preventDefault();
+            return false;
+        }
+    });
 
     // Функция скрытия попапа
     function hideCookieConsent() {
@@ -53,7 +69,35 @@ document.addEventListener('DOMContentLoaded', function() {
             cookieConsentPopup.classList.remove('show');
             setTimeout(function() {
                 cookieConsentPopup.style.display = 'none';
+                // Восстанавливаем скролл страницы
+                document.body.style.overflow = '';
             }, 500);
         }
     }
+
+    // Функция отключения аналитики
+    function disableAnalytics() {
+        // Устанавливаем флаг отключения аналитики
+        localStorage.setItem('analyticsDisabled', 'true');
+
+        // Здесь можно добавить код отключения других аналитических систем
+        console.log('Analytics disabled by user choice');
+    }
+
+    // Проверяем статус аналитики при загрузке страницы
+    function checkAnalyticsStatus() {
+        const analyticsDisabled = localStorage.getItem('analyticsDisabled');
+        const cookieConsent = localStorage.getItem('cookieConsent');
+
+        if (cookieConsent === 'declined' || analyticsDisabled === 'true') {
+            // Аналитика отключена
+            console.log('Analytics is disabled');
+        } else if (cookieConsent === 'accepted') {
+            // Аналитика разрешена
+            console.log('Analytics is enabled');
+        }
+    }
+
+    // Проверяем статус при загрузке
+    checkAnalyticsStatus();
 });

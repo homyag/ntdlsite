@@ -1,22 +1,25 @@
-<!-- templates/includes/cookie_consent.html -->
 <div id="cookie-consent" class="cookie-consent">
-    <button class="cookie-consent-close" id="cookie-consent-close" aria-label="Закрыть">&times;</button>
     <div class="cookie-consent-content">
         <div class="cookie-consent-text">
-            <h4>Обработка персональных данных и использование cookies</h4>
+            <h4>Мы заботимся о вашем удобстве</h4>
             <p>
-                Мы используем файлы cookie и обрабатываем персональные данные для улучшения работы сайта и предоставления персонализированного контента.
+                Чтобы сайт работал лучше и быстрее, мы используем файлы cookie и Яндекс.Метрику.
+                Это помогает нам делать его удобнее именно для вас.
             </p>
-            <p>
-                Подробнее в <a href="{% url 'privacy' %}" class="cookie-consent-link" target="_blank">политике конфиденциальности</a>.
+            <p class="cookie-mobile-hide">
+                В соответствии с законодательством РФ мы обязаны уведомить вас об этом.
+                <a href="{% url 'privacy' %}" class="cookie-consent-link" target="_blank">Подробнее — в политике конфиденциальности</a>.
+            </p>
+            <p class="cookie-mobile-show">
+                <a href="{% url 'privacy' %}" class="cookie-consent-link" target="_blank">Подробнее — в политике конфиденциальности</a>
             </p>
         </div>
         <div class="cookie-consent-actions">
             <button class="cookie-consent-btn cookie-consent-accept" id="cookie-consent-accept">
-                Принять
+                ✓ Хорошо
             </button>
             <button class="cookie-consent-btn cookie-consent-decline" id="cookie-consent-decline">
-                Отклонить
+                Нет, спасибо
             </button>
         </div>
     </div>

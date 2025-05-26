@@ -1345,12 +1345,56 @@ form#callback-form .agree-with-terms label {
 .footer-bottom {
     background-color: #113E71;
     padding: 15px 0;
-    text-align: center;
+}
+
+.footer-bottom-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .footer-copyright {
     color: #fff;
     font-size: 14px;
+}
+
+.footer-developer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-developer-text {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
+}
+
+.footer-developer-link {
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.footer-developer-link:hover {
+    transform: translateY(-1px);
+    opacity: 0.8;
+}
+
+.footer-developer-logo {
+    height: 18px;
+    width: auto;
+    max-width: 100px;
+    transition: all 0.3s ease;
+    filter: brightness(0) invert(1); /* Делаем логотип белым */
+}
+
+.footer-developer-logo:hover {
+    transform: scale(1.05);
 }
 
 /* Адаптивность */
@@ -1362,6 +1406,31 @@ form#callback-form .agree-with-terms label {
 }
 
 @media (max-width: 768px) {
+
+    .footer-bottom-container {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .footer-copyright {
+        order: 1;
+    }
+
+    .footer-developer {
+        order: 2;
+        gap: 6px;
+    }
+
+    .footer-developer-text {
+        font-size: 11px;
+    }
+
+    .footer-developer-logo {
+        height: 14px;
+        max-width: 60px;
+    }
+
     .footer {
         padding: 40px 0 0;
     }
@@ -1397,6 +1466,28 @@ form#callback-form .agree-with-terms label {
 
     .footer-container {
         padding: 0 15px;
+    }
+
+    .footer-bottom {
+        padding: 12px 0;
+    }
+
+    .footer-bottom-container {
+        padding: 0 15px;
+        gap: 8px;
+    }
+
+    .footer-copyright {
+        font-size: 12px;
+    }
+
+    .footer-developer-text {
+        font-size: 10px;
+    }
+
+    .footer-developer-logo {
+        height: 12px;
+        max-width: 50px;
     }
 }
 

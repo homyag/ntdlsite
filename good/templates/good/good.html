@@ -11,7 +11,7 @@
                 "@context": "https://schema.org",
                 "@type": "Product",
                 "name": "{{ good.name|escapejs }}",
-            "description": "{{ good.description|striptags|escapejs }}",
+            "description": "{{ good.product_card_description|striptags|escapejs }}",
             {% if good.img %}
                 "image": "{{ request.scheme }}://{{ request.get_host }}{{ good.img.url }}",
             {% else %}

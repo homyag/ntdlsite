@@ -1,0 +1,237 @@
+/* Стили для страниц тегов */
+.tag-description {
+    background-color: #f8f9fa;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.tag-description h2 {
+    color: #113E71;
+    margin-bottom: 20px;
+}
+
+.tag-description h3 {
+    color: #3698D4;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+/* Группировка по маркам */
+.grade-section {
+    margin-bottom: 50px;
+}
+
+.grade-title {
+    font-size: 1.8rem;
+    color: #113E71;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #3698D4;
+    position: relative;
+}
+
+.grade-title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 60px;
+    height: 3px;
+    background-color: #113E71;
+}
+
+/* Теги в сайдбаре */
+.tags-category {
+    margin-bottom: 25px;
+}
+
+.tags-category h4 {
+    color: #113E71;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tags-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tags-list li {
+    margin-bottom: 8px;
+}
+
+.tags-list a {
+    display: block;
+    padding: 8px 12px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.tags-list a:hover {
+    background-color: #f0f7ff;
+    color: #3698D4;
+    transform: translateX(5px);
+}
+
+.tag-count {
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: normal;
+}
+
+/* Теги в карточках товаров */
+.product-tags {
+    margin: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.product-tag {
+    display: inline-block;
+    padding: 3px 8px;
+    background-color: #e9ecef;
+    color: #495057;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* Разделитель в сайдбаре */
+.sidebar-separator {
+    margin: 20px 0 10px 0 !important;
+    padding: 0 !important;
+}
+
+.sidebar-separator hr {
+    border: none;
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 10px 0;
+}
+
+.sidebar-section-title {
+    font-size: 0.85rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+/* Стили для тегов в сайдбаре */
+.category-list li a[href*="granitnyj-beton"] {
+    position: relative;
+}
+
+.category-list li a[href*="granitnyj-beton"]:before {
+    content: "🏷️";
+    margin-right: 8px;
+    font-size: 0.9rem;
+}
+
+/* Фильтр по тегам в сайдбаре */
+.tags-filter {
+    margin-bottom: 20px;
+}
+
+.tag-filter-item {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    border: 2px solid transparent;
+}
+
+.tag-filter-item:hover {
+    background-color: #f0f7ff;
+    color: #3698D4;
+    transform: translateX(3px);
+}
+
+.tag-filter-item.active {
+    background-color: #3698D4;
+    color: white;
+    border-color: #113E71;
+}
+
+.tag-filter-item.active:hover {
+    background-color: #113E71;
+    transform: none;
+}
+
+/* Активный фильтр */
+.active-filter {
+    background-color: #f0f7ff;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-left: 4px solid #3698D4;
+}
+
+.filter-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.filter-info h2 {
+    color: #113E71;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.clear-filter {
+    padding: 8px 15px;
+    background-color: #dc3545;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    margin-left: 20px;
+}
+
+.clear-filter:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .grade-title {
+        font-size: 1.5rem;
+    }
+
+    .tag-description {
+        padding: 20px;
+    }
+
+    .product-tags {
+        margin: 8px 0;
+    }
+
+    .filter-info {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .clear-filter {
+        margin-left: 0;
+        margin-top: 15px;
+        text-align: center;
+    }
+}

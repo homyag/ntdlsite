@@ -38,6 +38,13 @@
                     {% show_categories city_slug=city_slug category_selected=category_selected %}
                 </ul>
             </div>
+            <!-- НОВОЕ: Фильтр по тегам -->
+            {% load tag_filters %}
+            {% if page_type == "category" %}
+                {% show_tag_filters city_slug=city_slug current_category=category %}
+            {% else %}
+                {% show_tag_filters city_slug=city_slug %}
+            {% endif %}
         </aside>
 
         <!-- CATALOG MAIN CONTENT -->
@@ -104,9 +111,21 @@
                                         {% endwith %}
                                     </div>
                                 {% endif %}
+                                <!-- НОВОЕ: Теги продукта -->
+                                {% if p.tags.all %}
+                                    <div class="product-tags">
+                                        {% for product_tag in p.tags.all %}
+                                            <a href="{% url 'category_or_tag' city_slug=city_slug slug=product_tag.slug %}"
+                                               class="product-tag">
+                                                {{ product_tag.name }}
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                                 <div class="product-actions">
                                     <!-- Add to Cart Form -->
-                                    <form action="{% url 'cart:cart_add' p.id %}" method="post" class="add-to-cart-form">
+                                    <form action="{% url 'cart:cart_add' p.id %}" method="post"
+                                          class="add-to-cart-form">
                                         {% csrf_token %}
                                         <input type="hidden" name="quantity" value="1">
                                         <input type="hidden" name="override" value="False">
@@ -135,7 +154,7 @@
             {% if description %}
                 <div class="category-description">
                     <h2>О товаре</h2>
-{#                    {{ description|linebreaks }}#}
+                    {#                    {{ description|linebreaks }}#}
                     {{ description|safe }}
                 </div>
             {% endif %}

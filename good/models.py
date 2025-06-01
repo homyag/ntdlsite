@@ -8,6 +8,65 @@ class PublishedManager(models.Manager):
         return super().get_queryset().filter(on_stock=True)
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Название тега")
+    slug = models.SlugField(
+        max_length=100,
+        unique=True,
+        blank=True,
+        null=True,
+        verbose_name="URL"
+    )
+    description = models.TextField(blank=True, verbose_name="Описание тега")
+
+    meta_title = models.CharField(max_length=255, blank=True, null=True)
+    meta_description = models.TextField(blank=True, null=True)
+    meta_keywords = models.TextField(blank=True, null=True)
+
+    # Дополнительные поля для каталожных страниц
+    catalog_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Заголовок на странице каталога"
+    )
+    catalog_description = models.TextField(
+        blank=True,
+        verbose_name="Описание на странице каталога"
+    )
+
+    # Поля для группировки и сортировки
+    category = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name="Категория тега",
+        help_text="Например: применение, марка, тип"
+    )
+    sort_order = models.IntegerField(default=0, verbose_name="Порядок сортировки")
+
+    # Активность тега
+    is_active = models.BooleanField(default=True, verbose_name="Активен")
+
+    class Meta:
+        verbose_name = "Тег"
+        verbose_name_plural = "Теги"
+        ordering = ['sort_order', 'name']
+        indexes = [
+            models.Index(fields=['slug'], name='good_tag_slug_idx'),
+            models.Index(fields=['category'], name='good_tag_category_idx'),
+            models.Index(fields=['is_active'], name='good_tag_active_idx'),
+        ]
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url_for_city(self, city_slug):
+        """Получение URL для конкретного города"""
+        return reverse("category_or_tag", kwargs={
+            "city_slug": city_slug,
+            "slug": self.slug
+        })
+
+
 class Product(models.Model):
     name = models.CharField(max_length=255, verbose_name="Название")
     slug: SlugField = models.SlugField(
@@ -48,6 +107,13 @@ class Product(models.Model):
         related_name="products",
         blank=True,
         null=True,
+    )
+
+    tags = models.ManyToManyField(
+        'Tag',
+        blank=True,
+        related_name='products',
+        verbose_name="Теги"
     )
 
     meta_title = models.CharField(max_length=255, blank=True, null=True)

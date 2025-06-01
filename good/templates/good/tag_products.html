@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load static %}
+{% load good_filters %}
+
+{% block content %}
+<!-- TAG PRODUCTS HERO SECTION -->
+<section class="catalog-hero">
+    <div class="catalog-hero-content">
+        <h1>{{ title }}</h1>
+        <p>Качественные строительные материалы для ваших проектов</p>
+    </div>
+</section>
+
+<div class="catalog-container">
+    <!-- SIDEBAR WITH RELATED TAGS -->
+    <aside class="catalog-sidebar">
+        <div class="sidebar-box">
+            <h3 class="sidebar-title">Связанные категории</h3>
+            {% for category, tags_list in related_tags_by_category.items %}
+                <div class="tags-category">
+                    <h4>{{ category }}</h4>
+                    <ul class="tags-list">
+                        {% for related_tag in tags_list %}
+                            <li>
+                                <a href="{% url 'category_or_tag' city_slug=city_slug slug=related_tag.slug %}">
+                                    {{ related_tag.name }}
+                                    <span class="tag-count">({{ related_tag.products_count }})</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Возврат в основной каталог -->
+        <div class="sidebar-box">
+            <h3 class="sidebar-title">Навигация</h3>
+            <ul class="category-list">
+                <li>
+                    <a href="{% url 'catalog' city_slug=city_slug %}">← Весь каталог</a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="catalog-content">
+        <!-- BREADCRUMBS -->
+        {% include 'good/includes/breadcrumbs.html' %}
+
+        <!-- TAG DESCRIPTION -->
+        {% if description %}
+            <div class="tag-description">
+                {{ description|safe }}
+            </div>
+        {% endif %}
+
+        <!-- PRODUCTS BY GRADE -->
+        {% if products %}
+            {% for grade, grade_products in products_by_grade.items %}
+                <div class="grade-section">
+                    <h2 class="grade-title">{{ grade }}</h2>
+                    <div class="products-grid">
+                        {% for product in grade_products %}
+                            <div class="product-card">
+                                <div class="product-image">
+                                    {% if product.img %}
+                                        <img src="{{ product.img.url }}" alt="{{ product.name }}">
+                                    {% else %}
+                                        <img src="{% static 'images/mainpage/zavod.webp' %}" alt="{{ product.name }}">
+                                    {% endif %}
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-name">
+                                        <a href="{% url 'product' city_slug=city_slug category_slug=product.category.slug product_slug=product.slug %}">
+                                            {{ product.name }}
+                                        </a>
+                                    </h3>
+
+                                    <div class="product-price">
+                                        <strong>{{ product.price }} руб/ед</strong>
+                                    </div>
+
+                                    {% if product.product_card_property %}
+                                        <div class="product-properties">
+                                            {% with property_lines=product.product_card_property|splitlines %}
+                                                {% for property_line in property_lines|slice:":3" %}
+                                                    <div class="product-property">{{ property_line|format_property|safe }}</div>
+                                                {% endfor %}
+                                            {% endwith %}
+                                        </div>
+                                    {% endif %}
+
+                                    <!-- Теги продукта -->
+                                    <div class="product-tags">
+                                        {% for product_tag in product.tags.all %}
+                                            <span class="product-tag">{{ product_tag.name }}</span>
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="product-actions">
+                                        <form action="{% url 'cart:cart_add' product.id %}" method="post" class="add-to-cart-form">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="quantity" value="1">
+                                            <input type="hidden" name="override" value="False">
+                                            <button type="submit" class="btn-order">В корзину</button>
+                                        </form>
+                                        <a href="{% url 'product' city_slug=city_slug category_slug=product.category.slug product_slug=product.slug %}" class="btn-details">Подробнее</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-products">
+                <p>К сожалению, товаров с тегом "{{ tag.name }}" в выбранном регионе нет.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+    <script src="{% static 'js/cart.js' %}"></script>
+{% endblock %}

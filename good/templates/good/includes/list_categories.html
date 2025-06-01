@@ -5,7 +5,22 @@
         </li>
     {% else %}
         <li>
-            <a href="{% url 'category' city_slug=city_slug category_slug=category.slug %}">{{ category.name }}</a>
+            <a href="{% url 'category_or_tag' city_slug=city_slug slug=category.slug %}">{{ category.name }}</a>
         </li>
     {% endif %}
 {% endfor %}
+
+<!-- Добавляем популярные теги в сайдбар -->
+{% if popular_tags %}
+    <li class="sidebar-separator">
+        <hr>
+        <span class="sidebar-section-title">Популярные направления</span>
+    </li>
+    {% for tag in popular_tags %}
+        <li>
+            <a href="{% url 'category_or_tag' city_slug=city_slug slug=tag.slug %}">
+                {{ tag.name }}
+            </a>
+        </li>
+    {% endfor %}
+{% endif %}

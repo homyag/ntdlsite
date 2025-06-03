@@ -1,0 +1,25 @@
+{% if show_filter %}
+<div class="sidebar-box">
+    <h3 class="sidebar-title">Фильтр по применению</h3>
+
+    <div class="filter-button-container">
+        <button class="filter-btn active">Все товары</button>
+    </div>
+
+    {% if application_tags %}
+        <div class="filter-section">
+            <h4>ПРИМЕНЕНИЕ</h4>
+            {% for tag in application_tags %}
+                <div class="filter-item">
+                    <a href="{% url 'category_or_tag' city_slug=city_slug slug=tag.slug %}">
+                        {{ tag.name }}
+                        {% if tag.products_count %}
+                            <span class="filter-count">({{ tag.products_count }})</span>
+                        {% endif %}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endif %}

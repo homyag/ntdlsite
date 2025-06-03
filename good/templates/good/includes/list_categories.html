@@ -10,16 +10,23 @@
     {% endif %}
 {% endfor %}
 
-<!-- Добавляем популярные теги в сайдбар -->
+<!-- Показываем релевантные теги только если они есть -->
 {% if popular_tags %}
     <li class="sidebar-separator">
         <hr>
-        <span class="sidebar-section-title">Популярные направления</span>
+        {% if category_selected and category_selected != 0 %}
+            <span class="sidebar-section-title">Виды продукции</span>
+        {% else %}
+            <span class="sidebar-section-title">Популярные направления</span>
+        {% endif %}
     </li>
     {% for tag in popular_tags %}
         <li>
             <a href="{% url 'category_or_tag' city_slug=city_slug slug=tag.slug %}">
                 {{ tag.name }}
+                {% if tag.products_count %}
+                    <span class="tag-count">({{ tag.products_count }})</span>
+                {% endif %}
             </a>
         </li>
     {% endfor %}

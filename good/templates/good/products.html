@@ -20,32 +20,28 @@
     <!--PRODUCTS MAIN CONTENT -->
     <div class="catalog-container">
         <!-- DESKTOP SIDEBAR -->
-        <aside class="catalog-sidebar">
-            <div class="sidebar-box">
-                <h3 class="sidebar-title">Категории</h3>
-                <ul class="category-list">
-                    {% if category_selected == 0 or category_selected is None %}
-                        <li>
-                            <a href="{% url 'catalog' city_slug=city_slug %}" class="active">Все категории</a>
-                        </li>
-                    {% else %}
-                        <li>
-                            <a href="{% url 'catalog' city_slug=city_slug %}">Все категории</a>
-                        </li>
-                    {% endif %}
-
-                    {% load good_tags %}
-                    {% show_categories city_slug=city_slug category_selected=category_selected %}
-                </ul>
-            </div>
-            <!-- НОВОЕ: Фильтр по тегам -->
-            {% load tag_filters %}
-            {% if page_type == "category" %}
-                {% show_tag_filters city_slug=city_slug current_category=category %}
+<aside class="catalog-sidebar">
+    <div class="sidebar-box">
+        <h3 class="sidebar-title">Категории</h3>
+        <ul class="category-list">
+            {% if category_selected == 0 or category_selected is None %}
+                <li>
+                    <a href="{% url 'catalog' city_slug=city_slug %}" class="active">Все категории</a>
+                </li>
             {% else %}
-                {% show_tag_filters city_slug=city_slug %}
+                <li>
+                    <a href="{% url 'catalog' city_slug=city_slug %}">Все категории</a>
+                </li>
             {% endif %}
-        </aside>
+
+            {% load good_tags %}
+            {% show_categories city_slug=city_slug category_selected=category_selected %}
+        </ul>
+    </div>
+
+{#    <!-- Фильтр по применению - показываем только для релевантных категорий -->#}
+{#    {% show_application_filter city_slug=city_slug current_category_id=category_selected %}#}
+</aside>
 
         <!-- CATALOG MAIN CONTENT -->
         <div class="catalog-content">

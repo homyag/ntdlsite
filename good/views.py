@@ -134,7 +134,7 @@ def show_category_view(request, city, category):
         "title": f"Купить {category.name} от производителя продукции ТД "
         f"Ленинградский в городе {city.name}",
         "products": products,
-        "category_selected": category.pk,
+        "category_selected": category.pk,  # Передаем ID категории
         "category": category,  # Добавляем объект категории
         "description": category.description,
         "short_description": category.small_text_for_catalog,

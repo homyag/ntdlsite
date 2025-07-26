@@ -1,17 +1,25 @@
 {% load good_tags %}
-{#Мобильный сайдбар#}
-<div class="category-slider">
-    <div class="category-slider-track">
-        <ul id="slider">
+{# Улучшенное мобильное меню #}
+<div class="mobile-category-menu">
+    <!-- Кнопка открытия меню -->
+    <button class="mobile-category-toggle" id="mobileCategoryToggle">
+        <span>Категории</span>
+        <span class="dropdown-arrow">▼</span>
+    </button>
+    
+    <!-- Выпадающее меню -->
+    <div class="mobile-category-dropdown" id="mobileCategoryDropdown">
+        <ul class="mobile-category-list">
             {% if category_selected == 0 or category_selected is None %}
-                <li>
-                 <a href="{% url 'catalog' city_slug=city_slug %}" class="active">Все категории</a>
+                <li class="active">
+                    <a href="{% url 'catalog' city_slug=city_slug %}">Все категории</a>
                 </li>
             {% else %}
                 <li>
                     <a href="{% url 'catalog' city_slug=city_slug %}">Все категории</a>
                 </li>
             {% endif %}
+            
             {% show_categories city_slug=city_slug category_selected=category_selected %}
         </ul>
     </div>

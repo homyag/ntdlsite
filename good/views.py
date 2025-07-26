@@ -272,7 +272,8 @@ def show_product(request, city_slug, category_slug, product_slug):
         data = {
             "title": f"Купить {good.name} в городе {city.name}",
             "content": good.description,
-            "category_selected": category.slug,
+            "category_selected": category.pk,
+            "category": category,
             "img": good.img.url if good.img else None,
             "property": good.product_card_property,
             "seo_title": good.meta_title,

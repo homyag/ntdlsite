@@ -1,0 +1,187 @@
+/* Компактное мобильное меню в стиле сайта */
+.mobile-category-menu {
+    position: relative;
+    width: 100%;
+}
+
+/* Кнопка меню */
+.mobile-category-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    color: #113E71;
+    font-family: 'Roboto', sans-serif;
+}
+
+.mobile-category-toggle:hover {
+    background-color: #3798D4;
+    color: white;
+}
+
+.mobile-category-toggle.active {
+    background-color: #3798D4;
+    color: white;
+}
+
+.dropdown-arrow {
+    transition: transform 0.3s ease;
+    font-size: 12px;
+}
+
+.mobile-category-toggle.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+/* Выпадающее меню */
+.mobile-category-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    margin-top: 8px;
+}
+
+.mobile-category-dropdown.show {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.mobile-category-list {
+    list-style: none;
+    margin: 0;
+    padding: 15px;
+}
+
+.mobile-category-list li {
+    margin-bottom: 8px;
+}
+
+.mobile-category-list li:last-child {
+    margin-bottom: 0;
+}
+
+.mobile-category-list a,
+.mobile-category-list span {
+    display: block;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #113E71;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    font-size: 15px;
+}
+
+.mobile-category-list a:hover {
+    background-color: #3798D4;
+    color: white;
+}
+
+.mobile-category-list li.active a,
+.mobile-category-list li.active span,
+.mobile-category-list li.selected {
+    background-color: #3798D4;
+    color: white;
+    font-weight: 500;
+    display: block;
+    padding: 12px 16px;
+    border-radius: 8px;
+}
+
+/* Разделители */
+.mobile-category-list li.separator,
+.mobile-category-list li.sidebar-separator {
+    margin: 16px 0 12px;
+    padding: 0;
+}
+
+.mobile-category-list .sidebar-section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0 16px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.mobile-category-list hr {
+    border: none;
+    height: 1px;
+    background: #e0e0e0;
+    margin: 8px 16px;
+}
+
+.separator-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0 16px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Теги */
+.mobile-category-list li.tag-item a {
+    background-color: #f1f3f4;
+    font-size: 14px;
+    position: relative;
+}
+
+.mobile-category-list li.tag-item a:hover {
+    background-color: #e8f0fe;
+    color: #113E71;
+}
+
+.tag-count {
+    color: #666;
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+.mobile-category-list li.tag-item a:hover .tag-count {
+    color: #113E71;
+}
+
+/* Скрытие на десктопе */
+@media (min-width: 993px) {
+    .mobile-category-menu {
+        display: none;
+    }
+}
+
+/* Адаптивность для очень маленьких экранов */
+@media (max-width: 480px) {
+    .mobile-category-toggle {
+        padding: 8px 16px;
+        font-size: 15px;
+    }
+    
+    .mobile-category-list {
+        padding: 12px;
+    }
+    
+    .mobile-category-list a,
+    .mobile-category-list span {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+}

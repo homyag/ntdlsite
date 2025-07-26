@@ -145,7 +145,7 @@
                         <div class="related-products__list">
                             {% for related_good in related_goods %}
                                 <div class="related-product">
-                                    <a href="{% url 'product' city_slug category_selected related_good.slug %}">
+                                    <a href="{% url 'product' city_slug=city_slug category_slug=category.slug product_slug=related_good.slug %}">
                                         {% if related_good.img %}
                                             <img src="{{ related_good.img.url }}" alt="{{ related_good.name }}">
                                         {% else %}

@@ -2338,6 +2338,14 @@ form#callback-form .agree-with-terms label {
     gap: 30px;
 }
 
+/* Корректировка для узких экранов с sidebar - строго 2 колонки */
+@media (min-width: 993px) and (max-width: 1140px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 25px !important;
+    }
+}
+
 .product-card {
     background-color: white;
     border-radius: 15px;
@@ -2541,6 +2549,7 @@ form#callback-form .agree-with-terms label {
 }
 
 /* Адаптивность */
+
 @media (max-width: 992px) {
     .catalog-container {
         flex-direction: column;

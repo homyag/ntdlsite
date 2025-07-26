@@ -127,14 +127,8 @@
 }
 
 /* Стили для тегов в сайдбаре */
-.category-list li a[href*="granitnyj-beton"] {
+.category-list li a[href*="beton"] {
     position: relative;
-}
-
-.category-list li a[href*="granitnyj-beton"]:before {
-    content: "🏷️";
-    margin-right: 8px;
-    font-size: 0.9rem;
 }
 
 /* Фильтр по тегам в сайдбаре */

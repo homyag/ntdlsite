@@ -284,6 +284,7 @@ def show_product(request, city_slug, category_slug, product_slug):
             "good": good,
             "good_price": good.price,
             "related_goods": related_goods,
+            "empty_page": False,  # Товар существует
             "breadcrumbs": [
                 {"title": "Главная", "url": reverse("home")},
                 {
@@ -309,6 +310,7 @@ def show_product(request, city_slug, category_slug, product_slug):
             "title": "Товар не найден",
             "city_slug": city.slug,
             "city_name": city.name,
+            "empty_page": True,  # Товар не найден
             "breadcrumbs": [
                 {"title": "Главная", "url": reverse("home")},
                 {

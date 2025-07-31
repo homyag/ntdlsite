@@ -3,6 +3,13 @@
 {% load l10n %}
 {% load cart_filters %}
 {% load good_filters %}
+{% block meta_robots %}
+    {% if empty_page %}
+        <meta name="robots" content="noindex, nofollow">
+    {% else %}
+        <meta name="robots" content="index, follow">
+    {% endif %}
+{% endblock %}
 
 {% block content %}
     {% if good %}

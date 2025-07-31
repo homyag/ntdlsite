@@ -2647,7 +2647,8 @@ form#callback-form .agree-with-terms label {
 
 .header-image img {
     width: 100%;
-    height: auto;
+    height: 400px;
+    max-height: 400px;
     object-fit: cover;
     border-radius: 10px;
     transition: transform 0.3s ease;
@@ -2800,6 +2801,10 @@ form#callback-form .agree-with-terms label {
         order: -1;
         margin-bottom: 20px;
     }
+    .header-image img {
+        height: 300px;
+        max-height: 300px;
+    }
 
     .related-products__list {
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -2817,6 +2822,10 @@ form#callback-form .agree-with-terms label {
 
     .goods__header-with-image {
         padding: 20px;
+    }
+    .header-image img {
+        height: 250px;
+        max-height: 250px;
     }
 
     .good-description {
